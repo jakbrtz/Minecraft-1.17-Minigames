@@ -1,0 +1,87 @@
+{
+  "format_version": "1.17",
+  "minecraft:npc_dialogue": {
+    "scenes": [
+      {
+        "scene_tag": "bridges_team",
+        "npc_name": "Game Master",
+        "text": "Choose a Team",
+        "on_close_commands": [ "/tag @initiator add JakesGames-team-" ],
+        "buttons": [
+          {
+            "name": "Red",
+            "commands": [ "/tag @initiator add JakesGames-team-red" ]
+          },
+          {
+            "name": "Blue",
+            "commands": [ "/tag @initiator add JakesGames-team-blue" ]
+          },
+          {
+            "name": "Green",
+            "commands": [ "/tag @initiator add JakesGames-team-green" ]
+          },
+          {
+            "name": "Yellow",
+            "commands": [ "/tag @initiator add JakesGames-team-yellow" ]
+          }
+        ]
+      },
+      {
+        "scene_tag": "bridges_base",
+        "npc_name": "Game Master",
+        "text": "Vote on a Base",
+        "on_close_commands": [ "/tag @initiator add JakesGames-base-" ],
+        "buttons": [
+          {
+            "name": "Temple",
+            "commands": [ "/tag @initiator add JakesGames-base-bridgebases:Temple" ]
+          },
+          {
+            "name": "Mud",
+            "commands": [ "/tag @initiator add JakesGames-base-bridgebases:Mud" ]
+          },
+          {
+            "name": "Amethyst",
+            "commands": [ "/tag @initiator add JakesGames-base-bridgebases:Amethyst" ]
+          },
+          {
+            "name": "Basic",
+            "commands": [ "/tag @initiator add JakesGames-base-bridgebases:Basic" ]
+          }
+        ]
+      },
+      {
+        "scene_tag": "bridges_baseAdv",
+        "npc_name": "Game Master",
+        "text": "Vote on a Base",
+        "on_close_commands": [ "/tag @initiator add JakesGames-base-" ],
+        "buttons": [
+          {
+            "name": "Temple",
+            "commands": [ "/tag @initiator add JakesGames-base-bridgebases:Temple" ]
+          },
+          {
+            "name": "Mud",
+            "commands": [ "/tag @initiator add JakesGames-base-bridgebases:Mud" ]
+          },
+          {
+            "name": "Custom slot 1",
+            "commands": [ "/tag @initiator add JakesGames-base-slot1" ]
+          },
+          {
+            "name": "Custom slot 2",
+            "commands": [ "/tag @initiator add JakesGames-base-slot2" ]
+          },
+          {
+            "name": "Custom slot 3",
+            "commands": [ "/tag @initiator add JakesGames-base-slot3" ]
+          },
+          {
+            "name": "Custom slot 4",
+            "commands": [ "/tag @initiator add JakesGames-base-slot4" ]
+          }
+        ]
+      }
+    ]
+  }
+}

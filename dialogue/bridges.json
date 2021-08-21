@@ -34,19 +34,23 @@
         "buttons": [
           {
             "name": "Temple",
-            "commands": [ "/tag @initiator add JakesGames-base-bridgebases:Temple" ]
+            "commands": [ "/tag @initiator add JakesGames-base-bases:Temple" ]
           },
           {
             "name": "Mud",
-            "commands": [ "/tag @initiator add JakesGames-base-bridgebases:Mud" ]
+            "commands": [ "/tag @initiator add JakesGames-base-bases:Mud" ]
           },
           {
             "name": "Amethyst",
-            "commands": [ "/tag @initiator add JakesGames-base-bridgebases:Amethyst" ]
+            "commands": [ "/tag @initiator add JakesGames-base-bases:Amethyst" ]
+          },
+          {
+            "name": "Gold Blocks",
+            "commands": [ "/tag @initiator add JakesGames-base-bases:GoldBlocks" ]
           },
           {
             "name": "Basic",
-            "commands": [ "/tag @initiator add JakesGames-base-bridgebases:Basic" ]
+            "commands": [ "/tag @initiator add JakesGames-base-bases:Basic" ]
           }
         ]
       },
@@ -58,11 +62,11 @@
         "buttons": [
           {
             "name": "Temple",
-            "commands": [ "/tag @initiator add JakesGames-base-bridgebases:Temple" ]
+            "commands": [ "/tag @initiator add JakesGames-base-bases:Temple" ]
           },
           {
             "name": "Mud",
-            "commands": [ "/tag @initiator add JakesGames-base-bridgebases:Mud" ]
+            "commands": [ "/tag @initiator add JakesGames-base-bases:Mud" ]
           },
           {
             "name": "Custom slot 1",

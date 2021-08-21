@@ -63,7 +63,7 @@ Bridges = class extends this.BaseGame {
 
 		this.ClearWorld()
 
-		let structureName = "bridgebases:Mud" // todo: randomize
+		let structureName = "bases:Mud" // todo: randomize
 		if (this.requestedBases.length > 0) {
 			structureName = getRandomItem(this.requestedBases)
 		}
@@ -76,24 +76,24 @@ Bridges = class extends this.BaseGame {
 			// Build bridge
 			let xlim = 0
 			let zlim = 0
-			if (p.x > 14) {
-				xlim = p.x - 14
+			if (p.x > 15) {
+				xlim = p.x - 15
 			}
-			if (p.x < -14) {
-				xlim = p.x + 14
+			if (p.x < -15) {
+				xlim = p.x + 15
 			}
-			if (p.z > 14) {
-				zlim = p.z - 14
+			if (p.z > 15) {
+				zlim = p.z - 15
 			}
-			if (p.z < -14) {
-				zlim = p.z + 14
+			if (p.z < -15) {
+				zlim = p.z + 15
 			}
 			if (p.r % 180 == 0) {
-				SlashCommand(`/fill ${xlim} ${p.y - 3} ${zlim} 0 ${p.y - 10} ${zlim} concrete ${p.c}`)
-				SlashCommand(`/fill 0 ${p.y - 3} ${zlim} 0 ${p.y - 10} 0 concrete ${p.c}`)
+				SlashCommand(`/fill ${xlim} ${p.y - 3} ${zlim} 0 ${p.y - 10} ${zlim} concrete ${p.c} keep`)
+				SlashCommand(`/fill 0 ${p.y - 3} ${zlim} 0 ${p.y - 10} 0 concrete ${p.c} keep`)
 			} else {
-				SlashCommand(`/fill ${xlim} ${p.y - 3} ${zlim} ${xlim} ${p.y - 10} 0 concrete ${p.c}`)
-				SlashCommand(`/fill ${xlim} ${p.y - 3} 0 0 ${p.y - 10} 0 concrete ${p.c}`)
+				SlashCommand(`/fill ${xlim} ${p.y - 3} ${zlim} ${xlim} ${p.y - 10} 0 concrete ${p.c} keep`)
+				SlashCommand(`/fill ${xlim} ${p.y - 3} 0 0 ${p.y - 10} 0 concrete ${p.c} keep`)
 			}
 			SlashCommand(`/fill 0 ${p.y - 3} 0 0 ${p.y - 10} 0 air`)
 		}
@@ -115,7 +115,7 @@ Bridges = class extends this.BaseGame {
 	RespawnOverride(player) {
 		if (player.team == undefined) return
 		let team = this.teams[player.team]
-		SlashCommand(`/tp ${player.name} ${team.x} ${team.y + 1} ${team.z} facing 0 70 0`)
+		SlashCommand(`/tp ${player.name} ${team.x} ${team.y} ${team.z} facing 0 70 0`)
 		SlashCommand(`/give ${player.name} iron_sword`)
 		SlashCommand(`/give ${player.name} iron_pickaxe`)
 		SlashCommand(`/give ${player.name} bow`)

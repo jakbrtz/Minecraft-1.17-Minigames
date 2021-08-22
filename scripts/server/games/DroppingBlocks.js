@@ -2,6 +2,7 @@ DroppingBlocks = class extends this.BaseGame {
 
 	constructor() {
 		super()
+		this.losers = []
 		this.trackedBlocks = []
 		this.layerColours = [2,1,10,4,3]
 	}
@@ -96,6 +97,11 @@ DroppingBlocks = class extends this.BaseGame {
 				})
 
 			}
+
+			if (this.elapsedGameTime > 20 && player.position.y < 20 && !this.losers.includes(player)) {
+				this.losers.push(player)
+				this.UpdateScore()
+			}
 		})
 
 		this.trackedBlocks.forEach(trackedBlock => {
@@ -114,13 +120,7 @@ DroppingBlocks = class extends this.BaseGame {
 	}
 
 	IsGameInProgressOverride() {
-		let result = false
-		this.players.forEach(player => {
-			if (player.position.y > 20) {
-				result = true
-            }
-		})
-		return result
+		return this.losers.length < this.players.size
 	}
 
 	LayerIndexToY(i) {
@@ -129,5 +129,13 @@ DroppingBlocks = class extends this.BaseGame {
 
 	YToLayerIndex(y) {
 		return Math.floor((y - 30) / 5)
-    }
+	}
+
+	UpdateScore() {
+		let lines = []
+		for (var i = 0; i < this.losers.length; i++) {
+			lines.push({ text: this.losers[i].name, value: this.players.length - i })
+		}
+		this.CreateScoreboard("Results", lines)
+	}
 }

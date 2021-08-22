@@ -166,7 +166,7 @@ BaseGame = class {
     }
 
     EndGameOverride() {
-        Chat("Game Over")
+        Chat("Game Completed")
     }
 
     AppearDead(player) {
@@ -193,10 +193,10 @@ BaseGame = class {
         SlashCommand(`/kill @e[type=!player,type=!npc]`)
     }
 
-    CreateScoreboard(title, lines) {
+    CreateScoreboard(title, lines, ascending) {
         this.DestroyScoreboard()
         SlashCommand(`/scoreboard objectives add showtouser dummy "${title}"`)
-        SlashCommand(`/scoreboard objectives setdisplay sidebar showtouser`)
+        SlashCommand(`/scoreboard objectives setdisplay sidebar showtouser ${(ascending || false) ? "ascending" : "descending"}`)
         for (var i = 0; i < 16 && i < lines.length; i++) {
             let line = lines[i]
             let colourCharacter = (i < 10) ? i : String.fromCharCode(97 + i - 10)

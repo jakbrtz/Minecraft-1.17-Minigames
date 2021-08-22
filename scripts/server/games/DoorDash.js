@@ -3,6 +3,8 @@ DoorDash = class extends this.BaseGame {
 	constructor() {
 		super()
 
+		this.winners = []
+
 		this.width = 6
 		this.depth = 8
 		this.rows = 8
@@ -35,6 +37,7 @@ DoorDash = class extends this.BaseGame {
 
 	StartGameOverride() {
 		SlashCommand(`/spreadplayers ${this.xOffset + Math.floor(this.doors * this.width / 2)} ${this.zOffset - this.depth} 3  ${this.depth - 2} @a`)
+		SlashCommand(`/effect @a speed 30 5 true`)
 	}
 
 	RespawnOverride(player) {
@@ -42,6 +45,23 @@ DoorDash = class extends this.BaseGame {
 	}
 
 	IsGameInProgressOverride() {
-		return this.AllPlayersAre(player => player.position.z < this.rows * this.depth + this.zOffset)
+		return this.winners.length < this.players.size
+	}
+
+	UpdateGameOverride() {
+		this.players.forEach(player => {
+			if (this.elapsedGameTime > 20 && player.position.z >= this.rows * this.depth + this.zOffset && !this.winners.includes(player)) {
+				this.winners.push(player)
+				this.UpdateScore()
+            }
+        })
+	}
+
+	UpdateScore() {
+		let lines = []
+		for (var i = 0; i < this.winners.length; i++) {
+			lines.push({ text: this.winners[i].name, value: i + 1 })
+		}
+		this.CreateScoreboard("Results", lines)
 	}
 }

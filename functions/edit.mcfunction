@@ -1,5 +1,7 @@
 gamemode c @a
 function end
+scoreboard objectives remove showtouser
+
 structure load basebuilder:generator1 -48 45 -48 0_degrees none layer_by_layer 
 structure load basebuilder:generator2 -48 45  48 0_degrees none layer_by_layer 
 structure load basebuilder:generator3  48 45  48 0_degrees none layer_by_layer 

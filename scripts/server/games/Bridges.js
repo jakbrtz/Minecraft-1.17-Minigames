@@ -3,12 +3,7 @@ Bridges = class extends this.BaseGame {
 	constructor() {
 		super()
 
-		this.teams = {
-			"blue": { x: 48, y: 65, z: 0, r: 270, c: 11 },
-			"red": { x: -48, y: 65, z: 0, r: 90, c: 14 },
-			"yellow": { x: 0, y: 65, z: 48, r: 0, c: 4 },
-			"green": { x: 0, y: 65, z: -48, r: 180, c: 13 },
-		}
+		this.teams = new Map()
 
 		this.DeathCoolDown = 5 * 20
 		this.GameDuration = 5 * 60 * 20
@@ -37,6 +32,7 @@ Bridges = class extends this.BaseGame {
 				tag = tag.substr(5)
 				if (tag != "") {
 					player.team = tag
+					this.CreateTeamIfItDoesntExist(tag)
 					this.UpdateScore()
 					let dialogue = this.includeTestBases ? "bridges_baseAdv" : "bridges_base"
 					SlashCommand(`/dialogue open @e[type=npc,c=1] ${player.name} ${dialogue}`)
@@ -54,6 +50,52 @@ Bridges = class extends this.BaseGame {
         }
 	}
 
+	CreateTeamIfItDoesntExist(name) {
+		if (this.teams.has(name)) return
+		var center
+		var rotation
+		switch (this.teams.size) {
+			case 0:
+				center = { x: 48, y: 65, z: 0 }
+				rotation = 270
+				break;
+			case 1:
+				center = { x: -48, y: 65, z: 0 }
+				rotation = 90
+				break;
+			case 2:
+				center = { x: 0, y: 65, z: 48 }
+				rotation = 0
+				break;
+			case 3:
+				center = { x: 0, y: 65, z: -48 }
+				rotation = 180
+				break;
+			// todo: move existing on 4-7
+		}
+		var colour
+		switch (name) {
+			case "red":
+				colour = 14
+				break;
+			case "blue":
+				colour = 11
+				break;
+			case "green":
+				colour = 13
+				break;
+			case "yellow":
+				colour = 4
+				break;
+		}
+		this.teams.set(name, {
+			center: center,
+			rotation: rotation,
+			colour: colour,
+			score: 0
+		})
+    }
+
 	UpdateSetupOverride() {
 		if (this.AllPlayersAre(player => player.readyToPlay)) {
 			this.StartGame()
@@ -66,47 +108,47 @@ Bridges = class extends this.BaseGame {
 
 		let structureName = (this.requestedBases.length > 0)
 			? getRandomItem(this.requestedBases)
-			: getRandomItem(["bases:Amethyst", "bases:Basic", "bases:GoldBlocks", "bases:Mud","bases:Temple"])
+			: getRandomItem(["bases:Amethyst", "bases:Basic", "bases:GoldBlocks", "bases:Mud", "bases:Temple"])
 
-		for (let [team, p] of Object.entries(this.teams)) {
+		this.teams.forEach(team => {
 			// Place structure
-			SlashCommand(`/structure load ${structureName} ${p.x - 14} ${p.y - 15} ${p.z - 14} ${p.r}_degrees`)
+			SlashCommand(`/structure load ${structureName} ${team.center.x - 14} ${team.center.y - 15} ${team.center.z - 14} ${team.rotation}_degrees`)
 			// Recolour concrete
-			SlashCommand(`/fill ${p.x - 14} ${p.y - 15} ${p.z - 14} ${p.x + 14} ${p.y + 15} ${p.z + 14} concrete ${p.c} replace concrete 14`)
-			SlashCommand(`/fill ${p.x - 14} ${p.y + 16} ${p.z - 14} ${p.x + 14} ${p.y + 45} ${p.z + 14} concrete ${p.c} replace concrete 14`)
+			SlashCommand(`/fill ${team.center.x - 14} ${team.center.y - 15} ${team.center.z - 14} ${team.center.x + 14} ${team.center.y + 15} ${team.center.z + 14} concrete ${team.colour} replace concrete 14`)
+			SlashCommand(`/fill ${team.center.x - 14} ${team.center.y + 16} ${team.center.z - 14} ${team.center.x + 14} ${team.center.y + 45} ${team.center.z + 14} concrete ${team.colour} replace concrete 14`)
 			// Build bridge
 			let xlim = 0
 			let zlim = 0
-			if (p.x > 15) {
-				xlim = p.x - 15
+			if (team.center.x > 15) {
+				xlim = team.center.x - 15
 			}
-			if (p.x < -15) {
-				xlim = p.x + 15
+			if (team.center.x < -15) {
+				xlim = team.center.x + 15
 			}
-			if (p.z > 15) {
-				zlim = p.z - 15
+			if (team.center.z > 15) {
+				zlim = team.center.z - 15
 			}
-			if (p.z < -15) {
-				zlim = p.z + 15
+			if (team.center.z < -15) {
+				zlim = team.center.z + 15
 			}
-			if (p.r % 180 == 0) {
-				SlashCommand(`/fill ${xlim} ${p.y - 3} ${zlim} 0 ${p.y - 10} ${zlim} concrete ${p.c} keep`)
-				SlashCommand(`/fill 0 ${p.y - 3} ${zlim} 0 ${p.y - 10} 0 concrete ${p.c} keep`)
+			if (team.center.r % 180 == 0) {
+				SlashCommand(`/fill ${xlim} ${team.center.y - 3} ${zlim} 0 ${team.center.y - 10} ${zlim} concrete ${team.colour} keep`)
+				SlashCommand(`/fill 0 ${team.center.y - 3} ${zlim} 0 ${team.center.y - 10} 0 concrete ${team.colour} keep`)
 			} else {
-				SlashCommand(`/fill ${xlim} ${p.y - 3} ${zlim} ${xlim} ${p.y - 10} 0 concrete ${p.c} keep`)
-				SlashCommand(`/fill ${xlim} ${p.y - 3} 0 0 ${p.y - 10} 0 concrete ${p.c} keep`)
+				SlashCommand(`/fill ${xlim} ${team.center.y - 3} ${zlim} ${xlim} ${team.center.y - 10} 0 concrete ${team.colour} keep`)
+				SlashCommand(`/fill ${xlim} ${team.center.y - 3} 0 0 ${team.center.y - 10} 0 concrete ${team.colour} keep`)
 			}
-			SlashCommand(`/fill 0 ${p.y - 3} 0 0 ${p.y - 10} 0 air`)
-		}
+			SlashCommand(`/fill 0 ${team.center.y - 3} 0 0 ${team.center.y - 10} 0 air`)
+		})
 
 		// Start game for all players
 		this.players.forEach(player => {
 			if (player.team != undefined) {
 				this.Respawn(player.entity)
 				Chat(`${player.name} is on the ${this.TeamColour(player.team)}${player.team} team`)
-				SlashCommand("/gamemode survival " + player.name)
+				SlashCommand(`/gamemode survival ${player.name}`)
 			} else {
-				Chat(GetName(entity) + " is not on any team")
+				Chat(`${GetName(entity)} is not on any team`)
             }
 		})
 
@@ -115,31 +157,28 @@ Bridges = class extends this.BaseGame {
 
 	RespawnOverride(player) {
 		if (player.team == undefined) return
-		let team = this.teams[player.team]
-		SlashCommand(`/tp ${player.name} ${team.x} ${team.y} ${team.z} facing 0 70 0`)
+		let team = this.teams.get(player.team)
+		SlashCommand(`/tp ${player.name} ${team.center.x} ${team.center.y} ${team.center.z} facing 0 70 0`)
 		SlashCommand(`/give ${player.name} iron_sword`)
 		SlashCommand(`/give ${player.name} iron_pickaxe`)
 		SlashCommand(`/give ${player.name} bow`)
 		SlashCommand(`/give ${player.name} arrow 16`)
-		SlashCommand(`/give ${player.name} concrete 64 ${team.c}`)
+		SlashCommand(`/give ${player.name} concrete 64 ${team.colour}`)
 	}
 
 	UpdateGameOverride() {
 
-		for (let [team, basePosition] of Object.entries(this.teams)) {
-
+		this.teams.forEach((team, teamId) => {
 			this.players.forEach(player => {
-				if (player.team != undefined && player.team != team &&
-					player.position.x >= basePosition.x - 2 && player.position.y >= basePosition.y - 2 && player.position.z >= basePosition.z - 2 &&
-					player.position.x <= basePosition.x + 2 && player.position.y <= basePosition.y + 2 && player.position.z <= basePosition.z + 2) {
+				if (player.team != undefined && player.team != teamId && PositionsAreClose(player.position, team.center, 2)) {
 					player.score++
+					team.score++
 					this.UpdateScore()
 					SlashCommand("/title " + player.name + " title You earned a point");
 					this.Respawn(player.entity)
-				}
-			})
-
-		}
+                }
+            })
+		})
 
 		if (this.elapsedGameTime % 20 == 0) {
 			this.UpdateScore()
@@ -170,22 +209,12 @@ Bridges = class extends this.BaseGame {
 
 	EndGameOverride() {
 		this.UpdateScore()
-		let teamScores = new Map()
-		this.players.forEach(player => {
-			if (player.team != undefined) {
-				let score = player.score
-				if (teamScores.has(player.team)) {
-					score += teamScores.get(player.team)
-				}
-				teamScores.set(player.team, score)
-			}
-		})
 		let bestScore = 0
 		let bestTeam = null
-		teamScores.forEach((score, team) => {
-			if (score > bestScore) {
-				bestTeam = team
-				bestScore = score
+		this.teams.forEach((team, teamId) => {
+			if (team.score > bestScore) {
+				bestTeam = teamId
+				bestScore = team.score
 			}
 		})
 		let msg = (bestTeam == null) ? `no one won` : `${this.TeamColour(bestTeam)}${bestTeam} wins`
@@ -209,7 +238,7 @@ Bridges = class extends this.BaseGame {
 		this.CreateScoreboard("Scores", lines)
 	}
 
-	TeamColour(team) {
-		return NumberToColour(this.teams[team].c)
+	TeamColour(teamId) {
+		return NumberToColour(this.teams.get(teamId).colour)
 	}
 }

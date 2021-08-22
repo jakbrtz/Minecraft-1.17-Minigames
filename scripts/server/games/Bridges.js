@@ -150,13 +150,9 @@ Bridges = class extends this.BaseGame {
 
 		// Start game for all players
 		this.players.forEach(player => {
-			if (player.team != undefined) {
-				this.Respawn(player.entity)
-				Chat(`${player.name} is on the ${this.TeamColour(player.team)}${player.team} team`)
-				SlashCommand(`/gamemode survival ${player.name}`)
-			} else {
-				Chat(`${GetName(entity)} is not on any team`)
-            }
+			this.Respawn(player.entity)
+			Chat(`${player.name} is on the ${this.TeamColour(player.team)}${player.team} team`)
+			SlashCommand(`/gamemode survival ${player.name}`)
 		})
 
 		this.UpdateScore()
@@ -175,9 +171,11 @@ Bridges = class extends this.BaseGame {
 
 	UpdateGameOverride() {
 
+		if (this.elapsedGameTime < 20) return
+
 		this.teams.forEach((team, teamId) => {
 			this.players.forEach(player => {
-				if (player.team != undefined && player.team != teamId && PositionsAreClose(player.position, team.center, 2)) {
+				if (player.team != teamId && PositionsAreClose(player.position, team.center, 2)) {
 					player.score++
 					team.score++
 					this.UpdateScore()

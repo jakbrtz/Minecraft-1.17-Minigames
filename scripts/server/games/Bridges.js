@@ -110,12 +110,15 @@ Bridges = class extends this.BaseGame {
 
 		this.teams.forEach(team => {
 
-			let structureName = (team.requestedBases.length > 0)
+			team.selectedBase = (team.requestedBases.length > 0)
 				? getRandomItem(team.requestedBases)
 				: getRandomItem(["bases:Amethyst", "bases:GoldBlocks", "bases:Mud", "bases:Temple"])
 
+			team.spawn = StructureSpawn(team.selectedBase, team.center, team.rotation)
+			team.goal = StructureGoal(team.selectedBase, team.center, team.rotation)
+
 			// Place structure
-			SlashCommand(`/structure load ${structureName} ${team.center.x - 14} ${team.center.y - 15} ${team.center.z - 14} ${team.rotation}_degrees`)
+			SlashCommand(`/structure load ${team.selectedBase} ${team.center.x - 14} ${team.center.y - 15} ${team.center.z - 14} ${team.rotation}_degrees`)
 			// Recolour concrete
 			SlashCommand(`/fill ${team.center.x - 14} ${team.center.y - 15} ${team.center.z - 14} ${team.center.x + 14} ${team.center.y + 15} ${team.center.z + 14} concrete ${team.colour} replace concrete 14`)
 			SlashCommand(`/fill ${team.center.x - 14} ${team.center.y + 16} ${team.center.z - 14} ${team.center.x + 14} ${team.center.y + 45} ${team.center.z + 14} concrete ${team.colour} replace concrete 14`)
@@ -157,7 +160,7 @@ Bridges = class extends this.BaseGame {
 	RespawnOverride(player) {
 		if (player.team == undefined) return
 		let team = this.teams.get(player.team)
-		SlashCommand(`/tp ${player.name} ${team.center.x} ${team.center.y} ${team.center.z} facing 0 70 0`)
+		SlashCommand(`/tp ${player.name} ${team.spawn.x} ${team.spawn.y} ${team.spawn.z} facing 0 70 0`)
 		SlashCommand(`/give ${player.name} iron_sword`)
 		SlashCommand(`/give ${player.name} iron_pickaxe`)
 		SlashCommand(`/give ${player.name} bow`)
@@ -171,7 +174,7 @@ Bridges = class extends this.BaseGame {
 
 		this.teams.forEach((team, teamId) => {
 			this.players.forEach(player => {
-				if (player.team != teamId && PositionsAreClose(player.position, team.center, 2)) {
+				if (player.team != teamId && PositionsAreClose(player.position, team.goal, 2)) {
 					player.score++
 					this.teams.get(player.team).score++
 					this.UpdateScore()

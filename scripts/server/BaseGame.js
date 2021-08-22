@@ -5,13 +5,13 @@ BaseGame = class {
         this.gameHasStarted = false
         this.elapsedGameTime = 0
         this.players = new Map()
-        this.DestroyScoreboard()
 
         this.DeathCoolDown = 0
 
     }
 
     Setup() {
+        this.DestroyScoreboard()
         this.elapsedGameTime = 0
         this.gameHasStarted = false
         allEntities.forEach(entity => {
@@ -166,7 +166,7 @@ BaseGame = class {
     }
 
     CreateScoreboard(title, lines) {
-        SlashCommand(`/scoreboard objectives remove showtouser`)
+        this.DestroyScoreboard()
         SlashCommand(`/scoreboard objectives add showtouser dummy "${title}"`)
         SlashCommand(`/scoreboard objectives setdisplay sidebar showtouser`)
         for (var i = 0; i < 16 && i < lines.length; i++) {

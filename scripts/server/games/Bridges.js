@@ -41,14 +41,15 @@ Bridges = class extends this.BaseGame {
 					let dialogue = this.includeTestBases ? "bridges_baseAdv" : "bridges_base"
 					SlashCommand(`/dialogue open @e[type=npc,c=1] ${player.name} ${dialogue}`)
 				} else if (player.team == undefined) {
-					SlashCommand(`/execute ${player.name} ~~~ function end`)
+					SlashCommand(`/dialogue open @e[type=npc,c=1] ${player.name} bridges_team`)
                 }
 			} else if (tag.startsWith("base-")) {
 				tag = tag.substr(5)
 				if (tag != "") {
 					this.requestedBases.push(tag)
+				} else {
+					player.readyToPlay = true
 				}
-				player.readyToPlay = true
             }
         }
 	}
@@ -63,10 +64,10 @@ Bridges = class extends this.BaseGame {
 
 		this.ClearWorld()
 
-		let structureName = "bases:Mud" // todo: randomize
-		if (this.requestedBases.length > 0) {
-			structureName = getRandomItem(this.requestedBases)
-		}
+		let structureName = (this.requestedBases.length > 0)
+			? getRandomItem(this.requestedBases)
+			: getRandomItem(["bases:Amethyst", "bases:Basic", "bases:GoldBlocks", "bases:Mud","bases:Temple"])
+
 		for (let [team, p] of Object.entries(this.teams)) {
 			// Place structure
 			SlashCommand(`/structure load ${structureName} ${p.x - 14} ${p.y - 15} ${p.z - 14} ${p.r}_degrees`)
@@ -121,17 +122,11 @@ Bridges = class extends this.BaseGame {
 		SlashCommand(`/give ${player.name} bow`)
 		SlashCommand(`/give ${player.name} arrow 16`)
 		SlashCommand(`/give ${player.name} concrete 64 ${team.c}`)
-		// todo: armor
 	}
 
 	UpdateGameOverride() {
 
 		for (let [team, basePosition] of Object.entries(this.teams)) {
-
-			if (!this.AnyPlayerIs(player => player.team == team)) {
-				// continue;
-				// todo: why doesn't continue work?
-			}
 
 			this.players.forEach(player => {
 				if (player.team != undefined && player.team != team &&

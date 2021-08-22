@@ -32,7 +32,7 @@ Bridges = class extends this.BaseGame {
 					SlashCommand(`/dialogue open @e[type=npc,c=1] ${player.name} ${dialogue}`)
 				} else if (player.team == undefined) {
 					SlashCommand(`/dialogue open @e[type=npc,c=1] ${player.name} bridges_team`)
-                }
+				}
 			} else if (tag.startsWith("base-")) {
 				tag = tag.substr(5)
 				if (tag != "") {
@@ -40,7 +40,7 @@ Bridges = class extends this.BaseGame {
 				} else {
 					player.readyToPlay = true
 				}
-            }
+			}
         }
 	}
 
@@ -65,7 +65,14 @@ Bridges = class extends this.BaseGame {
 				center = { x: 0, y: 65, z: -48 }
 				rotation = 180
 				break;
-			// todo: move existing on 4-7
+			case 4:
+				center = { x: 32, y: 65, z: 32 }
+				rotation = 0
+				break;
+			case 5:
+				center = { x: -32, y: 65, z: -32 }
+				rotation = 180
+				break;
 		}
 		var colour
 		switch (name) {

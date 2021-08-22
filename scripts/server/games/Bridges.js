@@ -177,7 +177,7 @@ Bridges = class extends this.BaseGame {
 			this.players.forEach(player => {
 				if (player.team != teamId && PositionsAreClose(player.position, team.center, 2)) {
 					player.score++
-					team.score++
+					this.teams.get(player.team).score++
 					this.UpdateScore()
 					SlashCommand("/title " + player.name + " title You earned a point");
 					this.Respawn(player.entity)
@@ -214,15 +214,26 @@ Bridges = class extends this.BaseGame {
 
 	EndGameOverride() {
 		this.UpdateScore()
-		let bestScore = 0
-		let bestTeam = null
+		let bestScore = 1
+		let bestTeams = []
 		this.teams.forEach((team, teamId) => {
 			if (team.score > bestScore) {
-				bestTeam = teamId
+				bestTeams = [ teamId ]
 				bestScore = team.score
-			}
+			} else if (team.score == bestScore) {
+				bestTeams.push(teamId)
+            }
 		})
-		let msg = (bestTeam == null) ? `no one won` : `${this.TeamColour(bestTeam)}${bestTeam} wins`
+		var msg
+		if (bestTeams.length == 0) {
+			msg = "No one won"
+		} else if (bestTeams.length == 1) {
+			msg = `${this.TeamColour(bestTeams[0])}${bestTeams[0]} wins`
+		} else if (bestTeams.length == this.teams.size) {
+			msg = "Everyone wins!"
+		} else {
+			msg = "It's a tie between " + bestTeams.map(team => `${this.TeamColour(team)}${team}\u00a7r`).join(" and ")
+        }
 		SlashCommand(`/title @a title ${msg}`)
 		Chat(msg)
 	}

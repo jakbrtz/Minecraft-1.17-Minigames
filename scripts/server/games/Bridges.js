@@ -4,10 +4,7 @@ Bridges = class extends this.BaseGame {
 		super()
 
 		this.teams = new Map()
-
 		this.DeathCoolDown = 5 * 20
-
-		this.requestedBases = []
 	}
 
 	SetupOverride() {
@@ -39,7 +36,7 @@ Bridges = class extends this.BaseGame {
 			} else if (tag.startsWith("base-")) {
 				tag = tag.substr(5)
 				if (tag != "") {
-					this.requestedBases.push(tag)
+					this.teams.get(player.team).requestedBases.push(tag)
 				} else {
 					player.readyToPlay = true
 				}
@@ -89,7 +86,8 @@ Bridges = class extends this.BaseGame {
 			center: center,
 			rotation: rotation,
 			colour: colour,
-			score: 0
+			score: 0,
+			requestedBases: []
 		})
     }
 
@@ -110,11 +108,12 @@ Bridges = class extends this.BaseGame {
 			this.CreateTeamIfItDoesntExist("blue")
 		}
 
-		let structureName = (this.requestedBases.length > 0)
-			? getRandomItem(this.requestedBases)
-			: getRandomItem(["bases:Amethyst", "bases:Basic", "bases:GoldBlocks", "bases:Mud", "bases:Temple"])
-
 		this.teams.forEach(team => {
+
+			let structureName = (team.requestedBases.length > 0)
+				? getRandomItem(team.requestedBases)
+				: getRandomItem(["bases:Amethyst", "bases:GoldBlocks", "bases:Mud", "bases:Temple"])
+
 			// Place structure
 			SlashCommand(`/structure load ${structureName} ${team.center.x - 14} ${team.center.y - 15} ${team.center.z - 14} ${team.rotation}_degrees`)
 			// Recolour concrete

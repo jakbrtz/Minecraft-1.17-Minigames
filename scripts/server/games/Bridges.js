@@ -6,9 +6,6 @@ Bridges = class extends this.BaseGame {
 		this.teams = new Map()
 
 		this.DeathCoolDown = 5 * 20
-		this.GameDuration = 5 * 60 * 20
-
-		this.includeTestBases = false
 
 		this.requestedBases = []
 	}
@@ -34,7 +31,7 @@ Bridges = class extends this.BaseGame {
 					player.team = tag
 					this.CreateTeamIfItDoesntExist(tag)
 					this.UpdateScore()
-					let dialogue = this.includeTestBases ? "bridges_baseAdv" : "bridges_base"
+					let dialogue = Globals.Editor ? "bridges_baseAdv" : "bridges_base"
 					SlashCommand(`/dialogue open @e[type=npc,c=1] ${player.name} ${dialogue}`)
 				} else if (player.team == undefined) {
 					SlashCommand(`/dialogue open @e[type=npc,c=1] ${player.name} bridges_team`)
@@ -209,7 +206,7 @@ Bridges = class extends this.BaseGame {
 	}
 
 	IsGameInProgressOverride() {
-		return this.elapsedGameTime < this.GameDuration
+		return this.elapsedGameTime < Globals.GameDuration
 	}
 
 	EndGameOverride() {
@@ -249,7 +246,7 @@ Bridges = class extends this.BaseGame {
 			}
 		})
 		if (this.gameHasStarted) {
-			lines.push(TicksToDuration(this.GameDuration - this.elapsedGameTime))
+			lines.push(TicksToDuration(Globals.GameDuration - this.elapsedGameTime))
 		}
 		this.CreateScoreboard("Scores", lines)
 	}

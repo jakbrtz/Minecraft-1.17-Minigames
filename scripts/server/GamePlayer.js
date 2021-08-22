@@ -1,7 +1,6 @@
 GamePlayer = class {
 	constructor() {
 		this.game = null
-		this.editor = false
 	}
 
 	Update() {
@@ -15,23 +14,19 @@ GamePlayer = class {
 						Chat("Game has been Terminated")
 					} else if (this.game != null) {
 						this.game.ReceivedTag(entity, tag)
-					}
-					else {
-						switch (tag) {
-							case "wantsBridges":
-								this.game = new Bridges()
-								this.game.includeTestBases = this.editor
-								break;
-							case "wantsDropper":
-								this.game = new DroppingBlocks()
-								break;
-							case "wantsDoorDash":
-								this.game = new DoorDash()
-								break;
-							case "isEditor":
-								this.editor = true
-								break;
-						}
+					} else {
+						if (tag == "wantsBridges") {
+							this.game = new Bridges()
+						} else if (tag == "wantsBridges") {
+							this.game = new DroppingBlocks()
+						} else if (tag == "wantsBridges") {
+							this.game = new DoorDash()
+						} else if (tag == "isEditor") {
+							Globals.Editor = true
+						} else if (tag.startsWith("duration")) {
+							Globals.GameDuration = tag.substr(8) * 20
+                        }
+
 						if (this.game != null) {
 							this.game.Setup()
 						}

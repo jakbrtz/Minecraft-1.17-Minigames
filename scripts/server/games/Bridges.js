@@ -106,6 +106,13 @@ Bridges = class extends this.BaseGame {
 
 		this.ClearWorld()
 
+		if (this.teams.size < 2) {
+			this.CreateTeamIfItDoesntExist("red")
+		}
+		if (this.teams.size < 2) {
+			this.CreateTeamIfItDoesntExist("blue")
+		}
+
 		let structureName = (this.requestedBases.length > 0)
 			? getRandomItem(this.requestedBases)
 			: getRandomItem(["bases:Amethyst", "bases:Basic", "bases:GoldBlocks", "bases:Mud", "bases:Temple"])

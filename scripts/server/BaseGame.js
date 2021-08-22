@@ -56,6 +56,7 @@ BaseGame = class {
         SlashCommand(`/clear ${player.name}`)
         SlashCommand(`/effect ${player.name} clear`)
         SlashCommand(`/effect ${player.name} instant_health 1 15 true`)
+        SlashCommand(`/effect ${player.name} fire_resistance 1 15 true`)
         player.deathTimer = -1
         this.RespawnOverride(player)
     }

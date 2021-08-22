@@ -9,6 +9,7 @@ system.initialize = function () {
 	simple_query = this.registerQuery();
 
 	this.listenForEvent("minecraft:entity_death", entity_death);
+	this.listenForEvent("minecraft:player_placed_block", entity_placed_block);
 
 	let loggerData = system.createEventData("minecraft:script_logger_config");
 	loggerData.data.log_information = true;
@@ -28,6 +29,10 @@ system.shutdown = function () {
 
 function entity_death(eventData) {
 	gamePlayer.EntityDied(eventData.data.entity, eventData.data.killer)
+}
+
+function entity_placed_block(eventData) {
+	gamePlayer.EntityPlacedBlock(eventData.data.player, eventData.data.block_position)
 }
 
 this.Chat = function (message) {

@@ -81,6 +81,12 @@ Bridges = class extends this.BaseGame {
 			case "yellow":
 				colour = 4
 				break;
+			case "orange":
+				colour = 1
+				break;
+			case "black":
+				colour = 7
+				break;
 		}
 		this.teams.set(name, {
 			center: center,
@@ -191,7 +197,9 @@ Bridges = class extends this.BaseGame {
 	}
 
 	PlayerDiedOverride (player) {
+	}
 
+	AttemptRevivePlayerOverride(player) {
 		if (Math.random() < 0.1) {
 			SlashCommand("/execute " + player.name + " ~~~ say " + getRandomItem([
 				"I got rekt",
@@ -203,8 +211,16 @@ Bridges = class extends this.BaseGame {
 				"I'll get my revenge... probably"
 			]))
 		}
-
 		SlashCommand(`/tp ${player.name} 0 100 0`)
+	}
+
+	PlayerPlacedBlockOverride(player, position) {
+		this.teams.forEach(team => {
+			if (PositionsAreClose(position, team.goal, 2)) {
+				SlashCommand(`/msg ${player.name} don't build there`)
+				SlashCommand(`/setblock ${position.x} ${position.y} ${position.z} air`)
+            }
+		})
 	}
 
 	IsGameInProgressOverride() {

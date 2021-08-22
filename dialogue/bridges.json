@@ -23,6 +23,14 @@
           {
             "name": "Yellow",
             "commands": [ "/tag @initiator add JakesGames-team-yellow" ]
+          },
+          {
+            "name": "Orange",
+            "commands": [ "/tag @initiator add JakesGames-team-orange" ]
+          },
+          {
+            "name": "Black",
+            "commands": [ "/tag @initiator add JakesGames-team-black" ]
           }
         ]
       },

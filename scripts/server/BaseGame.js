@@ -20,7 +20,7 @@ BaseGame = class {
                 name: GetName(entity),
                 deathTimer: -1,
                 position: { x: 0, y: 0, z: 0 },
-                inWorld: false
+                needsReviving: false
                 // todo: a bunch of other generic variables
             })
         })
@@ -66,15 +66,10 @@ BaseGame = class {
 
     Update() {
 
-        this.players.forEach(player => {
-            player.inWorld = false
-        })
-
         allEntities.filter((entity) => this.players.has(entity.id)).forEach(entity => {
             let player = this.players.get(entity.id)
             player.entity = entity
             player.position = Find(entity)
-            player.inWorld = true
         })
 
         if (this.gameHasStarted) {
@@ -96,13 +91,14 @@ BaseGame = class {
     UpdateGame() {
 
         this.players.forEach(player => {
-            if (player.inWorld) {
-                if (player.deathTimer == this.DeathCoolDown) {
-                    this.Respawn(player.entity)
-                } else if (player.deathTimer >= 0) {
-                    this.AppearDead(player)
-                    player.deathTimer++
-                }
+            if (player.needsReviving) {
+                this.AttemptRevivePlayer(player)
+            }
+            if (player.deathTimer >= this.DeathCoolDown) {
+                this.Respawn(player.entity)
+            } 
+            if (player.deathTimer >= 0) {
+                player.deathTimer++
             }
         })
 
@@ -118,10 +114,41 @@ BaseGame = class {
         if (!this.players.has(entity.id)) return
         let player = this.players.get(entity.id)
         player.deathTimer = 0
+        player.needsReviving = true
         this.PlayerDiedOverride(player)
     }
 
-    PlayerDiedOverride(player) {
+    PlayerDiedOverride(player, position) {
+
+    }
+
+    AttemptRevivePlayer(player) {
+        SlashCommand(`/tag ${player.name} add JakesGames-recentlyRevived`)
+        this.AppearDead(player)
+        this.AttemptRevivePlayerOverride(player)
+    }
+
+    AttemptRevivePlayerOverride(player) {
+        // todo: rewrite this nicer so it can handle edge cases like DeathCoolDown==1
+        if (this.DeathCoolDown == 0) {
+            this.Respawn(player.entity)
+        }
+    }
+
+    ReviveWasSuccessful(entity) {
+        if (!this.players.has(entity.id)) return
+        let player = this.players.get(entity.id)
+        SlashCommand(`/tag ${player.name} remove JakesGames-recentlyRevived`)
+        player.needsReviving = false
+    }
+
+    PlayerPlacedBlock(entity, position) {
+        if (!this.players.has(entity.id)) return
+        let player = this.players.get(entity.id)
+        this.PlayerPlacedBlockOverride(player, position)
+    }
+
+    PlayerPlacedBlockOverride(player, position) {
 
     }
 

@@ -10,16 +10,22 @@ GamePlayer = class {
 					SlashCommand(`/tag ${GetName(entity)} remove ${tag}`)
 					tag = tag.substr(11)
 					if (tag == "wantsEnd") {
-						this.game = null
-						Chat("Game has been Terminated")
+						if (this.game == null) {
+							Chat("No game is running")
+						} else {
+							this.game = null
+							Chat("Game has been Terminated")
+						}
+					} else if (tag == "recentlyRevived") {
+						this.game.ReviveWasSuccessful(entity)
 					} else if (this.game != null) {
 						this.game.ReceivedTag(entity, tag)
 					} else {
 						if (tag == "wantsBridges") {
 							this.game = new Bridges()
-						} else if (tag == "wantsBridges") {
+						} else if (tag == "wantsDropper") {
 							this.game = new DroppingBlocks()
-						} else if (tag == "wantsBridges") {
+						} else if (tag == "wantsDoorDash") {
 							this.game = new DoorDash()
 						} else if (tag == "isEditor") {
 							Globals.Editor = true
@@ -51,4 +57,10 @@ GamePlayer = class {
 			this.game.PlayerDied(entity, killer)
 		}
 	}
+
+	EntityPlacedBlock(entity, position) {
+		if (this.game != null) {
+			this.game.PlayerPlacedBlock(entity, position)
+        }
+    }
 }

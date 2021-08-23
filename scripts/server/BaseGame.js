@@ -116,10 +116,10 @@ BaseGame = class {
         let player = this.players.get(entity.id)
         player.deathTimer = 0
         player.needsReviving = true
-        this.PlayerDiedOverride(player)
+        this.PlayerDiedOverride(player, killer)
     }
 
-    PlayerDiedOverride(player, position) {
+    PlayerDiedOverride(player, killer) {
 
     }
 

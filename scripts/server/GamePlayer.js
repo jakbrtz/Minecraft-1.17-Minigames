@@ -27,11 +27,13 @@ GamePlayer = class {
 							this.game = new DroppingBlocks()
 						} else if (tag == "wantsDoorDash") {
 							this.game = new DoorDash()
+						} else if (tag == "wantsQuickRespawn") {
+							this.game = new QuickRespawn()
 						} else if (tag == "isEditor") {
 							Globals.Editor = true
 						} else if (tag.startsWith("duration")) {
 							Globals.GameDuration = tag.substr(8) * 20
-                        }
+						}
 
 						if (this.game != null) {
 							this.game.Setup()

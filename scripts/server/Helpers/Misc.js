@@ -6,6 +6,10 @@ RandomInt = function (max) {
     return Math.floor(Math.random() * max)
 }
 
+RandomFloat = function(min, max) {
+    return Math.random() * (max-min) + min
+}
+
 NumberToColour = function(n) {
     switch (n) {
         case 0: return '\u00a7f'

@@ -265,7 +265,7 @@ Bridges = class extends this.BaseGame {
 		this.players.forEach(player => {
 			if (player.team != undefined) {
 				lines.push({
-					text: `${this.TeamColour(player.team)}${player.name}\u00a7r  `,
+					text: `${this.TeamColour(player.team)}${player.name}\u00a7r`,
 					value: player.score
 				})
 			}

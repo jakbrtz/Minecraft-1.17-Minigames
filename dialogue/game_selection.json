@@ -18,6 +18,10 @@
           {
             "name": "Door Dash",
             "commands": [ "/tag @initiator add JakesGames-wantsDoorDash" ]
+          },
+          {
+            "name": "Quick Spawn",
+            "commands": [ "/tag @initiator add JakesGames-wantsQuickRespawn" ]
           }
         ]
       },

@@ -1,14 +1,18 @@
-BaseSurvivalGame = class extends this.BaseGame {
+BaseUntimedGame = class extends this.BaseGame {
 
 	constructor() {
 		super()
-		this.losers = []
+		this.GoalIsToFinishFast = true
 	}
 
 	SetupOverride() {
 
 		this.BuildWorld()
 		this.PlacePlayersAtStart()
+
+		this.players.forEach(player => {
+			player.finishTime = -1
+        })
 
 		SlashCommand(`/gamemode adventure @a`)
 		SlashCommand(`/effect @a regeneration 60 1 true`)
@@ -18,10 +22,6 @@ BaseSurvivalGame = class extends this.BaseGame {
 	BuildWorld() {
 
 	}
-
-	PlacePlayersAtStart() {
-		
-    }
 
 	UpdateSetupOverride() {
 		switch (this.elapsedGameTime) {
@@ -38,31 +38,42 @@ BaseSurvivalGame = class extends this.BaseGame {
 				Chat("Start!");
 				this.StartGame()
 				break;
-        }
-    }
+		}
+	}
 
 	UpdateGameOverride() {
 		this.players.forEach(player => {
-			if (this.elapsedGameTime > 20 && player.position.y < 20 && !this.losers.includes(player)) {
-				this.losers.push(player)
+			if (this.elapsedGameTime > 20 && player.finishTime == -1 && this.PlayerIsFinished(player)) {
+				player.finishTime = this.elapsedGameTime
 				this.UpdateScore()
 			}
 		})
 		this.UpdateGameOverrideOverride()
 	}
 
+	PlayerIsFinished(player) {
+		return false
+    }
+
 	UpdateGameOverrideOverride() {
 	}
 
 	IsGameInProgressOverride() {
-		return this.losers.length < this.players.size
+		return this.AnyPlayerIs(player => player.finishTime == -1)
 	}
 
 	UpdateScore() {
+
+		let finishedPlayers = [...this.players.values()]
+			.filter(player => player.finishTime != -1)
+			.sort((a, b) => (a.finishTime - b.finishTime))
+
 		let lines = []
-		for (var i = 0; i < this.losers.length; i++) {
-			lines.push({ text: this.losers[i].name, value: this.players.size - i })
+
+		for (var i = 0; i < finishedPlayers.length; i++) {
+			lines.push({ text: finishedPlayers[i].name, value: this.GoalIsToFinishFast ? i + 1 : this.players.size - i })
 		}
+
 		this.CreateScoreboard("Results", lines)
 	}
 }

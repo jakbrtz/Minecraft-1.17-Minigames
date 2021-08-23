@@ -1,4 +1,4 @@
-DoorDash = class extends this.BaseRacingGame {
+DoorDash = class extends this.BaseUntimedGame {
 
 	constructor() {
 		super()
@@ -26,7 +26,7 @@ DoorDash = class extends this.BaseRacingGame {
 		SlashCommand(`/fill ${this.xOffset} 64 ${this.rows * this.depth + this.zOffset} ${this.xOffset + this.doors * this.width - 1} 64 ${(this.rows + 2) * this.depth + this.zOffset} concrete 1`)
 	}
 
-	StartGameOverride() {
+	PlacePlayersAtStart() {
 		SlashCommand(`/spreadplayers ${this.xOffset + Math.floor(this.doors * this.width / 2)} ${this.zOffset - this.depth} 3  ${this.depth - 2} @a`)
 		SlashCommand(`/effect @a speed 30 5 true`)
 	}
@@ -35,16 +35,7 @@ DoorDash = class extends this.BaseRacingGame {
 		SlashCommand(`/spreadplayers ${this.xOffset + Math.floor(this.doors * this.width / 2)} ${this.zOffset - this.depth} 3  ${this.depth - 2} ${player.name}`)
 	}
 
-	UpdateGameOverride() {
-		this.players.forEach(player => {
-			if (this.elapsedGameTime > 20 && player.position.z >= this.rows * this.depth + this.zOffset && !this.winners.includes(player)) {
-				this.winners.push(player)
-				this.UpdateScore()
-            }
-        })
-	}
-
-	PlayerIsAtEnd(player) {
+	PlayerIsFinished(player) {
 		return player.position.z >= this.rows * this.depth + this.zOffset
-    }
+	}
 }

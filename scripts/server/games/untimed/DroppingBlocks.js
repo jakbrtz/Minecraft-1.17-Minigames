@@ -1,4 +1,4 @@
-DroppingBlocks = class extends this.BaseSurvivalGame {
+DroppingBlocks = class extends this.BaseUntimedGame {
 
 	constructor() {
 		super()
@@ -17,10 +17,14 @@ DroppingBlocks = class extends this.BaseSurvivalGame {
 		SlashCommand(`/spreadplayers -20 0 3 6 @a`)
 	}
 
+	RespawnOverride(player) {
+		SlashCommand(`/spreadplayers -20 0 3 6 ${player.name}`)
+	}
+
 	UpdateGameOverrideOverride() {
 
 		this.players.forEach(player => {
-			if (!this.losers.includes(player)) {
+			if (player.finishTime == -1) {
 				let blocksToChange = [{
 					x: Math.floor(player.position.x),
 					y: Math.floor(player.position.y - 1),
@@ -87,8 +91,8 @@ DroppingBlocks = class extends this.BaseSurvivalGame {
 
 	}
 
-	RespawnOverride(player) {
-		SlashCommand(`/spreadplayers -20 0 3 6 ${player.name}`)
+	PlayerIsFinished(player) {
+		return player.position.y < this.LayerIndexToY(0)
 	}
 
 	LayerIndexToY(i) {

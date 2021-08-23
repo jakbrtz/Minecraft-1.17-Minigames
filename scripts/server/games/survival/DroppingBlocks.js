@@ -1,49 +1,26 @@
-DroppingBlocks = class extends this.BaseGame {
+DroppingBlocks = class extends this.BaseSurvivalGame {
 
 	constructor() {
 		super()
-		this.losers = []
 		this.trackedBlocks = []
 		this.layerColours = [2,1,10,4,3]
 	}
 
-	SetupOverride() {
-
+	BuildWorld() {
 		this.ClearWorld()
-
 		for (var i = 0; i < this.layerColours.length; i++) {
 			SlashCommand(`/fill -10 ${this.LayerIndexToY(i)} -10 -30 ${this.LayerIndexToY(i)} 10 concrete ${this.layerColours[i]}`)
-        }
-
-		SlashCommand(`/spreadplayers -20 0 3 6 @a`)
-		SlashCommand(`/gamemode adventure @a`)
-
-		SlashCommand(`/effect @a regeneration 60 1 true`)
-		SlashCommand(`/clear @a`)
+		}
 	}
 
-	UpdateSetupOverride() {
-		switch (this.elapsedGameTime) {
-			case 0:
-				Chat("3...");
-				break;
-			case 20:
-				Chat("2...");
-				break;
-			case 40:
-				Chat("1...");
-				break;
-			case 60:
-				Chat("Start!");
-				this.StartGame()
-				break;
-        }
-    }
+	PlacePlayersAtStart() {
+		SlashCommand(`/spreadplayers -20 0 3 6 @a`)
+	}
 
-	UpdateGameOverride() {
+	UpdateGameOverrideOverride() {
 
 		this.players.forEach(player => {
-			if (player.deathTimer == -1) {
+			if (!this.losers.includes(player)) {
 				let blocksToChange = [{
 					x: Math.floor(player.position.x),
 					y: Math.floor(player.position.y - 1),
@@ -97,11 +74,6 @@ DroppingBlocks = class extends this.BaseGame {
 				})
 
 			}
-
-			if (this.elapsedGameTime > 20 && player.position.y < 20 && !this.losers.includes(player)) {
-				this.losers.push(player)
-				this.UpdateScore()
-			}
 		})
 
 		this.trackedBlocks.forEach(trackedBlock => {
@@ -119,23 +91,11 @@ DroppingBlocks = class extends this.BaseGame {
 		SlashCommand(`/spreadplayers -20 0 3 6 ${player.name}`)
 	}
 
-	IsGameInProgressOverride() {
-		return this.losers.length < this.players.size
-	}
-
 	LayerIndexToY(i) {
 		return 30 + i * 5
 	}
 
 	YToLayerIndex(y) {
 		return Math.floor((y - 30) / 5)
-	}
-
-	UpdateScore() {
-		let lines = []
-		for (var i = 0; i < this.losers.length; i++) {
-			lines.push({ text: this.losers[i].name, value: this.players.length - i })
-		}
-		this.CreateScoreboard("Results", lines)
 	}
 }

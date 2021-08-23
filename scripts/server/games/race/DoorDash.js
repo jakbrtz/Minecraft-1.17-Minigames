@@ -1,19 +1,17 @@
-DoorDash = class extends this.BaseGame {
+DoorDash = class extends this.BaseRacingGame {
 
 	constructor() {
 		super()
-
-		this.winners = []
 
 		this.width = 6
 		this.depth = 8
 		this.rows = 8
 		this.doors = 4
 		this.xOffset = -Math.floor(this.doors * this.width / 2)
-		this.zOffset = 0
+		this.zOffset = -Math.floor(this.rows * this.depth / 2)
 	}
 
-	SetupOverride() {
+	BuildWorld() {
 		this.ClearWorld()
 
 		for (var row = 0; row < this.rows; row++) {
@@ -26,13 +24,6 @@ DoorDash = class extends this.BaseGame {
 		}
 		SlashCommand(`/fill ${this.xOffset} 64 ${this.zOffset - 2 * this.depth} ${this.xOffset + this.doors * this.width - 1} 64 ${this.zOffset-1} concrete 1`)
 		SlashCommand(`/fill ${this.xOffset} 64 ${this.rows * this.depth + this.zOffset} ${this.xOffset + this.doors * this.width - 1} 64 ${(this.rows + 2) * this.depth + this.zOffset} concrete 1`)
-
-		SlashCommand(`/spreadplayers 0 ${this.zOffset - this.depth} 3 ${this.depth-2} @a`)
-		SlashCommand(`/gamemode adventure @a`)
-
-		SlashCommand(`/clear @a`)
-
-		this.StartGame()
 	}
 
 	StartGameOverride() {
@@ -44,10 +35,6 @@ DoorDash = class extends this.BaseGame {
 		SlashCommand(`/spreadplayers ${this.xOffset + Math.floor(this.doors * this.width / 2)} ${this.zOffset - this.depth} 3  ${this.depth - 2} ${player.name}`)
 	}
 
-	IsGameInProgressOverride() {
-		return this.winners.length < this.players.size
-	}
-
 	UpdateGameOverride() {
 		this.players.forEach(player => {
 			if (this.elapsedGameTime > 20 && player.position.z >= this.rows * this.depth + this.zOffset && !this.winners.includes(player)) {
@@ -57,11 +44,7 @@ DoorDash = class extends this.BaseGame {
         })
 	}
 
-	UpdateScore() {
-		let lines = []
-		for (var i = 0; i < this.winners.length; i++) {
-			lines.push({ text: this.winners[i].name, value: i + 1 })
-		}
-		this.CreateScoreboard("Results", lines)
-	}
+	PlayerIsAtEnd(player) {
+		return player.position.z >= this.rows * this.depth + this.zOffset
+    }
 }

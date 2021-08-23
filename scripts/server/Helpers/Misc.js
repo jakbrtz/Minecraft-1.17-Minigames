@@ -1,5 +1,5 @@
-getRandomItem = function (arr) {
-	return arr[Math.floor(Math.random() * arr.length)]; // todo: use RandomInt
+GetRandomItem = function (arr) {
+    return arr[RandomInt(arr.length)]
 }
 
 RandomInt = function (max) {

@@ -124,8 +124,8 @@ Bridges = class extends this.BaseGame {
 		this.teams.forEach(team => {
 
 			team.selectedBase = (team.requestedBases.length > 0)
-				? getRandomItem(team.requestedBases)
-				: getRandomItem(["bases:Amethyst", "bases:GoldBlocks", "bases:Mud", "bases:Temple"])
+				? GetRandomItem(team.requestedBases)
+				: GetRandomItem(["bases:Amethyst", "bases:GoldBlocks", "bases:Mud", "bases:Temple"])
 
 			team.spawn = StructureSpawn(team.selectedBase, team.center, team.rotation)
 			team.goal = StructureGoal(team.selectedBase, team.center, team.rotation)
@@ -208,7 +208,7 @@ Bridges = class extends this.BaseGame {
 
 	AttemptRevivePlayerOverride(player) {
 		if (Math.random() < 0.1) {
-			SlashCommand("/execute " + player.name + " ~~~ say " + getRandomItem([
+			SlashCommand("/execute " + player.name + " ~~~ say " + GetRandomItem([
 				"I got rekt",
 				"aww man",
 				"It's kinda sad that we are so desensitised to death",

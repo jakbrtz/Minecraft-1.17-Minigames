@@ -22,6 +22,10 @@
           {
             "name": "Quick Spawn",
             "commands": [ "/tag @initiator add JakesGames-wantsQuickRespawn" ]
+          },
+          {
+            "name": "Paint",
+            "commands": [ "/tag @initiator add JakesGames-wantsPaint" ]
           }
         ]
       },

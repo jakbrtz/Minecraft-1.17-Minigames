@@ -29,6 +29,8 @@ GamePlayer = class {
 							this.game = new DoorDash()
 						} else if (tag == "wantsQuickRespawn") {
 							this.game = new QuickRespawn()
+						} else if (tag == "wantsPaint") {
+							this.game = new Paint()
 						} else if (tag == "isEditor") {
 							Globals.Editor = true
 						} else if (tag.startsWith("duration")) {

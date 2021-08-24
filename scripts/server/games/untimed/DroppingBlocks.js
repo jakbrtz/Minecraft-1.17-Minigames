@@ -2,8 +2,8 @@ DroppingBlocks = class extends this.BaseUntimedGame {
 
 	constructor() {
 		super()
-		this.trackedBlocks = []
-		this.layerColours = [2,1,10,4,3]
+		this.layerColours = [2, 1, 10, 4, 3]
+		this.trackedBlocks = new ArrayMultiDimensional([21, 5, 21], [-30, 0, -10])
 	}
 
 	BuildWorld() {
@@ -70,11 +70,12 @@ DroppingBlocks = class extends this.BaseUntimedGame {
 				}
 
 				blocksToChange.forEach(position => {
-					if (!this.trackedBlocks.some(block => block.position.x == position.x && block.position.y == position.y && block.position.z == position.z) &&
-						GetBlock(player.entity, position).__identifier__ == "minecraft:concrete") {
-						SlashCommand(`/setblock ${position.x} ${position.y} ${position.z} stained_glass ${this.layerColours[this.YToLayerIndex(position.y)]}`)
-						this.trackedBlocks.push({ position: position, remainingTime: 20 })
-					}
+					if (this.trackedBlocks.IndicesInRange([position.x, this.YToLayerIndex(position.y), position.z])) {
+						if (this.trackedBlocks.Get([position.x, this.YToLayerIndex(position.y), position.z]) == undefined) {
+							SlashCommand(`/setblock ${position.x} ${position.y} ${position.z} stained_glass ${this.layerColours[this.YToLayerIndex(position.y)]}`)
+							this.trackedBlocks.Set([position.x, this.YToLayerIndex(position.y), position.z], { remainingTime: 20, position: position })
+                        }
+                    }
 				})
 
 			}
@@ -87,8 +88,6 @@ DroppingBlocks = class extends this.BaseUntimedGame {
 			}
 		})
 
-		this.trackedBlocks = this.trackedBlocks.filter(trackedBlock => trackedBlock.remainingTime > 0)
-
 	}
 
 	PlayerIsFinished(player) {
@@ -100,6 +99,6 @@ DroppingBlocks = class extends this.BaseUntimedGame {
 	}
 
 	YToLayerIndex(y) {
-		return Math.floor((y - 30) / 5)
+		return Math.floor(y - 30) / 5
 	}
 }

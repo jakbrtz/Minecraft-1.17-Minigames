@@ -3,7 +3,7 @@ Bridges = class extends this.BaseGame {
 	constructor() {
 		super()
 
-		this.teams = new Map()
+		this.teams = []
 		this.DeathCoolDown = 5 * 20
 	}
 
@@ -25,8 +25,7 @@ Bridges = class extends this.BaseGame {
 			if (tag.startsWith("team-")) {
 				tag = tag.substr(5)
 				if (tag != "") {
-					player.team = tag
-					this.CreateTeamIfItDoesntExist(tag)
+					player.team = this.CreateTeamIfItDoesntExist(tag)
 					this.UpdateScore()
 					let dialogue = Globals.Editor ? "bridges_baseAdv" : "bridges_base"
 					SlashCommand(`/dialogue open @e[type=npc,c=1] ${player.name} ${dialogue}`)
@@ -36,7 +35,7 @@ Bridges = class extends this.BaseGame {
 			} else if (tag.startsWith("base-")) {
 				tag = tag.substr(5)
 				if (tag != "") {
-					this.teams.get(player.team).requestedBases.push(tag)
+					player.team.requestedBases.push(tag)
 				} else {
 					player.readyToPlay = true
 				}
@@ -45,10 +44,14 @@ Bridges = class extends this.BaseGame {
 	}
 
 	CreateTeamIfItDoesntExist(name) {
-		if (this.teams.has(name)) return
+		for (var i = 0; i < this.teams.length; i++) {
+			if (this.teams[i].name == name) {
+				return this.teams[i]
+			}
+		}
 		var center
 		var rotation
-		switch (this.teams.size) {
+		switch (this.teams.length) {
 			case 0:
 				center = { x: 48, y: 65, z: 0 }
 				rotation = 270
@@ -95,13 +98,16 @@ Bridges = class extends this.BaseGame {
 				colour = 7
 				break;
 		}
-		this.teams.set(name, {
+		let team = {
+			name: name,
 			center: center,
 			rotation: rotation,
 			colour: colour,
 			score: 0,
 			requestedBases: []
-		})
+		}
+		this.teams.push(team)
+		return team
     }
 
 	UpdateSetupOverride() {
@@ -114,11 +120,8 @@ Bridges = class extends this.BaseGame {
 
 		this.ClearWorld()
 
-		if (this.teams.size < 2) {
-			this.CreateTeamIfItDoesntExist("red")
-		}
-		if (this.teams.size < 2) {
-			this.CreateTeamIfItDoesntExist("blue")
+		while (this.teams.length < 2) {
+			this.CreateTeamIfItDoesntExist(GetRandomItem(["red","yellow","green","blue","orange","black"]))
 		}
 
 		this.teams.forEach(team => {
@@ -163,7 +166,7 @@ Bridges = class extends this.BaseGame {
 		// Start game for all players
 		this.players.forEach(player => {
 			this.Respawn(player.entity)
-			Chat(`${player.name} is on the ${this.TeamColour(player.team)}${player.team} team`)
+			Chat(`${player.name} is on the ${NumberToColour(player.team.colour)}${player.team.name} team`)
 			SlashCommand(`/gamemode survival ${player.name}`)
 		})
 
@@ -172,24 +175,23 @@ Bridges = class extends this.BaseGame {
 
 	RespawnOverride(player) {
 		if (player.team == undefined) return
-		let team = this.teams.get(player.team)
-		SlashCommand(`/tp ${player.name} ${team.spawn.x} ${team.spawn.y} ${team.spawn.z} facing 0 70 0`)
+		SlashCommand(`/tp ${player.name} ${player.team.spawn.x} ${player.team.spawn.y} ${player.team.spawn.z} facing 0 70 0`)
 		SlashCommand(`/give ${player.name} iron_sword`)
 		SlashCommand(`/give ${player.name} iron_pickaxe`)
 		SlashCommand(`/give ${player.name} bow`)
 		SlashCommand(`/give ${player.name} arrow 16`)
-		SlashCommand(`/give ${player.name} concrete 64 ${team.colour}`)
+		SlashCommand(`/give ${player.name} concrete 64 ${player.team.colour}`)
 	}
 
 	UpdateGameOverride() {
 
 		if (this.elapsedGameTime < 20) return
 
-		this.teams.forEach((team, teamId) => {
+		this.teams.forEach(team => {
 			this.players.forEach(player => {
-				if (player.team != teamId && PositionsAreClose(player.position, team.goal, 2)) {
+				if (player.team != team && PositionsAreClose(player.position, team.goal, 2)) {
 					player.score++
-					this.teams.get(player.team).score++
+					player.team.score++
 					this.UpdateScore()
 					SlashCommand("/title " + player.name + " title You earned a point");
 					this.Respawn(player.entity)
@@ -238,23 +240,23 @@ Bridges = class extends this.BaseGame {
 		this.UpdateScore()
 		let bestScore = 1
 		let bestTeams = []
-		this.teams.forEach((team, teamId) => {
+		this.teams.forEach(team => {
 			if (team.score > bestScore) {
-				bestTeams = [ teamId ]
+				bestTeams = [ team ]
 				bestScore = team.score
 			} else if (team.score == bestScore) {
-				bestTeams.push(teamId)
+				bestTeams.push(team)
             }
 		})
 		var msg
 		if (bestTeams.length == 0) {
 			msg = "No one won"
 		} else if (bestTeams.length == 1) {
-			msg = `${this.TeamColour(bestTeams[0])}${bestTeams[0]} wins`
-		} else if (bestTeams.length == this.teams.size) {
+			msg = `${NumberToColour(bestTeams[0].colour)}${bestTeams[0].name} wins`
+		} else if (bestTeams.length == this.teams.length) {
 			msg = "Everyone wins!"
 		} else {
-			msg = "It's a tie between " + bestTeams.map(team => `${this.TeamColour(team)}${team}\u00a7r`).join(" and ")
+			msg = "It's a tie between " + bestTeams.map(team => `${NumberToColour(team.colour)}${team.name}\u00a7r`).join(" and ")
         }
 		SlashCommand(`/title @a title ${msg}`)
 		Chat(msg)
@@ -265,7 +267,7 @@ Bridges = class extends this.BaseGame {
 		this.players.forEach(player => {
 			if (player.team != undefined) {
 				lines.push({
-					text: `${this.TeamColour(player.team)}${player.name}\u00a7r`,
+					text: `${NumberToColour(player.team.colour)}${player.name}\u00a7r`,
 					value: player.score
 				})
 			}
@@ -274,9 +276,5 @@ Bridges = class extends this.BaseGame {
 			lines.push(TicksToDuration(Globals.GameDuration - this.elapsedGameTime))
 		}
 		this.CreateScoreboard("Scores", lines)
-	}
-
-	TeamColour(teamId) {
-		return NumberToColour(this.teams.get(teamId).colour)
 	}
 }

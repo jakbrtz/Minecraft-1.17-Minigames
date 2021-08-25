@@ -20,7 +20,8 @@ BaseGame = class {
                 name: GetName(entity),
                 deathTimer: -1,
                 position: { x: 0, y: 0, z: 0 },
-                needsReviving: false
+                needsReviving: false,
+                needsDialogue: undefined
                 // todo: a bunch of other generic variables
             })
         })
@@ -43,7 +44,12 @@ BaseGame = class {
 
     ReceivedTag(entity, tag) {
         let player = this.players.get(entity.id)
-        this.ReceivedTagOverride(player, tag)
+
+        if (tag == "recentlyOpenedDialogue") {
+            player.needsDialogue = undefined
+        } else {
+            this.ReceivedTagOverride(player, tag)
+        }
     }
 
     ReceivedTagOverride(player, tag) {
@@ -78,6 +84,15 @@ BaseGame = class {
         } else {
             this.UpdateSetup()
         }
+
+        if (this.elapsedGameTime % 5 == 0) {
+            this.players.forEach(player => {
+                if (player.needsDialogue) {
+                    SlashCommand(`/dialogue open @e[type=npc,c=1] ${player.name} ${player.needsDialogue}`)
+                }
+            })
+        }
+
         this.elapsedGameTime++
     }
 
@@ -229,6 +244,10 @@ BaseGame = class {
             }
         })
         return result
+    }
+
+    OpenDialogue(player, dialogue) {
+        player.needsDialogue = dialogue
     }
 
 }

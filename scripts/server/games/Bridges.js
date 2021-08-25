@@ -8,11 +8,11 @@ Bridges = class extends this.BaseGame {
 	}
 
 	SetupOverride() {
-		SlashCommand(`/dialogue open @e[type=npc,c=1] @a bridges_team`)
 		this.UpdateScore()
 		this.players.forEach(player => {
 			player.readyToPlay = false
 			player.score = 0
+			this.OpenDialogue(player, "bridges_team")
         })
 	}
 
@@ -30,7 +30,7 @@ Bridges = class extends this.BaseGame {
 					let dialogue = Globals.Editor ? "bridges_baseAdv" : "bridges_base"
 					SlashCommand(`/dialogue open @e[type=npc,c=1] ${player.name} ${dialogue}`)
 				} else if (player.team == undefined) {
-					SlashCommand(`/dialogue open @e[type=npc,c=1] ${player.name} bridges_team`)
+					this.OpenDialogue(player, "bridges_team")
 				}
 			} else if (tag.startsWith("base-")) {
 				tag = tag.substr(5)

@@ -32,7 +32,7 @@ NumberToColour = function(n) {
 }
 
 TicksToDuration = function(n) {
-    let totalSeconds = Math.floor(n / 20)
+    let totalSeconds = Math.ceil(n / 20)
     let seconds = totalSeconds % 60
     let minutes = (totalSeconds - seconds) / 60
     return `${minutes}:${seconds.toString().padStart(2, '0')}`

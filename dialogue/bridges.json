@@ -6,6 +6,7 @@
         "scene_tag": "bridges_team",
         "npc_name": "Game Master",
         "text": "Choose a Team",
+        "on_open_commands": [ "/tag @initiator add JakesGames-recentlyOpenedDialogue" ],
         "on_close_commands": [ "/tag @initiator add JakesGames-team-" ],
         "buttons": [
           {

@@ -205,9 +205,6 @@ Bridges = class extends this.BaseGame {
 
 	}
 
-	PlayerDiedOverride (player) {
-	}
-
 	AttemptRevivePlayerOverride(player) {
 		if (Math.random() < 0.1) {
 			SlashCommand("/execute " + player.name + " ~~~ say " + GetRandomItem([

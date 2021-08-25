@@ -35,6 +35,10 @@ DoorDash = class extends this.BaseUntimedGame {
 		SlashCommand(`/spreadplayers ${this.xOffset + Math.floor(this.doors * this.width / 2)} ${this.zOffset - this.depth} 3  ${this.depth - 2} ${player.name}`)
 	}
 
+	PlayerIsOutOfBounds(player) {
+		return player.position.y < 60 || (!this.gameHasStarted && player.position.z >= this.zOffset)
+	}
+
 	PlayerIsFinished(player) {
 		return player.position.z >= this.rows * this.depth + this.zOffset
 	}

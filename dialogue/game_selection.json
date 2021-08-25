@@ -26,6 +26,10 @@
           {
             "name": "Paint",
             "commands": [ "/tag @initiator add JakesGames-wantsPaint" ]
+          },
+          {
+            "name": "Stepping Stones",
+            "commands": [ "/tag @initiator add JakesGames-wantsSteppingStones" ]
           }
         ]
       },

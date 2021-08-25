@@ -31,6 +31,8 @@ GamePlayer = class {
 							this.game = new QuickRespawn()
 						} else if (tag == "wantsPaint") {
 							this.game = new Paint()
+						} else if (tag == "wantsSteppingStones") {
+							this.game = new SteppingStones()
 						} else if (tag == "isEditor") {
 							Globals.Editor = true
 						} else if (tag.startsWith("duration")) {

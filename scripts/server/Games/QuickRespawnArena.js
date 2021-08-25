@@ -32,10 +32,8 @@ QuickRespawn = class extends this.BaseGame {
         }
 	}
 
-	PlayerDiedOverride(player, killer) {
-		if (killer == undefined) return
-		if (!this.players.has(killer.id)) return
-		this.players.get(entity.id).score++
+	PlayerKilled(player, killer) {
+		killer.score++
 		this.UpdateScore()
 	}
 

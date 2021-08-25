@@ -116,10 +116,13 @@ BaseGame = class {
         let player = this.players.get(entity.id)
         player.deathTimer = 0
         player.needsReviving = true
-        this.PlayerDiedOverride(player, killer)
+
+        if (killer == undefined) return
+        if (!this.players.has(killer.id)) return
+        this.PlayerKilled(player, this.players.get(killer.id))
     }
 
-    PlayerDiedOverride(player, killer) {
+    PlayerKilled(player, killer) {
 
     }
 
@@ -196,7 +199,7 @@ BaseGame = class {
     CreateScoreboard(title, lines, ascending) {
         this.DestroyScoreboard()
         SlashCommand(`/scoreboard objectives add showtouser dummy "${title}"`)
-        SlashCommand(`/scoreboard objectives setdisplay sidebar showtouser ${(ascending || false) ? "ascending" : "descending"}`)
+        SlashCommand(`/scoreboard objectives setdisplay sidebar showtouser ${ascending ? "ascending" : "descending"}`)
         for (var i = 0; i < 16 && i < lines.length; i++) {
             let line = lines[i]
             let colourCharacter = (i < 10) ? i : String.fromCharCode(97 + i - 10)

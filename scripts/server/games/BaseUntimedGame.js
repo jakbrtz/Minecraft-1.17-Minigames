@@ -1,4 +1,4 @@
-BaseUntimedGame = class extends this.BaseGame {
+﻿BaseUntimedGame = class extends this.BaseGame {
 
 	constructor() {
 		super()
@@ -26,24 +26,34 @@ BaseUntimedGame = class extends this.BaseGame {
 	UpdateSetupOverride() {
 		switch (this.elapsedGameTime) {
 			case 0:
-				Chat("3...");
+				SlashCommand(`/title @a title 3...`);
+				if (Math.random() < 0.05) {
+					SlashCommand(`/title @a actionbar ⚠ cross-teaming is bannable or whatever`)
+				}
 				break;
 			case 20:
-				Chat("2...");
+				SlashCommand(`/title @a title 2...`);
 				break;
 			case 40:
-				Chat("1...");
+				SlashCommand(`/title @a title 1...`);
 				break;
 			case 60:
-				Chat("Start!");
+				SlashCommand(`/title @a clear`);
 				this.StartGame()
 				break;
 		}
+		this.players.forEach(player => {
+			if (this.PlayerIsOutOfBounds(player)) {
+				this.Respawn(player.entity)
+			}
+		})
 	}
 
 	UpdateGameOverride() {
 		this.players.forEach(player => {
-			if (this.elapsedGameTime > 20 && player.finishTime == -1 && this.PlayerIsFinished(player)) {
+			if (this.PlayerIsOutOfBounds(player)) {
+				this.Respawn(player.entity)
+			} else if (this.elapsedGameTime > 20 && player.finishTime == -1 && this.PlayerIsFinished(player)) {
 				player.finishTime = this.elapsedGameTime
 				this.UpdateScore()
 			}
@@ -52,6 +62,10 @@ BaseUntimedGame = class extends this.BaseGame {
 	}
 
 	PlayerIsFinished(player) {
+		return false
+	}
+
+	PlayerIsOutOfBounds(player) {
 		return false
     }
 
@@ -74,6 +88,6 @@ BaseUntimedGame = class extends this.BaseGame {
 			lines.push({ text: finishedPlayers[i].name, value: this.GoalIsToFinishFast ? i + 1 : this.players.size - i })
 		}
 
-		this.CreateScoreboard("Results", lines)
+		this.CreateScoreboard("Results", lines, true)
 	}
 }

@@ -1,7 +1,7 @@
 ArrayMultiDimensional = class {
     constructor(sizes, offsets) {
         this.sizes = sizes
-        this.offsets = offsets
+        this.offsets = offsets || []
         this.arr = []
     }
 
@@ -23,7 +23,7 @@ ArrayMultiDimensional = class {
     }
 
     forEach(action) {
-        this.arr.forEach((value, index) => action(value, this.IndicesToIndex(index)))
+        this.arr.forEach(value => action(value))
     }
 
     IndicesInRange(indices) {

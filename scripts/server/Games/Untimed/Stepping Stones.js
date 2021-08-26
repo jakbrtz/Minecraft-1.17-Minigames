@@ -65,10 +65,6 @@ SteppingStones = class extends this.BaseUntimedGame {
 		// todo: use different word instead of block
 	}
 
-	PlacePlayersAtStart() {
-		SlashCommand(`/spreadplayers ${this.xOffset + Math.floor(this.columns * (this.size + this.gap) / 2)} ${this.zOffset - 5} 3 4 @a`)
-	}
-
 	RespawnOverride(player) {
 		SlashCommand(`/spreadplayers ${this.xOffset + Math.floor(this.columns * (this.size + this.gap) / 2)} ${this.zOffset - 5} 3 4 ${player.name}`)
 	}

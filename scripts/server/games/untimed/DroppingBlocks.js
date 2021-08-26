@@ -13,10 +13,6 @@ DroppingBlocks = class extends this.BaseUntimedGame {
 		}
 	}
 
-	PlacePlayersAtStart() {
-		SlashCommand(`/spreadplayers -20 0 3 6 @a`)
-	}
-
 	RespawnOverride(player) {
 		SlashCommand(`/spreadplayers -20 0 3 6 ${player.name}`)
 	}

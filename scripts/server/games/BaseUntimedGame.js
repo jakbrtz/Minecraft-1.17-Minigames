@@ -8,7 +8,6 @@
 	SetupOverride() {
 
 		this.BuildWorld()
-		this.PlacePlayersAtStart()
 
 		GameController.Players.forEach(player => {
 			player.finishTime = -1
@@ -17,6 +16,10 @@
 		SlashCommand(`/gamemode adventure @a`)
 		SlashCommand(`/effect @a regeneration 60 1 true`)
 		SlashCommand(`/clear @a`)
+
+		GameController.Players.forEach(player => {
+			this.Respawn(player.entity)
+		})
 	}
 
 	BuildWorld() {

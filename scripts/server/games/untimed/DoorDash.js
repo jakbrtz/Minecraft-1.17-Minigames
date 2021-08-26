@@ -26,13 +26,9 @@ DoorDash = class extends this.BaseUntimedGame {
 		SlashCommand(`/fill ${this.xOffset} 64 ${this.rows * this.depth + this.zOffset} ${this.xOffset + this.doors * this.width - 1} 64 ${(this.rows + 2) * this.depth + this.zOffset} concrete 1`)
 	}
 
-	PlacePlayersAtStart() {
-		SlashCommand(`/spreadplayers ${this.xOffset + Math.floor(this.doors * this.width / 2)} ${this.zOffset - this.depth} 3  ${this.depth - 2} @a`)
-		SlashCommand(`/effect @a speed 30 5 true`)
-	}
-
 	RespawnOverride(player) {
 		SlashCommand(`/spreadplayers ${this.xOffset + Math.floor(this.doors * this.width / 2)} ${this.zOffset - this.depth} 3  ${this.depth - 2} ${player.name}`)
+		SlashCommand(`/effect ${player.name} speed 30 5 true`)
 	}
 
 	PlayerIsOutOfBounds(player) {

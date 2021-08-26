@@ -37,10 +37,13 @@ BaseGame = class {
     }
 
     ReceivedTag(entity, tag) {
+        if (!GameController.Players.has(entity.id)) return
         let player = GameController.Players.get(entity.id)
 
         if (tag == "recentlyOpenedDialogue") {
             player.needsDialogue = undefined
+        } else if (tag == "recentlyRevived") {
+            player.needsReviving = false
         } else {
             this.ReceivedTagOverride(player, tag)
         }
@@ -140,13 +143,6 @@ BaseGame = class {
         if (this.DeathCoolDown == 0) {
             this.Respawn(player.entity)
         }
-    }
-
-    ReviveWasSuccessful(entity) {
-        if (!GameController.Players.has(entity.id)) return
-        let player = GameController.Players.get(entity.id)
-        SlashCommand(`/tag ${player.name} remove JakesGames-recentlyRevived`)
-        player.needsReviving = false
     }
 
     PlayerPlacedBlock(entity, position) {

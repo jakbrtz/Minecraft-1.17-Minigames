@@ -32,8 +32,10 @@ GameController = {
 							this.Game = null
 							Chat("Game has been Terminated")
 						}
-					} else if (tag == "recentlyRevived") {
-						this.Game.ReviveWasSuccessful(entity)
+					} else if (tag == "isEditor") {
+						this.Editor = true
+					} else if (tag.startsWith("duration")) {
+						this.GameDuration = tag.substr(8) * 20
 					} else if (this.Game != null) {
 						this.Game.ReceivedTag(entity, tag)
 					} else {
@@ -49,12 +51,7 @@ GameController = {
 							this.Game = new Paint()
 						} else if (tag == "wantsSteppingStones") {
 							this.Game = new SteppingStones()
-						} else if (tag == "isEditor") {
-							this.Editor = true
-						} else if (tag.startsWith("duration")) {
-							this.GameDuration = tag.substr(8) * 20
 						}
-
 						if (this.Game != null) {
 							this.Game.Setup()
 						}

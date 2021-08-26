@@ -9,7 +9,7 @@ Bridges = class extends this.BaseGame {
 
 	SetupOverride() {
 		this.UpdateScore()
-		this.players.forEach(player => {
+		GameController.Players.forEach(player => {
 			player.readyToPlay = false
 			player.score = 0
 			this.OpenDialogue(player, "bridges_team")
@@ -27,7 +27,7 @@ Bridges = class extends this.BaseGame {
 				if (tag != "") {
 					player.team = this.CreateTeamIfItDoesntExist(tag)
 					this.UpdateScore()
-					let dialogue = Globals.Editor ? "bridges_baseAdv" : "bridges_base"
+					let dialogue = GameController.Editor ? "bridges_baseAdv" : "bridges_base"
 					SlashCommand(`/dialogue open @e[type=npc,c=1] ${player.name} ${dialogue}`)
 				} else if (player.team == undefined) {
 					this.OpenDialogue(player, "bridges_team")
@@ -164,7 +164,7 @@ Bridges = class extends this.BaseGame {
 		})
 
 		// Start game for all players
-		this.players.forEach(player => {
+		GameController.Players.forEach(player => {
 			this.Respawn(player.entity)
 			Chat(`${player.name} is on the ${NumberToColour(player.team.colour)}${player.team.name} team`)
 			SlashCommand(`/gamemode survival ${player.name}`)
@@ -188,7 +188,7 @@ Bridges = class extends this.BaseGame {
 		if (this.elapsedGameTime < 20) return
 
 		this.teams.forEach(team => {
-			this.players.forEach(player => {
+			GameController.Players.forEach(player => {
 				if (player.team != team && PositionsAreClose(player.position, team.goal, 2)) {
 					player.score++
 					player.team.score++
@@ -230,7 +230,7 @@ Bridges = class extends this.BaseGame {
 	}
 
 	IsGameInProgressOverride() {
-		return this.elapsedGameTime < Globals.GameDuration
+		return this.elapsedGameTime < GameController.GameDuration
 	}
 
 	EndGameOverride() {
@@ -261,7 +261,7 @@ Bridges = class extends this.BaseGame {
 
 	UpdateScore() {
 		let lines = []
-		this.players.forEach(player => {
+		GameController.Players.forEach(player => {
 			if (player.team != undefined) {
 				lines.push({
 					text: `${NumberToColour(player.team.colour)}${player.name}\u00a7r`,
@@ -270,7 +270,7 @@ Bridges = class extends this.BaseGame {
 			}
 		})
 		if (this.gameHasStarted) {
-			lines.push(TicksToDuration(Globals.GameDuration - this.elapsedGameTime))
+			lines.push(TicksToDuration(GameController.GameDuration - this.elapsedGameTime))
 		}
 		this.CreateScoreboard("Scores", lines)
 	}

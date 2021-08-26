@@ -4,7 +4,6 @@ BaseGame = class {
 
         this.gameHasStarted = false
         this.elapsedGameTime = 0
-        this.players = new Map()
 
         this.DeathCoolDown = 0
 
@@ -14,16 +13,11 @@ BaseGame = class {
         this.DestroyScoreboard()
         this.elapsedGameTime = 0
         this.gameHasStarted = false
-        allEntities.forEach(entity => {
-            this.players.set(entity.id, {
-                entity: entity,
-                name: GetName(entity),
-                deathTimer: -1,
-                position: { x: 0, y: 0, z: 0 },
-                needsReviving: false,
-                needsDialogue: undefined
-                // todo: a bunch of other generic variables
-            })
+        GameController.Players.forEach(player => {
+            player.deathTimer = -1
+            player.needsReviving= false
+            player.needsDialogue = undefined
+            // todo: a bunch of other generic variables
         })
         this.SetupOverride()
     }
@@ -43,7 +37,7 @@ BaseGame = class {
     }
 
     ReceivedTag(entity, tag) {
-        let player = this.players.get(entity.id)
+        let player = GameController.Players.get(entity.id)
 
         if (tag == "recentlyOpenedDialogue") {
             player.needsDialogue = undefined
@@ -58,7 +52,7 @@ BaseGame = class {
 
     Respawn(entity) {
 
-        let player = this.players.get(entity.id)
+        let player = GameController.Players.get(entity.id)
         SlashCommand(`/clear ${player.name}`)
         SlashCommand(`/effect ${player.name} clear`)
         SlashCommand(`/effect ${player.name} instant_health 1 15 true`)
@@ -73,12 +67,6 @@ BaseGame = class {
 
     Update() {
 
-        allEntities.filter((entity) => this.players.has(entity.id)).forEach(entity => {
-            let player = this.players.get(entity.id)
-            player.entity = entity
-            player.position = Find(entity)
-        })
-
         if (this.gameHasStarted) {
             this.UpdateGame()
         } else {
@@ -86,7 +74,7 @@ BaseGame = class {
         }
 
         if (this.elapsedGameTime % 5 == 0) {
-            this.players.forEach(player => {
+            GameController.Players.forEach(player => {
                 if (player.needsDialogue) {
                     SlashCommand(`/dialogue open @e[type=npc,c=1] ${player.name} ${player.needsDialogue}`)
                 }
@@ -106,7 +94,7 @@ BaseGame = class {
 
     UpdateGame() {
 
-        this.players.forEach(player => {
+        GameController.Players.forEach(player => {
             if (player.needsReviving) {
                 this.AttemptRevivePlayer(player)
             }
@@ -127,14 +115,14 @@ BaseGame = class {
     }
 
     PlayerDied(entity, killer) {
-        if (!this.players.has(entity.id)) return
-        let player = this.players.get(entity.id)
+        if (!GameController.Players.has(entity.id)) return
+        let player = GameController.Players.get(entity.id)
         player.deathTimer = 0
         player.needsReviving = true
 
         if (killer == undefined) return
-        if (!this.players.has(killer.id)) return
-        this.PlayerKilled(player, this.players.get(killer.id))
+        if (!GameController.Players.has(killer.id)) return
+        this.PlayerKilled(player, GameController.Players.get(killer.id))
     }
 
     PlayerKilled(player, killer) {
@@ -155,15 +143,15 @@ BaseGame = class {
     }
 
     ReviveWasSuccessful(entity) {
-        if (!this.players.has(entity.id)) return
-        let player = this.players.get(entity.id)
+        if (!GameController.Players.has(entity.id)) return
+        let player = GameController.Players.get(entity.id)
         SlashCommand(`/tag ${player.name} remove JakesGames-recentlyRevived`)
         player.needsReviving = false
     }
 
     PlayerPlacedBlock(entity, position) {
-        if (!this.players.has(entity.id)) return
-        let player = this.players.get(entity.id)
+        if (!GameController.Players.has(entity.id)) return
+        let player = GameController.Players.get(entity.id)
         this.PlayerPlacedBlockOverride(player, position)
     }
 
@@ -228,7 +216,7 @@ BaseGame = class {
 
     AnyPlayerIs(condition) {
         let result = false
-        this.players.forEach(player => {
+        GameController.Players.forEach(player => {
             if (condition(player)) {
                 result = true
             }
@@ -238,7 +226,7 @@ BaseGame = class {
 
     AllPlayersAre(condition) {
         let result = true
-        this.players.forEach(player => {
+        GameController.Players.forEach(player => {
             if (!condition(player)) {
                 result = false
             }

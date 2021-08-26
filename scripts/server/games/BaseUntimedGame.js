@@ -10,7 +10,7 @@
 		this.BuildWorld()
 		this.PlacePlayersAtStart()
 
-		this.players.forEach(player => {
+		GameController.Players.forEach(player => {
 			player.finishTime = -1
         })
 
@@ -42,7 +42,7 @@
 				this.StartGame()
 				break;
 		}
-		this.players.forEach(player => {
+		GameController.Players.forEach(player => {
 			if (this.PlayerIsOutOfBounds(player)) {
 				this.Respawn(player.entity)
 			}
@@ -50,7 +50,7 @@
 	}
 
 	UpdateGameOverride() {
-		this.players.forEach(player => {
+		GameController.Players.forEach(player => {
 			if (this.PlayerIsOutOfBounds(player)) {
 				this.Respawn(player.entity)
 			} else if (this.elapsedGameTime > 20 && player.finishTime == -1 && this.PlayerIsFinished(player)) {
@@ -78,14 +78,14 @@
 
 	UpdateScore() {
 
-		let finishedPlayers = [...this.players.values()]
+		let finishedPlayers = [...GameController.Players.values()]
 			.filter(player => player.finishTime != -1)
 			.sort((a, b) => (a.finishTime - b.finishTime))
 
 		let lines = []
 
 		for (var i = 0; i < finishedPlayers.length; i++) {
-			lines.push({ text: finishedPlayers[i].name, value: this.GoalIsToFinishFast ? i + 1 : this.players.size - i })
+			lines.push({ text: finishedPlayers[i].name, value: this.GoalIsToFinishFast ? i + 1 : GameController.Players.size - i })
 		}
 
 		this.CreateScoreboard("Results", lines, true)

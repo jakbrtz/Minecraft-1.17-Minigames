@@ -1,6 +1,5 @@
 const system = server.registerSystem(0, 0)
 
-gamePlayer = new GamePlayer()
 allEntities = []
 
 system.initialize = function () {
@@ -21,18 +20,18 @@ system.initialize = function () {
 
 system.update = function () {
 	allEntities = system.getEntitiesFromQuery(simple_query).filter(entity => entity.__identifier__ == "minecraft:player")
-	gamePlayer.Update()
+	GameController.Update()
 }
 
 system.shutdown = function () {
 }
 
 function entity_death(eventData) {
-	gamePlayer.EntityDied(eventData.data.entity, eventData.data.killer)
+	GameController.EntityDied(eventData.data.entity, eventData.data.killer)
 }
 
 function entity_placed_block(eventData) {
-	gamePlayer.EntityPlacedBlock(eventData.data.player, eventData.data.block_position)
+	GameController.EntityPlacedBlock(eventData.data.player, eventData.data.block_position)
 }
 
 this.Chat = function (message) {

@@ -13,15 +13,18 @@ SteppingStones = class extends this.BaseUntimedGame {
 		this.trackedBlocks = new ArrayMultiDimensional([this.columns, this.rows])
 	}
 
-	UnknownMaterial(column, row) { return (row + column) % 2 ? "concrete 0" : "concrete 8" }
+	UnknownMaterial(column, row) { return (row + column) % 2 ? "deepslate_bricks" : "polished_blackstone_bricks" }
 	SafeMaterial(column, row) { return "concrete 5" }
-	DangerMaterial(column, row) { return "air" }
-	StartMaterial() { return "concrete 1" }
-	EndMaterial() { return "concrete 1" }
+	DangerMaterial(column, row) { return "lava" }
+	StartMaterial() { return "stone" }
+	EndMaterial() { return "stone" }
+	GapMaterial() { return "lava" }
 	HideMaterialOnceDone() { return true }
 
 	BuildWorld() {
 		this.ClearWorld()
+
+		SlashCommand(`/fill ${this.xOffset - 1} 63 ${this.zOffset - 11} ${this.xOffset + this.columns * (this.size + this.gap) - this.gap} 64 ${(this.rows + 2) * (this.size + this.gap) + this.zOffset + 1} ${this.GapMaterial()}`)
 
 		for (var row = 0; row < this.rows; row++) {
 			for (var column = 0; column < this.columns; column++) {
@@ -44,14 +47,14 @@ SteppingStones = class extends this.BaseUntimedGame {
 			horizontalDistance = 0
 			if (AllowedRight && (!AllowedLeft || Math.random() < 0.5)) {
 				headingRight = true
-				while (x < this.columns - 1 && Math.random() < 0.5) {
+				while (x < this.columns - 1 && Math.random() < 0.7) {
 					x++
 					horizontalDistance++
 					this.trackedBlocks.Get([x,row]).safe=true
                 }
 			} else if (AllowedLeft) {
 				headingRight = false
-				while (x > 0 && Math.random() < 0.5) {
+				while (x > 0 && Math.random() < 0.7) {
 					x--
 					horizontalDistance++
 					this.trackedBlocks.Get([x, row]).safe = true
@@ -77,7 +80,7 @@ SteppingStones = class extends this.BaseUntimedGame {
 			trackedBlock.nearbyPlayer = false
 		})
 
-		this.players.forEach(player => {
+		GameController.Players.forEach(player => {
 			if (player.position.y > 60) {
 				let index = this.IndexFromPosition(player.position)
 				if (this.trackedBlocks.IndicesInRange(index)) {

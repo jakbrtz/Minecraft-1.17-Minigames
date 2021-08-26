@@ -10,7 +10,7 @@ Paint = class extends this.BaseGame {
 
 	SetupOverride() {
 		this.UpdateScore()
-		this.players.forEach(player => {
+		GameController.Players.forEach(player => {
 			player.readyToPlay = false
 			player.score = 0
 			this.OpenDialogue(player, "paint_team")
@@ -84,7 +84,7 @@ Paint = class extends this.BaseGame {
 
 		SlashCommand(`/fill -20 64 -20 20 64 20 concrete 0`)
 
-		this.players.forEach(player => {
+		GameController.Players.forEach(player => {
 			this.Respawn(player.entity)
 			Chat(`${player.name} is on the ${NumberToColour(player.team.colour)}${player.team.name} team`)
 			SlashCommand(`/gamemode adventure ${player.name}`)
@@ -101,7 +101,7 @@ Paint = class extends this.BaseGame {
 
 		if (this.elapsedGameTime < 20) return
 
-		this.players.forEach(player => {
+		GameController.Players.forEach(player => {
 			if (player.deathTimer == -1) {
 				let position = {
 					x: Math.floor(player.position.x),
@@ -134,7 +134,7 @@ Paint = class extends this.BaseGame {
 	}
 
 	IsGameInProgressOverride() {
-		return this.elapsedGameTime < Globals.GameDuration
+		return this.elapsedGameTime < GameController.GameDuration
 	}
 
 	EndGameOverride() {
@@ -173,7 +173,7 @@ Paint = class extends this.BaseGame {
             })
 		})
 		if (this.gameHasStarted) {
-			lines.push(TicksToDuration(Globals.GameDuration - this.elapsedGameTime))
+			lines.push(TicksToDuration(GameController.GameDuration - this.elapsedGameTime))
 		}
 		this.CreateScoreboard("Scores", lines)
 	}

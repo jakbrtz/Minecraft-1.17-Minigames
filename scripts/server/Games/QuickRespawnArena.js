@@ -5,7 +5,7 @@ QuickRespawn = class extends this.BaseGame {
 	}
 
 	SetupOverride() {
-		this.players.forEach(player => {
+		GameController.Players.forEach(player => {
 			player.score = 0
 		})
 		this.ClearWorld()
@@ -15,7 +15,7 @@ QuickRespawn = class extends this.BaseGame {
 	}
 
 	StartGameOverride() {
-		this.players.forEach(player => {
+		GameController.Players.forEach(player => {
 			this.Respawn(player.entity)
 		})
 		this.UpdateScore()
@@ -38,14 +38,14 @@ QuickRespawn = class extends this.BaseGame {
 	}
 
 	IsGameInProgressOverride() {
-		return this.elapsedGameTime < Globals.GameDuration
+		return this.elapsedGameTime < GameController.GameDuration
 	}
 
 	EndGameOverride() {
 		this.UpdateScore()
 		let bestScore = 1
 		let bestPlayers = []
-		this.players.forEach(player => {
+		GameController.Players.forEach(player => {
 			if (player.score > bestScore) {
 				bestPlayers = [ player ]
 				bestScore = player.score
@@ -58,7 +58,7 @@ QuickRespawn = class extends this.BaseGame {
 			msg = "No one won"
 		} else if (bestPlayers.length == 1) {
 			msg = `${bestPlayers[0].name} wins`
-		} else if (bestPlayers.length == this.players.size) {
+		} else if (bestPlayers.length == GameController.Players.size) {
 			msg = "Everyone wins!"
 		} else {
 			msg = "It's a tie between " + bestPlayers.map(player => player.name).join(" and ")
@@ -69,14 +69,14 @@ QuickRespawn = class extends this.BaseGame {
 
 	UpdateScore() {
 		let lines = []
-		this.players.forEach(player => {
+		GameController.Players.forEach(player => {
 			lines.push({
 				text: player.name,
 				value: player.score
 			})
 		})
 		if (this.gameHasStarted) {
-			lines.push(TicksToDuration(Globals.GameDuration - this.elapsedGameTime))
+			lines.push(TicksToDuration(GameController.GameDuration - this.elapsedGameTime))
 		}
 		this.CreateScoreboard("Scores", lines)
 	}

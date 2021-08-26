@@ -23,7 +23,7 @@ DroppingBlocks = class extends this.BaseUntimedGame {
 
 	UpdateGameOverrideOverride() {
 
-		this.players.forEach(player => {
+		GameController.Players.forEach(player => {
 			if (player.finishTime == -1) {
 				let blocksToChange = [{
 					x: Math.floor(player.position.x),

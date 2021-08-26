@@ -16,7 +16,7 @@ BaseGame = class {
         GameController.Players.forEach(player => {
             player.deathTimer = -1
             player.needsReviving= false
-            player.needsDialogue = undefined
+            player.tryOpenThisDialogue = undefined
             // todo: a bunch of other generic variables
         })
         this.SetupOverride()
@@ -41,7 +41,7 @@ BaseGame = class {
         let player = GameController.Players.get(entity.id)
 
         if (tag == "recentlyOpenedDialogue") {
-            player.needsDialogue = undefined
+            player.tryOpenThisDialogue = undefined
         } else if (tag == "recentlyRevived") {
             player.needsReviving = false
         } else {
@@ -76,13 +76,20 @@ BaseGame = class {
             this.UpdateSetup()
         }
 
-        if (this.elapsedGameTime % 5 == 0) {
-            GameController.Players.forEach(player => {
-                if (player.needsDialogue) {
-                    SlashCommand(`/dialogue open @e[type=npc,c=1] ${player.name} ${player.needsDialogue}`)
-                }
-            })
-        }
+        GameController.Players.forEach(player => {
+            if (player.needsReviving) {
+                this.AttemptRevivePlayer(player)
+            }
+            if (player.tryOpenThisDialogue && this.elapsedGameTime % 2) {
+                SlashCommand(`/dialogue open @e[type=npc,c=1] ${player.name} ${player.tryOpenThisDialogue}`)
+            }
+            if (player.deathTimer >= this.DeathCoolDown) {
+                this.Respawn(player.entity)
+            }
+            if (player.deathTimer >= 0) {
+                player.deathTimer++
+            }
+        })
 
         this.elapsedGameTime++
     }
@@ -96,21 +103,7 @@ BaseGame = class {
     }
 
     UpdateGame() {
-
-        GameController.Players.forEach(player => {
-            if (player.needsReviving) {
-                this.AttemptRevivePlayer(player)
-            }
-            if (player.deathTimer >= this.DeathCoolDown) {
-                this.Respawn(player.entity)
-            } 
-            if (player.deathTimer >= 0) {
-                player.deathTimer++
-            }
-        })
-
         this.UpdateGameOverride()
-
     }
 
     UpdateGameOverride() {
@@ -228,10 +221,6 @@ BaseGame = class {
             }
         })
         return result
-    }
-
-    OpenDialogue(player, dialogue) {
-        player.needsDialogue = dialogue
     }
 
 }

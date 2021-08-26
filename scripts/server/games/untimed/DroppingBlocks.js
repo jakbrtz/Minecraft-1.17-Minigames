@@ -91,7 +91,7 @@ DroppingBlocks = class extends this.BaseUntimedGame {
 	}
 
 	PlayerIsFinished(player) {
-		return player.position.y < this.LayerIndexToY(0)
+		return player.position.y < this.LayerIndexToY(-5)
 	}
 
 	LayerIndexToY(i) {

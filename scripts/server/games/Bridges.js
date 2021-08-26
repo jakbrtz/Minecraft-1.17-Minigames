@@ -12,7 +12,7 @@ Bridges = class extends this.BaseGame {
 		GameController.Players.forEach(player => {
 			player.readyToPlay = false
 			player.score = 0
-			this.OpenDialogue(player, "bridges_team")
+			player.tryOpenThisDialogue = "bridges_team"
         })
 	}
 
@@ -30,7 +30,7 @@ Bridges = class extends this.BaseGame {
 					let dialogue = GameController.Editor ? "bridges_baseAdv" : "bridges_base"
 					SlashCommand(`/dialogue open @e[type=npc,c=1] ${player.name} ${dialogue}`)
 				} else if (player.team == undefined) {
-					this.OpenDialogue(player, "bridges_team")
+					player.tryOpenThisDialogue = "bridges_team"
 				}
 			} else if (tag.startsWith("base-")) {
 				tag = tag.substr(5)

@@ -13,7 +13,7 @@ Paint = class extends this.BaseGame {
 		GameController.Players.forEach(player => {
 			player.readyToPlay = false
 			player.score = 0
-			this.OpenDialogue(player, "paint_team")
+			player.tryOpenThisDialogue = "paint_team"
         })
 	}
 
@@ -30,7 +30,7 @@ Paint = class extends this.BaseGame {
 					this.UpdateScore()
 					player.readyToPlay = true
 				} else if (player.team == undefined) {
-					this.OpenDialogue(player, "paint_team")
+					player.tryOpenThisDialogue = "paint_team"
 				}
 			}
         }

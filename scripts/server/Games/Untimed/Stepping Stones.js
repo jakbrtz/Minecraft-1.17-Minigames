@@ -24,18 +24,19 @@ SteppingStones = class extends this.BaseUntimedGame {
 	BuildWorld() {
 		this.ClearWorld()
 
-		SlashCommand(`/fill ${this.xOffset - 1} 63 ${this.zOffset - 11} ${this.xOffset + this.columns * (this.size + this.gap) - this.gap} 64 ${(this.rows + 2) * (this.size + this.gap) + this.zOffset + 1} ${this.GapMaterial()}`)
-
 		for (var row = 0; row < this.rows; row++) {
+			let z = this.zOffset + row * (this.size + this.gap)
+			let y = 64 // - row
+			SlashCommand(`/fill ${this.xOffset - 1} ${y-1} ${z-1} ${this.xOffset + this.columns * (this.size + this.gap) - this.gap} ${y} ${z+2} ${this.GapMaterial()}`)
 			for (var column = 0; column < this.columns; column++) {
 				let x = this.xOffset + column * (this.size + this.gap)
-				let z = this.zOffset + row * (this.size + this.gap)
-				SlashCommand(`/fill ${x} 64 ${z} ${x + this.size - 1} 64 ${z + this.size - 1} ${this.UnknownMaterial(column, row)}`)
-				this.trackedBlocks.Set([column, row], { safe: false, nearbyPlayer: false, previousNearbyPlayer: false, position: { x: x, z: z } })
+				SlashCommand(`/fill ${x} ${y} ${z} ${x + this.size - 1} ${y} ${z + this.size - 1} ${this.UnknownMaterial(column, row)}`)
+				this.trackedBlocks.Set([column, row], { safe: false, nearbyPlayer: false, previousNearbyPlayer: false, position: { x: x, y: y, z: z } })
 			}
 		}
 		SlashCommand(`/fill ${this.xOffset} 64 ${this.zOffset - 10} ${this.xOffset + this.columns * (this.size + this.gap) - 1 - this.gap} 64 ${this.zOffset - 1} ${this.StartMaterial()}`)
-		SlashCommand(`/fill ${this.xOffset} 64 ${this.rows * (this.size + this.gap) + this.zOffset - this.gap} ${this.xOffset + this.columns * (this.size + this.gap) - 1 - this.gap} 64 ${(this.rows + 2) * (this.size + this.gap) + this.zOffset} ${this.StartMaterial()}`)
+		let endHeight = 64 // - this.rows
+		SlashCommand(`/fill ${this.xOffset} ${endHeight} ${this.rows * (this.size + this.gap) + this.zOffset - this.gap} ${this.xOffset + this.columns * (this.size + this.gap) - 1 - this.gap}  ${endHeight} ${(this.rows + 2) * (this.size + this.gap) + this.zOffset} ${this.StartMaterial()}`)
 
 		let headingRight = true
 		let horizontalDistance = 0
@@ -77,11 +78,9 @@ SteppingStones = class extends this.BaseUntimedGame {
 		})
 
 		GameController.Players.forEach(player => {
-			if (player.position.y > 60) {
-				let index = this.IndexFromPosition(player.position)
-				if (this.trackedBlocks.IndicesInRange(index)) {
-					this.trackedBlocks.Get(index).nearbyPlayer = true
-				}
+			let index = this.IndexFromPosition(player.position)
+			if (this.trackedBlocks.IndicesInRange(index)) {
+				this.trackedBlocks.Get(index).nearbyPlayer = true
 			}
 		})
 
@@ -90,13 +89,13 @@ SteppingStones = class extends this.BaseUntimedGame {
 			if (trackedBlock.previousNearbyPlayer != trackedBlock.nearbyPlayer) {
 				if (trackedBlock.nearbyPlayer) {
 					if (trackedBlock.safe) {
-						SlashCommand(`/fill ${trackedBlock.position.x} 64 ${trackedBlock.position.z} ${trackedBlock.position.x + this.size - 1} 64 ${trackedBlock.position.z + this.size - 1}  ${this.SafeMaterial(column, row)}`)
+						SlashCommand(`/fill ${trackedBlock.position.x} ${trackedBlock.position.y} ${trackedBlock.position.z} ${trackedBlock.position.x + this.size - 1} ${trackedBlock.position.y} ${trackedBlock.position.z + this.size - 1}  ${this.SafeMaterial(column, row)}`)
 					}
 					else {
-						SlashCommand(`/fill ${trackedBlock.position.x} 64 ${trackedBlock.position.z} ${trackedBlock.position.x + this.size - 1} 64 ${trackedBlock.position.z + this.size - 1} ${this.DangerMaterial(column, row)}`)
+						SlashCommand(`/fill ${trackedBlock.position.x} ${trackedBlock.position.y} ${trackedBlock.position.z} ${trackedBlock.position.x + this.size - 1} ${trackedBlock.position.y} ${trackedBlock.position.z + this.size - 1} ${this.DangerMaterial(column, row)}`)
                     }
 				} else if (this.HideMaterialOnceDone()) {
-					SlashCommand(`/fill ${trackedBlock.position.x} 64 ${trackedBlock.position.z} ${trackedBlock.position.x + this.size - 1} 64 ${trackedBlock.position.z + this.size - 1} ${this.UnknownMaterial(column, row)}`)
+					SlashCommand(`/fill ${trackedBlock.position.x} ${trackedBlock.position.y} ${trackedBlock.position.z} ${trackedBlock.position.x + this.size - 1} ${trackedBlock.position.y} ${trackedBlock.position.z + this.size - 1} ${this.UnknownMaterial(column, row)}`)
                 }
             }
 		})
@@ -104,7 +103,7 @@ SteppingStones = class extends this.BaseUntimedGame {
 	}
 
 	PlayerIsOutOfBounds(player) {
-		return player.position.y < 60 || (!this.gameHasStarted && player.position.z >= this.zOffset)
+		return player.position.y < 40 || (!this.gameHasStarted && player.position.z >= this.zOffset)
     }
 
 	PlayerIsFinished(player) {

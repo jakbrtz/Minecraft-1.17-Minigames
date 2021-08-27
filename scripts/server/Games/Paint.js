@@ -11,72 +11,19 @@ Paint = class extends this.BaseGame {
 	SetupOverride() {
 		this.UpdateScore()
 		GameController.Players.forEach(player => {
-			player.readyToPlay = false
-			player.score = 0
-			player.tryOpenThisDialogue = "paint_team"
-        })
+			this.CreateTeamIfItDoesntExist(player.team)
+		})
+		this.StartGame()
 	}
 
-	ReceivedTagOverride(player, tag) {
-		if (this.gameHasStarted) {
-			if ((tag.startsWith("team-")) && tag.length > 5) {
-				SlashCommand(`/msg ${player.name} The game has already started!`)
-            }
-		} else {
-			if (tag.startsWith("team-")) {
-				tag = tag.substr(5)
-				if (tag != "") {
-					player.team = this.CreateTeamIfItDoesntExist(tag)
-					this.UpdateScore()
-					player.readyToPlay = true
-				} else if (player.team == undefined) {
-					player.tryOpenThisDialogue = "paint_team"
-				}
-			}
-        }
-	}
-
-	CreateTeamIfItDoesntExist(name) {
+	CreateTeamIfItDoesntExist(team) {
 		for (var i = 0; i < this.teams.length; i++) {
-			if (this.teams[i].name == name) {
-				return this.teams[i]
+			if (this.teams[i] == team) {
+				return
             }
         }
-		var colour
-		switch (name) {
-			case "red":
-				colour = 14
-				break;
-			case "blue":
-				colour = 11
-				break;
-			case "green":
-				colour = 13
-				break;
-			case "yellow":
-				colour = 4
-				break;
-			case "orange":
-				colour = 1
-				break;
-			case "black":
-				colour = 7
-				break;
-		}
-		let team = {
-			name: name,
-			colour: colour,
-			score: 0
-		}
 		this.teams.push(team)
-		return team
     }
-
-	UpdateSetupOverride() {
-		if (this.AllPlayersAre(player => player.readyToPlay)) {
-			this.StartGame()
-		}
-	}
 
 	StartGameOverride() {
 
@@ -86,9 +33,9 @@ Paint = class extends this.BaseGame {
 
 		GameController.Players.forEach(player => {
 			this.Respawn(player.entity)
-			Chat(`${player.name} is on the ${NumberToColour(player.team.colour)}${player.team.name} team`)
-			SlashCommand(`/gamemode adventure ${player.name}`)
 		})
+
+		SlashCommand(`/gamemode adventure @a`)
 
 		this.UpdateScore()
 	}

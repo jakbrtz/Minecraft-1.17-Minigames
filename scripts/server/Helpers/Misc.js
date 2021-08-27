@@ -38,12 +38,20 @@ TicksToDuration = function(n) {
     return `${minutes}:${seconds.toString().padStart(2, '0')}`
 }
 
-PositionsAreClose = function(position1, position2, distance) {
+PositionsAreClose = function (position1, position2, distance) {
     return (
         position1.x >= position2.x - distance &&
         position1.x <= position2.x + distance &&
         position1.y >= position2.y - distance &&
         position1.y <= position2.y + distance &&
+        position1.z >= position2.z - distance &&
+        position1.z <= position2.z + distance)
+}
+
+PositionsAreCloseIgnoreY = function (position1, position2, distance) {
+    return (
+        position1.x >= position2.x - distance &&
+        position1.x <= position2.x + distance &&
         position1.z >= position2.z - distance &&
         position1.z <= position2.z + distance)
 }

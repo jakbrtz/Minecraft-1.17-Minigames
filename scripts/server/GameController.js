@@ -15,7 +15,8 @@ GameController = {
 				this.Players.set(entity.id, {
 					entity: entity,
 					position: Find(entity),
-					name: GetName(entity)
+					name: GetName(entity),
+					team: RandomTeam()
 				})
 			}
 		})
@@ -51,6 +52,8 @@ GameController = {
 							this.Game = new Paint()
 						} else if (tag == "wantsSteppingStones") {
 							this.Game = new SteppingStones()
+						} else if (tag == "wantsTeamChooser") {
+							this.Game = new TeamChooser()
 						}
 						if (this.Game != null) {
 							this.Game.Setup()

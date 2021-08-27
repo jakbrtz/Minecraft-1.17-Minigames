@@ -16,9 +16,10 @@ BaseGame = class {
         GameController.Players.forEach(player => {
             player.deathTimer = -1
             player.needsReviving= false
-            player.tryOpenThisDialogue = undefined
+            player.score = 0
             // todo: a bunch of other generic variables
         })
+        ResetAllTeamScores()
         this.SetupOverride()
     }
 
@@ -40,9 +41,7 @@ BaseGame = class {
         if (!GameController.Players.has(entity.id)) return
         let player = GameController.Players.get(entity.id)
 
-        if (tag == "recentlyOpenedDialogue") {
-            player.tryOpenThisDialogue = undefined
-        } else if (tag == "recentlyRevived") {
+        if (tag == "recentlyRevived") {
             player.needsReviving = false
         } else {
             this.ReceivedTagOverride(player, tag)
@@ -79,9 +78,6 @@ BaseGame = class {
         GameController.Players.forEach(player => {
             if (player.needsReviving) {
                 this.AttemptRevivePlayer(player)
-            }
-            if (player.tryOpenThisDialogue && this.elapsedGameTime % 2) {
-                SlashCommand(`/dialogue open @e[type=npc,c=1] ${player.name} ${player.tryOpenThisDialogue}`)
             }
             if (player.deathTimer >= this.DeathCoolDown) {
                 this.Respawn(player.entity)

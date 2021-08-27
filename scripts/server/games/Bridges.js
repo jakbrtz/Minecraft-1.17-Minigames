@@ -2,7 +2,6 @@ Bridges = class extends this.BaseGame {
 
 	constructor() {
 		super()
-
 		this.teams = []
 		this.DeathCoolDown = 5 * 20
 	}
@@ -10,118 +9,62 @@ Bridges = class extends this.BaseGame {
 	SetupOverride() {
 		this.UpdateScore()
 		GameController.Players.forEach(player => {
-			player.readyToPlay = false
-			player.score = 0
-			player.tryOpenThisDialogue = "bridges_team"
-        })
+			this.CreateTeamIfItDoesntExist(player.team)
+		})
+		this.StartGame()
 	}
 
-	ReceivedTagOverride(player, tag) {
-		if (this.gameHasStarted) {
-			if ((tag.startsWith("team-") || tag.startsWith("base-")) && tag.length > 5) {
-				SlashCommand(`/msg ${player.name} The game has already started!`)
-            }
-		} else {
-			if (tag.startsWith("team-")) {
-				tag = tag.substr(5)
-				if (tag != "") {
-					player.team = this.CreateTeamIfItDoesntExist(tag)
-					this.UpdateScore()
-					let dialogue = GameController.Editor ? "bridges_baseAdv" : "bridges_base"
-					SlashCommand(`/dialogue open @e[type=npc,c=1] ${player.name} ${dialogue}`)
-				} else if (player.team == undefined) {
-					player.tryOpenThisDialogue = "bridges_team"
-				}
-			} else if (tag.startsWith("base-")) {
-				tag = tag.substr(5)
-				if (tag != "") {
-					player.team.requestedBases.push(tag)
-				} else {
-					player.readyToPlay = true
-				}
-			}
-        }
-	}
-
-	CreateTeamIfItDoesntExist(name) {
+	CreateTeamIfItDoesntExist(team) {
 		for (var i = 0; i < this.teams.length; i++) {
-			if (this.teams[i].name == name) {
+			if (this.teams[i] == team) {
 				return this.teams[i]
 			}
 		}
-		var center
-		var rotation
 		switch (this.teams.length) {
 			case 0:
-				center = { x: 48, y: 65, z: 0 }
-				rotation = 270
+				team.center = { x: 48, y: 65, z: 0 }
+				team.rotation = 270
 				break;
 			case 1:
-				center = { x: -48, y: 65, z: 0 }
-				rotation = 90
+				team.center = { x: -48, y: 65, z: 0 }
+				team.rotation = 90
 				break;
 			case 2:
-				center = { x: 0, y: 65, z: 48 }
-				rotation = 0
+				team.center = { x: 0, y: 65, z: 48 }
+				team.rotation = 0
 				break;
 			case 3:
-				center = { x: 0, y: 65, z: -48 }
-				rotation = 180
+				team.center = { x: 0, y: 65, z: -48 }
+				team.rotation = 180
 				break;
 			case 4:
-				center = { x: 32, y: 65, z: 32 }
-				rotation = 0
+				team.center = { x: 32, y: 65, z: 32 }
+				team.rotation = 0
 				break;
 			case 5:
-				center = { x: -32, y: 65, z: -32 }
-				rotation = 180
+				team.center = { x: -32, y: 65, z: -32 }
+				team.rotation = 180
+				break;
+			case 6:
+				team.center = { x: -32, y: 65, z: 32 }
+				team.rotation = 90
+				break;
+			case 7:
+				team.center = { x: 32, y: 65, z: -32 }
+				team.rotation = 270
 				break;
 		}
-		var colour
-		switch (name) {
-			case "red":
-				colour = 14
-				break;
-			case "blue":
-				colour = 11
-				break;
-			case "green":
-				colour = 13
-				break;
-			case "yellow":
-				colour = 4
-				break;
-			case "orange":
-				colour = 1
-				break;
-			case "black":
-				colour = 7
-				break;
-		}
-		let team = {
-			name: name,
-			center: center,
-			rotation: rotation,
-			colour: colour,
-			score: 0,
-			requestedBases: []
-		}
+		team.requestedBases = []
 		this.teams.push(team)
 		return team
     }
-
-	UpdateSetupOverride() {
-		if (this.AllPlayersAre(player => player.readyToPlay)) {
-			this.StartGame()
-		}
-	}
 
 	StartGameOverride() {
 
 		this.ClearWorld()
 
 		while (this.teams.length < 2) {
-			this.CreateTeamIfItDoesntExist(GetRandomItem(["red","yellow","green","blue","orange","black"]))
+			this.CreateTeamIfItDoesntExist(RandomTeam())
 		}
 
 		this.teams.forEach(team => {
@@ -174,7 +117,6 @@ Bridges = class extends this.BaseGame {
 	}
 
 	RespawnOverride(player) {
-		if (player.team == undefined) return
 		SlashCommand(`/tp ${player.name} ${player.team.spawn.x} ${player.team.spawn.y} ${player.team.spawn.z} facing 0 70 0`)
 		SlashCommand(`/give ${player.name} iron_sword`)
 		SlashCommand(`/give ${player.name} iron_pickaxe`)

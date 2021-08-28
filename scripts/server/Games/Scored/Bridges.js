@@ -1,12 +1,12 @@
-Bridges = class extends this.BaseGame {
+Bridges = class extends this.BaseScoredGame {
 
 	constructor() {
 		super()
 		this.DeathCoolDown = 5 * 20
 	}
 
-	SetupOverride() {
-		this.UpdateScore()
+	BuildWorld() {
+
 		while (this.teams.length < 2) {
 			let randomTeam = RandomTeam()
 			if (!this.teams.includes(randomTeam)) {
@@ -50,14 +50,9 @@ Bridges = class extends this.BaseGame {
 					break;
 			}
 			team.requestedBases = []
-        }
-		this.StartGame()
-	}
-
-	StartGameOverride() {
+		}
 
 		this.ClearWorld()
-
 		this.teams.forEach(team => {
 
 			team.selectedBase = (team.requestedBases.length > 0)
@@ -96,15 +91,6 @@ Bridges = class extends this.BaseGame {
 			}
 			SlashCommand(`/fill 0 ${team.center.y - 3} 0 0 ${team.center.y - 10} 0 air`)
 		})
-
-		// Start game for all players
-		GameController.Players.forEach(player => {
-			this.Respawn(player.entity)
-			Chat(`${player.name} is on the ${NumberToColour(player.team.colour)}${player.team.name} team`)
-			SlashCommand(`/gamemode survival ${player.name}`)
-		})
-
-		this.UpdateScore()
 	}
 
 	RespawnOverride(player) {
@@ -116,7 +102,7 @@ Bridges = class extends this.BaseGame {
 		SlashCommand(`/give ${player.name} concrete 64 ${player.team.colour}`)
 	}
 
-	UpdateGameOverride() {
+	UpdateGameOverrideOverride() {
 
 		if (this.elapsedGameTime < 20) return
 
@@ -131,10 +117,6 @@ Bridges = class extends this.BaseGame {
                 }
             })
 		})
-
-		if (this.elapsedGameTime % 20 == 0) {
-			this.UpdateScore()
-        }
 
 	}
 
@@ -160,45 +142,13 @@ Bridges = class extends this.BaseGame {
 		})
 	}
 
-	IsGameInProgressOverride() {
-		return this.elapsedGameTime < GameController.GameDuration
-	}
-
-	EndGameOverride() {
-		this.UpdateScore()
-		let bestScore = 1
-		let bestTeams = []
-		this.teams.forEach(team => {
-			if (team.score > bestScore) {
-				bestTeams = [ team ]
-				bestScore = team.score
-			} else if (team.score == bestScore) {
-				bestTeams.push(team)
-            }
-		})
-		var msg
-		if (bestTeams.length == 0) {
-			msg = "No one won"
-		} else if (bestTeams.length == 1) {
-			msg = `${NumberToColour(bestTeams[0].colour)}${bestTeams[0].name} wins`
-		} else if (bestTeams.length == this.teams.length) {
-			msg = "Everyone wins!"
-		} else {
-			msg = "It's a tie between " + bestTeams.map(team => `${NumberToColour(team.colour)}${team.name}\u00a7r`).join(" and ")
-        }
-		SlashCommand(`/title @a title ${msg}`)
-		Chat(msg)
-	}
-
 	UpdateScore() {
 		let lines = []
 		GameController.Players.forEach(player => {
-			if (player.team != undefined) {
-				lines.push({
-					text: `${NumberToColour(player.team.colour)}${player.name}\u00a7r`,
-					value: player.score
-				})
-			}
+			lines.push({
+				text: `${NumberToColour(player.team.colour)}${player.name}\u00a7r`,
+				value: player.score
+			})
 		})
 		if (this.gameHasStarted) {
 			lines.push(TicksToDuration(GameController.GameDuration - this.elapsedGameTime))

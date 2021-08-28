@@ -1,4 +1,4 @@
-Paint = class extends this.BaseGame {
+Paint = class extends this.BaseScoredGame {
 
 	constructor() {
 		super()
@@ -7,31 +7,17 @@ Paint = class extends this.BaseGame {
 		this.trackedBlocks = new ArrayMultiDimensional([41, 41], [-20, -20])
 	}
 
-	SetupOverride() {
-		this.UpdateScore()
-		this.StartGame()
-	}
-
-	StartGameOverride() {
-
+	BuildWorld() {
 		this.ClearWorld()
-
 		SlashCommand(`/fill -20 64 -20 20 64 20 concrete 0`)
-
-		GameController.Players.forEach(player => {
-			this.Respawn(player.entity)
-		})
-
-		SlashCommand(`/gamemode adventure @a`)
-
-		this.UpdateScore()
 	}
 
 	RespawnOverride(player) {
 		SlashCommand(`/tp ${player.name} ${RandomFloat(-5, 5)} 66 ${RandomFloat(-5, 5)}`)
+		SlashCommand(`/give @a filled_map`)
 	}
 
-	UpdateGameOverride() {
+	UpdateGameOverrideOverride() {
 
 		if (this.elapsedGameTime < 20) return
 
@@ -57,45 +43,10 @@ Paint = class extends this.BaseGame {
             }
         })
 
-		if (this.elapsedGameTime % 20 == 0) {
-			this.UpdateScore()
-        }
-
 	}
 
 	AttemptRevivePlayerOverride(player) {
 		SlashCommand(`/tp ${player.name} 0 100 0`)
-	}
-
-	IsGameInProgressOverride() {
-		return this.elapsedGameTime < GameController.GameDuration
-	}
-
-	EndGameOverride() {
-		this.UpdateScore()
-		let bestScore = 1
-		let bestTeams = []
-		this.teams.forEach(team => {
-			if (team.score > bestScore) {
-				bestTeams = [ team ]
-				bestScore = team.score
-			} else if (team.score == bestScore) {
-				bestTeams.push(team)
-            }
-		})
-		var msg
-		if (bestTeams.length == 0) {
-			msg = "No one won"
-		} else if (bestTeams.length == 1) {
-			msg = `${NumberToColour(bestTeams[0].colour)}${bestTeams[0].name} wins`
-		} else if (bestTeams.length == this.teams.length) {
-			msg = "Everyone wins!"
-		} else {
-			msg = "It's a tie between " + bestTeams.map(team => `${NumberToColour(team.colour)}${team.name}\u00a7r`).join(" and ")
-        }
-		SlashCommand(`/title @a title ${msg}`)
-		Chat(msg)
-		SlashCommand(`/give @a filled_map`)
 	}
 
 	UpdateScore() {

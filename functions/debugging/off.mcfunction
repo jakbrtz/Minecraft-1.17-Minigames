@@ -1,0 +1,3 @@
+gamerule commandblockoutput false
+gamerule showcoordinates false
+gamerule sendcommandfeedback false

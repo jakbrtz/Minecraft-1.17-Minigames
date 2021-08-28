@@ -1,3 +1,4 @@
+// todo: can this somehow be combined with the GameController?
 Lobby = class extends this.BaseGame {
 
 	constructor() {

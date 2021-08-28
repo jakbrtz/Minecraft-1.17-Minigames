@@ -40,7 +40,7 @@ BaseScoredGame = class extends this.BaseGame {
 
     }
 
-	IsGameInProgressOverride() {
+	IsGameInProgress() {
 		return this.elapsedGameTime < GameController.GameDuration
 	}
 

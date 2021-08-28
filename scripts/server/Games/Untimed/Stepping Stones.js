@@ -103,8 +103,12 @@ SteppingStones = class extends this.BaseUntimedGame {
 	}
 
 	PlayerIsOutOfBounds(player) {
-		return player.position.y < 40 || (!this.gameHasStarted && player.position.z >= this.zOffset)
-    }
+		return player.position.y < 40
+	}
+
+	PlayerHasLeftStartArea(player) {
+		return player.position.z >= this.zOffset
+	}
 
 	PlayerIsFinished(player) {
 		return player.position.z >= this.rows * (this.size + this.gap) + this.zOffset

@@ -2,7 +2,7 @@ BaseGame = class {
 
     constructor() {
 
-        this.gameHasStarted = false
+        this.stage = stages.Setup
         this.elapsedGameTime = 0
         this.teams = []
 
@@ -13,7 +13,7 @@ BaseGame = class {
     Setup() {
         this.DestroyScoreboard()
         this.elapsedGameTime = 0
-        this.gameHasStarted = false
+        this.stage = stages.Setup
         GameController.Players.forEach(player => {
             player.deathTimer = -1
             player.needsReviving= false
@@ -34,7 +34,7 @@ BaseGame = class {
 
     StartGame() {
         this.elapsedGameTime = 0
-        this.gameHasStarted = true
+        this.stage = stages.InGame
         this.StartGameOverride()
     }
 
@@ -74,10 +74,20 @@ BaseGame = class {
 
     Update() {
 
-        if (this.gameHasStarted) {
-            this.UpdateGame()
-        } else {
+        switch (this.stage) {
+            case stages.Setup:
+                this.up
+        }
+
+        if (this.stage == stages.Setup) {
             this.UpdateSetup()
+        } else if (this.stage == stages.InGame) {
+            this.UpdateGame()
+            if (!this.IsGameInProgress()) {
+                this.EndGame()
+            }
+        } else if (this.stage == stages.EndGame) {
+            this.UpdateEndGame()
         }
 
         GameController.Players.forEach(player => {
@@ -150,19 +160,23 @@ BaseGame = class {
     }
 
     IsGameInProgress() {
-        return !this.gameHasStarted || this.IsGameInProgressOverride()
-    }
-
-    IsGameInProgressOverride() {
         return true
     }
 
     EndGame() {
+        this.stage = stages.EndGame
+        this.elapsedGameTime = 0
         this.EndGameOverride()
     }
 
     EndGameOverride() {
         Chat("Game Completed")
+    }
+
+    UpdateEndGame() {
+        if (this.elapsedGameTime >= 10 * 20) {
+            GameController.game == null
+        }
     }
 
     AppearDead(player) {
@@ -224,4 +238,10 @@ BaseGame = class {
         return result
     }
 
+}
+
+const stages = {
+    Setup: 'Setup',
+    InGame: 'InGame',
+    EndGame: 'EndGame'
 }

@@ -46,7 +46,7 @@
 				break;
 		}
 		GameController.Players.forEach(player => {
-			if (this.PlayerIsOutOfBounds(player)) {
+			if (this.PlayerIsOutOfBounds(player) || this.PlayerHasLeftStartArea(player)) {
 				this.Respawn(player.entity)
 			}
 		})
@@ -70,12 +70,16 @@
 
 	PlayerIsOutOfBounds(player) {
 		return false
+	}
+
+	PlayerHasLeftStartArea(player) {
+		return false
     }
 
 	UpdateGameOverrideOverride() {
 	}
 
-	IsGameInProgressOverride() {
+	IsGameInProgress() {
 		return this.AnyPlayerIs(player => player.finishTime == -1)
 	}
 

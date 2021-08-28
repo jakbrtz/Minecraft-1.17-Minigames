@@ -32,7 +32,11 @@ DoorDash = class extends this.BaseUntimedGame {
 	}
 
 	PlayerIsOutOfBounds(player) {
-		return player.position.y < 60 || (!this.gameHasStarted && player.position.z >= this.zOffset)
+		return player.position.y < 60
+	}
+
+	PlayerHasLeftStartArea(player) {
+		return player.position.z >= this.zOffset
 	}
 
 	PlayerIsFinished(player) {

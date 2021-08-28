@@ -46,10 +46,6 @@ GameController = {
 
 		if (this.Game != null) {
 			this.Game.Update()
-			if (!this.Game.IsGameInProgress()) {
-				this.Game.EndGame()
-				this.Game = null
-			}
 		} else {
 			this.ChangeGame(new Lobby())
         }

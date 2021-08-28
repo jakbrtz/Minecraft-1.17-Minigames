@@ -141,18 +141,4 @@ Bridges = class extends this.BaseScoredGame {
             }
 		})
 	}
-
-	UpdateScore() {
-		let lines = []
-		GameController.Players.forEach(player => {
-			lines.push({
-				text: `${NumberToColour(player.team.colour)}${player.name}\u00a7r`,
-				value: player.score
-			})
-		})
-		if (this.gameHasStarted) {
-			lines.push(TicksToDuration(GameController.GameDuration - this.elapsedGameTime))
-		}
-		this.CreateScoreboard("Scores", lines)
-	}
 }

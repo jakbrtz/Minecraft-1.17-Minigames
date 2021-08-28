@@ -48,18 +48,4 @@ Paint = class extends this.BaseScoredGame {
 	AttemptRevivePlayerOverride(player) {
 		SlashCommand(`/tp ${player.name} 0 100 0`)
 	}
-
-	UpdateScore() {
-		let lines = []
-		this.teams.forEach(team => {
-			lines.push({
-				text: NumberToColour(team.colour) + team.name,
-				value: team.score
-            })
-		})
-		if (this.gameHasStarted) {
-			lines.push(TicksToDuration(GameController.GameDuration - this.elapsedGameTime))
-		}
-		this.CreateScoreboard("Scores", lines)
-	}
 }

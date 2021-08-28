@@ -39,25 +39,6 @@ GameController = {
 						this.GameDuration = tag.substr(8) * 20
 					} else if (this.Game != null) {
 						this.Game.ReceivedTag(entity, tag)
-					} else {
-						if (tag == "wantsBridges") {
-							this.Game = new Bridges()
-						} else if (tag == "wantsDropper") {
-							this.Game = new DroppingBlocks()
-						} else if (tag == "wantsDoorDash") {
-							this.Game = new DoorDash()
-						} else if (tag == "wantsQuickRespawn") {
-							this.Game = new QuickRespawn()
-						} else if (tag == "wantsPaint") {
-							this.Game = new Paint()
-						} else if (tag == "wantsSteppingStones") {
-							this.Game = new SteppingStones()
-						} else if (tag == "wantsTeamChooser") {
-							this.Game = new TeamChooser()
-						}
-						if (this.Game != null) {
-							this.Game.Setup()
-						}
 					}
 				}
 			})
@@ -69,8 +50,15 @@ GameController = {
 				this.Game.EndGame()
 				this.Game = null
 			}
-		}
+		} else {
+			this.ChangeGame(new Lobby())
+        }
 	},
+
+	ChangeGame: function (game) {
+		this.Game = game
+		this.Game.Setup()
+    },
 
 	EntityDied: function (entity, killer) {
 		if (this.Game != null) {

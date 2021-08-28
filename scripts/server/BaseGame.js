@@ -181,7 +181,7 @@ BaseGame = class {
             SlashCommand(`/fill -128 ${layer} -128  -1 ${layer} 127 air`)
             SlashCommand(`/fill    0 ${layer} -128 127 ${layer} 127 air`)
         }
-        SlashCommand(`/kill @e[type=!player,type=!npc]`)
+        SlashCommand(`/kill @e[type=!player]`)
     }
 
     CreateScoreboard(title, lines, ascending) {

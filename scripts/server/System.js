@@ -9,6 +9,7 @@ system.initialize = function () {
 
 	this.listenForEvent("minecraft:entity_death", entity_death);
 	this.listenForEvent("minecraft:player_placed_block", entity_placed_block);
+	this.listenForEvent("minecraft:entity_hurt", entity_hurt);
 
 	let loggerData = system.createEventData("minecraft:script_logger_config");
 	loggerData.data.log_information = true;
@@ -32,6 +33,15 @@ function entity_death(eventData) {
 
 function entity_placed_block(eventData) {
 	GameController.EntityPlacedBlock(eventData.data.player, eventData.data.block_position)
+}
+
+function entity_hurt(eventData) {
+	let damageSensorComponent = system.getComponent(eventData.data.entity, "minecraft:damage_sensor");
+	damageSensorComponent.data.push({
+		cause: "fall",
+		deals_damage: false
+	})
+	system.applyComponentChanges(eventData.data.entity, damageSensorComponent);
 }
 
 this.Chat = function (message) {

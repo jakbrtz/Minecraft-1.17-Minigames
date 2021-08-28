@@ -2,7 +2,7 @@ BaseGame = class {
 
     constructor() {
 
-        this.stage = stages.Setup
+        this.stage = 'Setup'
         this.elapsedGameTime = 0
         this.teams = []
 
@@ -13,7 +13,7 @@ BaseGame = class {
     Setup() {
         this.DestroyScoreboard()
         this.elapsedGameTime = 0
-        this.stage = stages.Setup
+        this.stage = 'Setup'
         GameController.Players.forEach(player => {
             player.deathTimer = -1
             player.needsReviving= false
@@ -34,7 +34,7 @@ BaseGame = class {
 
     StartGame() {
         this.elapsedGameTime = 0
-        this.stage = stages.InGame
+        this.stage = 'InGame'
         this.StartGameOverride()
     }
 
@@ -74,19 +74,14 @@ BaseGame = class {
 
     Update() {
 
-        switch (this.stage) {
-            case stages.Setup:
-                this.up
-        }
-
-        if (this.stage == stages.Setup) {
+        if (this.stage == 'Setup') {
             this.UpdateSetup()
-        } else if (this.stage == stages.InGame) {
+        } else if (this.stage == 'InGame') {
             this.UpdateGame()
             if (!this.IsGameInProgress()) {
                 this.EndGame()
             }
-        } else if (this.stage == stages.EndGame) {
+        } else if (this.stage == 'EndGame') {
             this.UpdateEndGame()
         }
 
@@ -164,7 +159,7 @@ BaseGame = class {
     }
 
     EndGame() {
-        this.stage = stages.EndGame
+        this.stage = 'EndGame'
         this.elapsedGameTime = 0
         this.EndGameOverride()
     }
@@ -238,10 +233,4 @@ BaseGame = class {
         return result
     }
 
-}
-
-const stages = {
-    Setup: 'Setup',
-    InGame: 'InGame',
-    EndGame: 'EndGame'
 }

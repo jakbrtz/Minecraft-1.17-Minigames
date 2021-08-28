@@ -71,7 +71,7 @@ BaseScoredGame = class extends this.BaseGame {
 		Chat(msg)
 	}
 
-	UpdateScore() {
+	UpdateScore(showTime) {
 		let domain = this.GroupScoreByTeam ? this.teams : GameController.Players
 		let lines = []
 		domain.forEach(element => {
@@ -80,7 +80,7 @@ BaseScoredGame = class extends this.BaseGame {
 				value: element.score
             })
 		})
-		if (this.gameHasStarted) {
+		if (this.stage == 'InGame') {
 			lines.push(TicksToDuration(GameController.GameDuration - this.elapsedGameTime))
 		}
 		this.CreateScoreboard("Scores", lines)

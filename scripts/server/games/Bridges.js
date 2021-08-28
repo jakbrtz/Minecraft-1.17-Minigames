@@ -2,70 +2,61 @@ Bridges = class extends this.BaseGame {
 
 	constructor() {
 		super()
-		this.teams = []
 		this.DeathCoolDown = 5 * 20
 	}
 
 	SetupOverride() {
 		this.UpdateScore()
-		GameController.Players.forEach(player => {
-			this.CreateTeamIfItDoesntExist(player.team)
-		})
-		this.StartGame()
-	}
-
-	CreateTeamIfItDoesntExist(team) {
-		for (var i = 0; i < this.teams.length; i++) {
-			if (this.teams[i] == team) {
-				return this.teams[i]
+		while (this.teams.length < 2) {
+			let randomTeam = RandomTeam()
+			if (!this.teams.includes(randomTeam)) {
+				this.teams.push(randomTeam)
 			}
 		}
-		switch (this.teams.length) {
-			case 0:
-				team.center = { x: 48, y: 65, z: 0 }
-				team.rotation = 270
-				break;
-			case 1:
-				team.center = { x: -48, y: 65, z: 0 }
-				team.rotation = 90
-				break;
-			case 2:
-				team.center = { x: 0, y: 65, z: 48 }
-				team.rotation = 0
-				break;
-			case 3:
-				team.center = { x: 0, y: 65, z: -48 }
-				team.rotation = 180
-				break;
-			case 4:
-				team.center = { x: 32, y: 65, z: 32 }
-				team.rotation = 0
-				break;
-			case 5:
-				team.center = { x: -32, y: 65, z: -32 }
-				team.rotation = 180
-				break;
-			case 6:
-				team.center = { x: -32, y: 65, z: 32 }
-				team.rotation = 90
-				break;
-			case 7:
-				team.center = { x: 32, y: 65, z: -32 }
-				team.rotation = 270
-				break;
-		}
-		team.requestedBases = []
-		this.teams.push(team)
-		return team
-    }
+		for (var i = 0; i < this.teams.length; i++) {
+			let team = this.teams[i]
+			switch (i) {
+				case 0:
+					team.center = { x: 48, y: 65, z: 0 }
+					team.rotation = 270
+					break;
+				case 1:
+					team.center = { x: -48, y: 65, z: 0 }
+					team.rotation = 90
+					break;
+				case 2:
+					team.center = { x: 0, y: 65, z: 48 }
+					team.rotation = 0
+					break;
+				case 3:
+					team.center = { x: 0, y: 65, z: -48 }
+					team.rotation = 180
+					break;
+				case 4:
+					team.center = { x: 32, y: 65, z: 32 }
+					team.rotation = 0
+					break;
+				case 5:
+					team.center = { x: -32, y: 65, z: -32 }
+					team.rotation = 180
+					break;
+				case 6:
+					team.center = { x: -32, y: 65, z: 32 }
+					team.rotation = 90
+					break;
+				case 7:
+					team.center = { x: 32, y: 65, z: -32 }
+					team.rotation = 270
+					break;
+			}
+			team.requestedBases = []
+        }
+		this.StartGame()
+	}
 
 	StartGameOverride() {
 
 		this.ClearWorld()
-
-		while (this.teams.length < 2) {
-			this.CreateTeamIfItDoesntExist(RandomTeam())
-		}
 
 		this.teams.forEach(team => {
 
@@ -152,9 +143,7 @@ Bridges = class extends this.BaseGame {
 			SlashCommand("/execute " + player.name + " ~~~ say " + GetRandomItem([
 				"I got rekt",
 				"aww man",
-				"It's kinda sad that we are so desensitised to death",
 				"when I respawn it will be over for you punks",
-				"I would swear but then I would get in trouble",
 				"If I was better then I wouldn't be so bad",
 				"I'll get my revenge... probably"
 			]))
@@ -164,7 +153,7 @@ Bridges = class extends this.BaseGame {
 
 	PlayerPlacedBlockOverride(player, position) {
 		this.teams.forEach(team => {
-			if (PositionsAreClose(position, team.goal, 2)) {
+			if (PositionsAreClose(position, team.goal, 1) || PositionsAreClose(position, team.spawn, 1)) {
 				SlashCommand(`/msg ${player.name} don't build there`)
 				SlashCommand(`/setblock ${position.x} ${position.y} ${position.z} air`)
             }

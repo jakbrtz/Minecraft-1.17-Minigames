@@ -4,6 +4,7 @@ BaseGame = class {
 
         this.gameHasStarted = false
         this.elapsedGameTime = 0
+        this.teams = []
 
         this.DeathCoolDown = 0
 
@@ -18,8 +19,12 @@ BaseGame = class {
             player.needsReviving= false
             player.score = 0
             // todo: a bunch of other generic variables
+            if (!this.teams.includes(player.team)) this.teams.push(player.team) 
         })
-        ResetAllTeamScores()
+        // todo: randomize order of this.teams
+        this.teams.forEach(team => {
+            team.score = 0
+        })
         this.SetupOverride()
     }
 

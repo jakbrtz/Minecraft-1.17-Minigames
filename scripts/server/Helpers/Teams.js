@@ -48,13 +48,5 @@ GetTeam = function(name) {
 }
 
 RandomTeam = function () {
-    return GetRandomItem(AllTeams())
-}
-
-AllTeams = function () {
-    return TeamNames.map(name=>GetTeam(name))
-}
-
-ResetAllTeamScores = function () {
-    AllTeams().forEach(team => team.score = 0)
+    return GetRandomItem(TeamNames.map(name => GetTeam(name)))
 }

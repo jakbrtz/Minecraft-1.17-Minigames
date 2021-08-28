@@ -3,27 +3,14 @@ Paint = class extends this.BaseGame {
 	constructor() {
 		super()
 
-		this.teams = []
 		this.DeathCoolDown = 5 * 20
 		this.trackedBlocks = new ArrayMultiDimensional([41, 41], [-20, -20])
 	}
 
 	SetupOverride() {
 		this.UpdateScore()
-		GameController.Players.forEach(player => {
-			this.CreateTeamIfItDoesntExist(player.team)
-		})
 		this.StartGame()
 	}
-
-	CreateTeamIfItDoesntExist(team) {
-		for (var i = 0; i < this.teams.length; i++) {
-			if (this.teams[i] == team) {
-				return
-            }
-        }
-		this.teams.push(team)
-    }
 
 	StartGameOverride() {
 

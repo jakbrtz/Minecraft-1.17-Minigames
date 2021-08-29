@@ -24,20 +24,21 @@ Lobby = class extends this.BaseSelection {
 				]
 			},
 			{
-				construct: game => SlashCommand(`/structure load lobby:${game.structure} ${game.x - 8} 4 ${game.z - 8} ${SuggestedRotation(game)}_degrees`),
-				radius: 5,
+				construct: game => SlashCommand(`/structure load lobby:${game.structure} ${game.x - 3} 4 ${game.z - 3} ${SuggestedRotation(game)}_degrees`),
+				radius: 3,
 				additionalCheck: (player, game) => true,
 				onSelect: (player, game) => {
 					GameController.ChangeGame(game.game)
 				},
 				options: [
-					{ x: 32, z: 16, structure: "arena", game: new QuickRespawn() },
+					{ x: 32, z: 16, structure: "arena", game: new QuickRespawn(false) },
 					{ x: 32, z: -16, structure: "bridges", game: new Bridges() },
-					{ x: 64, z: -16, structure: "bridges", game: new BridgesBaseSelection() },
+					{ x: 64, z: -16, structure: "bridgeselect", game: new BridgesBaseSelection() },
 					{ x: 16, z: -32, structure: "doordash", game: new DoorDash() },
 					{ x: -16, z: -32, structure: "droppers", game: new DroppingBlocks() },
 					{ x: -32, z: -16, structure: "paint", game: new Paint() },
 					{ x: -32, z: 16, structure: "steppingstones", game: new SteppingStones() },
+					{ x: -16, z: 32, structure: "arenateam", game: new QuickRespawn(true) },
 				]
             }
 		]

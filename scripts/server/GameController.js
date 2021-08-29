@@ -48,6 +48,7 @@ GameController = {
 			this.Game.Update()
 		} else if (this.Players.size > 0) {
 			this.ChangeGame(new Lobby())
+			this.EnableTeamsPvP(false)
         }
 	},
 

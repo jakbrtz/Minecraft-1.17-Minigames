@@ -57,9 +57,8 @@ BaseGame = class {
 
     }
 
-    Respawn(entity) {
+    Respawn(player) {
 
-        let player = GameController.Players.get(entity.id)
         SlashCommand(`/clear ${player.name}`)
         SlashCommand(`/effect ${player.name} clear`)
         SlashCommand(`/effect ${player.name} instant_health 1 15 true`)
@@ -90,7 +89,7 @@ BaseGame = class {
                 this.AttemptRevivePlayer(player)
             }
             if (player.deathTimer >= this.DeathCoolDown) {
-                this.Respawn(player.entity)
+                this.Respawn(player)
             }
             if (player.deathTimer >= 0) {
                 player.deathTimer++
@@ -140,7 +139,7 @@ BaseGame = class {
     AttemptRevivePlayerOverride(player) {
         // todo: rewrite this nicer so it can handle edge cases like DeathCoolDown==1
         if (this.DeathCoolDown == 0) {
-            this.Respawn(player.entity)
+            this.Respawn(player)
         }
     }
 

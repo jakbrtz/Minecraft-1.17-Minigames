@@ -13,7 +13,7 @@ BaseSelection = class extends this.BaseGame {
             })
 		})
 		GameController.Players.forEach(player => {
-			this.Respawn(player.entity)
+			this.Respawn(player)
         })
 	}
 

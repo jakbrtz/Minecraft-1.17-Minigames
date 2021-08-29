@@ -18,7 +18,7 @@
 		SlashCommand(`/clear @a`)
 
 		GameController.Players.forEach(player => {
-			this.Respawn(player.entity)
+			this.Respawn(player)
 		})
 	}
 
@@ -47,7 +47,7 @@
 		}
 		GameController.Players.forEach(player => {
 			if (this.PlayerIsOutOfBounds(player) || this.PlayerHasLeftStartArea(player)) {
-				this.Respawn(player.entity)
+				this.Respawn(player)
 			}
 		})
 	}
@@ -55,7 +55,7 @@
 	UpdateGameOverride() {
 		GameController.Players.forEach(player => {
 			if (this.PlayerIsOutOfBounds(player)) {
-				this.Respawn(player.entity)
+				this.Respawn(player)
 			} else if (this.elapsedGameTime > 20 && player.finishTime == -1 && this.PlayerIsFinished(player)) {
 				player.finishTime = this.elapsedGameTime
 				this.UpdateScore()

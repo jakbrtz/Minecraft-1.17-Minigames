@@ -96,7 +96,7 @@ Bridges = class extends this.BaseScoredGame {
 					player.team.score++
 					this.UpdateScore()
 					SlashCommand("/title " + player.name + " title You earned a point");
-					this.Respawn(player.entity)
+					this.Respawn(player)
                 }
             })
 		})

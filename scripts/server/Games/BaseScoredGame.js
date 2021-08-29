@@ -19,7 +19,7 @@ BaseScoredGame = class extends this.BaseGame {
 	StartGameOverride() {
 
 		GameController.Players.forEach(player => {
-			this.Respawn(player.entity)
+			this.Respawn(player)
 		})
 
 		SlashCommand(`/gamemode survival @a`) //todo: sometimes adventure mode

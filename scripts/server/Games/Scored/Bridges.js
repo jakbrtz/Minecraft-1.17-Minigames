@@ -13,42 +13,19 @@ Bridges = class extends this.BaseScoredGame {
 				this.teams.push(randomTeam)
 			}
 		}
+		let centers = [
+			{ x: 48, y: 65, z: 0 },
+			{ x: -48, y: 65, z: 0 },
+			{ x: 0, y: 65, z: 48 },
+			{ x: 0, y: 65, z: -48 },
+			{ x: 0, y: 65, z: -48 },
+			{ x: -32, y: 65, z: -32 },
+			{ x: -32, y: 65, z: 32 },
+			{ x: 32, y: 65, z: -32 },
+		]
 		for (var i = 0; i < this.teams.length; i++) {
 			let team = this.teams[i]
-			switch (i) {
-				case 0:
-					team.center = { x: 48, y: 65, z: 0 }
-					team.rotation = 270
-					break;
-				case 1:
-					team.center = { x: -48, y: 65, z: 0 }
-					team.rotation = 90
-					break;
-				case 2:
-					team.center = { x: 0, y: 65, z: 48 }
-					team.rotation = 0
-					break;
-				case 3:
-					team.center = { x: 0, y: 65, z: -48 }
-					team.rotation = 180
-					break;
-				case 4:
-					team.center = { x: 32, y: 65, z: 32 }
-					team.rotation = 0
-					break;
-				case 5:
-					team.center = { x: -32, y: 65, z: -32 }
-					team.rotation = 180
-					break;
-				case 6:
-					team.center = { x: -32, y: 65, z: 32 }
-					team.rotation = 90
-					break;
-				case 7:
-					team.center = { x: 32, y: 65, z: -32 }
-					team.rotation = 270
-					break;
-			}
+			team.center = centers[i]
 			team.requestedBases = []
 		}
 
@@ -65,11 +42,11 @@ Bridges = class extends this.BaseScoredGame {
 				? GetRandomItem(team.requestedBases)
 				: GetRandomItem(["bases:Amethyst", "bases:GoldBlocks", "bases:Mud", "bases:Temple"])
 
-			team.spawn = StructureSpawn(team.selectedBase, team.center, team.rotation)
-			team.goal = StructureGoal(team.selectedBase, team.center, team.rotation)
+			team.spawn = StructureSpawn(team.selectedBase, team.center, SuggestedRotation(team.center))
+			team.goal = StructureGoal(team.selectedBase, team.center, SuggestedRotation(team.center))
 
 			// Place structure
-			SlashCommand(`/structure load ${team.selectedBase} ${team.center.x - 14} ${team.center.y - 15} ${team.center.z - 14} ${team.rotation}_degrees`)
+			SlashCommand(`/structure load ${team.selectedBase} ${team.center.x - 14} ${team.center.y - 15} ${team.center.z - 14} ${SuggestedRotation(team.center)}_degrees`)
 			// Recolour concrete
 			SlashCommand(`/fill ${team.center.x - 14} ${team.center.y - 15} ${team.center.z - 14} ${team.center.x + 14} ${team.center.y + 15} ${team.center.z + 14} concrete ${team.colour} replace concrete 14`)
 			SlashCommand(`/fill ${team.center.x - 14} ${team.center.y + 16} ${team.center.z - 14} ${team.center.x + 14} ${team.center.y + 45} ${team.center.z + 14} concrete ${team.colour} replace concrete 14`)
@@ -88,12 +65,12 @@ Bridges = class extends this.BaseScoredGame {
 			if (team.center.z < -15) {
 				zlim = team.center.z + 15
 			}
-			if (team.center.r % 180 == 0) {
-				SlashCommand(`/fill ${xlim} ${team.center.y - 3} ${zlim} 0 ${team.center.y - 10} ${zlim} concrete ${team.colour} keep`)
-				SlashCommand(`/fill 0 ${team.center.y - 3} ${zlim} 0 ${team.center.y - 10} 0 concrete ${team.colour} keep`)
-			} else {
+			if (SuggestedRotation(team.center) % 180 == 0) {
 				SlashCommand(`/fill ${xlim} ${team.center.y - 3} ${zlim} ${xlim} ${team.center.y - 10} 0 concrete ${team.colour} keep`)
 				SlashCommand(`/fill ${xlim} ${team.center.y - 3} 0 0 ${team.center.y - 10} 0 concrete ${team.colour} keep`)
+			} else {
+				SlashCommand(`/fill ${xlim} ${team.center.y - 3} ${zlim} 0 ${team.center.y - 10} ${zlim} concrete ${team.colour} keep`)
+				SlashCommand(`/fill 0 ${team.center.y - 3} ${zlim} 0 ${team.center.y - 10} 0 concrete ${team.colour} keep`)
 			}
 			SlashCommand(`/fill 0 ${team.center.y - 3} 0 0 ${team.center.y - 10} 0 air`)
 		})

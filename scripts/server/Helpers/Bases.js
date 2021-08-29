@@ -9,35 +9,6 @@ const BaseInfo = {
     },
 }
 
-const AddWithRotation = function (point, rotation, offset) {
-    switch (rotation) {
-        case 0:
-            return {
-                x: point.x + offset.x,
-                y: point.y + offset.y,
-                z: point.z + offset.z,
-            }
-        case 90:
-            return {
-                x: point.x - offset.z,
-                y: point.y + offset.y,
-                z: point.z + offset.x,
-            }
-        case 180:
-            return {
-                x: point.x - offset.x,
-                y: point.y + offset.y,
-                z: point.z - offset.z,
-            }
-        case 270:
-            return {
-                x: point.x + offset.z,
-                y: point.y + offset.y,
-                z: point.z - offset.x,
-            }
-    }
-}
-
 StructureSpawn = function (name, center, rotation) {
     if (BaseInfo[name] == undefined || BaseInfo[name].spawn == undefined) {
         return center

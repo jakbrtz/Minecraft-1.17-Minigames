@@ -14,13 +14,13 @@ Lobby = class extends this.BaseGame {
 			{ x: 4, z: 8, team: GetTeam("brown") },
 		]
 		this.games = [
-			{ x: 32, z: 16, rotation: 270, structure: "arena", game: new QuickRespawn() },
-			{ x: 32, z: -16, rotation: 270, structure: "bridges", game: new Bridges() },
-			{ x: 64, z: -16, rotation: 270, structure: "bridges", game: new BridgesBaseSelection() },
-			{ x: 16, z: -32, rotation: 180, structure: "doordash", game: new DoorDash() },
-			{ x: -16, z: -32, rotation: 180, structure: "droppers", game: new DroppingBlocks() },
-			{ x: -32, z: -16, rotation: 90, structure: "paint", game: new Paint() },
-			{ x: -32, z: 16, rotation: 90, structure: "steppingstones", game: new SteppingStones() },
+			{ x: 32, z: 16, structure: "arena", game: new QuickRespawn() },
+			{ x: 32, z: -16, structure: "bridges", game: new Bridges() },
+			{ x: 64, z: -16, structure: "bridges", game: new BridgesBaseSelection() },
+			{ x: 16, z: -32, structure: "doordash", game: new DoorDash() },
+			{ x: -16, z: -32, structure: "droppers", game: new DroppingBlocks() },
+			{ x: -32, z: -16, structure: "paint", game: new Paint() },
+			{ x: -32, z: 16, structure: "steppingstones", game: new SteppingStones() },
 		]
 	}
 
@@ -32,7 +32,7 @@ Lobby = class extends this.BaseGame {
 			SlashCommand(`/fill ${dot.x - 1} 6 ${dot.z - 1} ${dot.x + 1} 6 ${dot.z + 1} concrete ${dot.team.colour}`)
 		})
 		this.games.forEach(game => {
-			SlashCommand(`/structure load lobby:${game.structure} ${game.x - 8} 4 ${game.z - 8} ${game.rotation}_degrees`)
+			SlashCommand(`/structure load lobby:${game.structure} ${game.x - 8} 4 ${game.z - 8} ${SuggestedRotation(game)}_degrees`)
         })
 
 		GameController.Players.forEach(player => {

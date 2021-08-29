@@ -3,10 +3,10 @@ BridgesBaseSelection = class extends this.BaseGame {
 	constructor() {
 		super()
 		this.bases = [
-			{ x: 32, z: 0, rotation: 270, structure: "bases:Amethyst" },
-			{ x: 0, z: -32, rotation: 180, structure: "bases:GoldBlocks" },
-			{ x: -32, z: 0, rotation: 90, structure: "bases:Mud" },
-			{ x: 0, z: 32, rotation: 0, structure: "bases:Temple" },
+			{ x: 32, z: 0, structure: "bases:Amethyst" },
+			{ x: 0, z: -32, structure: "bases:GoldBlocks" },
+			{ x: -32, z: 0, structure: "bases:Mud" },
+			{ x: 0, z: 32, structure: "bases:Temple" },
 		]
 	}
 
@@ -14,7 +14,7 @@ BridgesBaseSelection = class extends this.BaseGame {
 		this.ClearWorld()
 		SlashCommand(`/fill -64 64 -64 63 64 63 glass`)
 		this.bases.forEach(base => {
-			SlashCommand(`/structure load ${base.structure} ${base.x - 14} 50 ${base.z - 14} ${base.rotation}_degrees`)
+			SlashCommand(`/structure load ${base.structure} ${base.x - 14} 50 ${base.z - 14} ${SuggestedRotation(base)}_degrees`)
         })
 
 		GameController.Players.forEach(player => {

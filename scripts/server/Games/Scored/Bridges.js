@@ -52,6 +52,12 @@ Bridges = class extends this.BaseScoredGame {
 			team.requestedBases = []
 		}
 
+		GameController.Players.forEach(player => {
+			if (player.requestedBase != undefined) {
+				player.team.requestedBases.push(player.requestedBase)
+            }
+        })
+
 		this.ClearWorld()
 		this.teams.forEach(team => {
 

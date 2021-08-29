@@ -16,6 +16,7 @@ Lobby = class extends this.BaseGame {
 		this.games = [
 			{ x: 32, z: 16, rotation: 270, structure: "arena", game: new QuickRespawn() },
 			{ x: 32, z: -16, rotation: 270, structure: "bridges", game: new Bridges() },
+			{ x: 64, z: -16, rotation: 270, structure: "bridges", game: new BridgesBaseSelection() },
 			{ x: 16, z: -32, rotation: 180, structure: "doordash", game: new DoorDash() },
 			{ x: -16, z: -32, rotation: 180, structure: "droppers", game: new DroppingBlocks() },
 			{ x: -32, z: -16, rotation: 90, structure: "paint", game: new Paint() },
@@ -56,7 +57,7 @@ Lobby = class extends this.BaseGame {
 				}
 			})
 			this.games.forEach(game => {
-				if (PositionsAreCloseIgnoreY(player.position, game, 8)) {
+				if (PositionsAreCloseIgnoreY(player.position, game, 5)) {
 					GameController.ChangeGame(game.game)
 				}
 			})

@@ -4,7 +4,7 @@ GameController = {
 	Game: null,
 	Players: new Map(),
 
-	Update: function () {
+	Update: function (allEntities) {
 
 		allEntities.forEach(entity => {
 			if (this.Players.has(entity.id)) {
@@ -46,7 +46,7 @@ GameController = {
 
 		if (this.Game != null) {
 			this.Game.Update()
-		} else {
+		} else if (this.Players.size > 0) {
 			this.ChangeGame(new Lobby())
         }
 	},

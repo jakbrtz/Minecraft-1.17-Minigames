@@ -5,8 +5,8 @@ SteppingStones = class extends this.BaseUntimedGame {
 
 		this.size = 3
 		this.gap = 1
-		this.rows = 8
-		this.columns = 6
+		this.rows = 7
+		this.columns = 5
 
 		this.xOffset = -Math.floor(this.columns * (this.size + this.gap) / 2)
 		this.zOffset = -Math.floor(this.rows * (this.size + this.gap) / 2)

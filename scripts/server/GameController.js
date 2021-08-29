@@ -66,6 +66,19 @@ GameController = {
 		if (this.Game != null) {
 			this.Game.PlayerPlacedBlock(entity, position)
 		}
-	}
+	},
+
+	EnableTeamsPvP: function (enabled) {
+		this.Players.forEach(player => {
+			SlashCommand(`/tag @a remove team-${player.team.name}`)
+		})
+		this.Players.forEach(player => ClearNullifiedDamage(player.entity))
+		if (enabled) {
+			this.Players.forEach(player => {
+				SlashCommand(`/tag ${player.name} add team-${player.team.name}`)
+				NullifyDamageFromTag(player.entity, `team-${player.team.name}`)
+            })
+        }
+    }
 
 }

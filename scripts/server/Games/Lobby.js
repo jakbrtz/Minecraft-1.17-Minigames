@@ -24,7 +24,7 @@ Lobby = class extends this.BaseGame {
 	}
 
 	StartGameOverride() {
-
+		GameController.EnableTeamsPvP(false)
 		this.ClearWorld()
 		SlashCommand(`/structure load lobby:Spawn -16 4 -16`)
 		this.dots.forEach(dot => {

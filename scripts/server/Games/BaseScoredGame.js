@@ -6,6 +6,7 @@ BaseScoredGame = class extends this.BaseGame {
 	}
 
 	SetupOverride() {
+		GameController.EnableTeamsPvP(this.GroupScoreByTeam)
 		this.BuildWorld()
 		this.UpdateScore()
 		this.StartGame()

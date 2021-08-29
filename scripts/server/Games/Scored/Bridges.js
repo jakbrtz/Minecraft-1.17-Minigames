@@ -18,7 +18,7 @@ Bridges = class extends this.BaseScoredGame {
 			{ x: -48, y: 65, z: 0 },
 			{ x: 0, y: 65, z: 48 },
 			{ x: 0, y: 65, z: -48 },
-			{ x: 0, y: 65, z: -48 },
+			{ x: 32, y: 65, z: 32 },
 			{ x: -32, y: 65, z: -32 },
 			{ x: -32, y: 65, z: 32 },
 			{ x: 32, y: 65, z: -32 },

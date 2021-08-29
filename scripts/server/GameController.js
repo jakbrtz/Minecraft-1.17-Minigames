@@ -27,12 +27,9 @@ GameController = {
 					SlashCommand(`/tag ${GetName(entity)} remove ${tag}`)
 					tag = tag.substr(11)
 					if (tag == "wantsEnd") {
-						if (this.Game == null) {
-							Chat("No game is running")
-						} else {
-							this.Game = null
-							Chat("Game has been Terminated")
-						}
+						this.Game.EndGame()
+						this.Game = null
+						Chat("Game has been Terminated")
 					} else if (tag == "isEditor") {
 						this.Editor = true
 					} else if (tag.startsWith("duration")) {

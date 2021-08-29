@@ -3,7 +3,7 @@ const BaseInfo = {
         spawn: { x: 0, y: 0, z: -9 },
         goal: { x: 0, y: 0, z: 0 }
     },
-    "slot1": {
+    "bases:EndIslands": {
         spawn: { x: -1, y: -12, z: -12 },
         goal: { x: -4, y: 12, z: -8 },
     },

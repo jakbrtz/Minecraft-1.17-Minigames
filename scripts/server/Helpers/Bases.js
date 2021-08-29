@@ -1,12 +1,14 @@
 const BaseInfo = {
     "bases:Temple": {
-        spawn: { x: 0, y: 0, z: -9 },
-        goal: { x: 0, y: 0, z: 0 }
+        spawn: { x: 0, y: 0, z: -9 }
     },
     "bases:EndIslands": {
         spawn: { x: -1, y: -12, z: -12 },
         goal: { x: -4, y: 12, z: -8 },
     },
+    "bases:Amethyst": {
+        spawn: { x: 2, y: -7, z: -12 }
+    }
 }
 
 StructureSpawn = function (name, center, rotation) {

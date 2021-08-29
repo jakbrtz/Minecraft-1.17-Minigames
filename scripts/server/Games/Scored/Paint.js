@@ -14,7 +14,7 @@ Paint = class extends this.BaseScoredGame {
 
 	RespawnOverride(player) {
 		SlashCommand(`/tp ${player.name} ${RandomFloat(-5, 5)} 66 ${RandomFloat(-5, 5)}`)
-		SlashCommand(`/give @a filled_map`)
+		SlashCommand(`/give ${player.name} filled_map`)
 	}
 
 	UpdateGameOverrideOverride() {

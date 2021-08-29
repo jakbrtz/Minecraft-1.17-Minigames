@@ -31,15 +31,15 @@ Lobby = class extends this.BaseSelection {
 					GameController.ChangeGame(game.game)
 				},
 				options: [
-					{ x: 32, z: 16, structure: "arena", game: new QuickRespawn(false) },
-					{ x: 32, z: -16, structure: "bridges", game: new Bridges() },
-					{ x: 64, z: -16, structure: "bridgeselect", game: new BridgesBaseSelection() },
-					{ x: 16, z: -32, structure: "doordash", game: new DoorDash() },
-					{ x: -16, z: -32, structure: "droppers", game: new DroppingBlocks() },
-					{ x: -32, z: -16, structure: "paint", game: new Paint() },
-					{ x: -32, z: 16, structure: "steppingstones", game: new SteppingStones() },
-					{ x: -16, z: 32, structure: "arenateam", game: new QuickRespawn(true) },
-					{ x: 16, z: 32, structure: "bridgeselect", game: new BridgesBaseBuilder() },
+					{ x: 24, z: 8, structure: "arena", game: new QuickRespawn(false) },
+					{ x: 24, z: -8, structure: "bridges", game: new Bridges() },
+					{ x: 20, z: -20, structure: "bridgeselect", game: new BridgesBaseSelection() },
+					{ x: 8, z: -24, structure: "bridgebuild", game: new BridgesBaseBuilder() },
+					{ x: -8, z: -24, structure: "droppers", game: new DroppingBlocks() },
+					{ x: -24, z: -8, structure: "paint", game: new Paint() },
+					{ x: -24, z: 8, structure: "steppingstones", game: new SteppingStones() },
+					{ x: -8, z: 24, structure: "arenateam", game: new QuickRespawn(true) },
+					{ x: 8, z: 24, structure: "doordash", game: new DoorDash() },
 				]
             }
 		]
@@ -48,6 +48,7 @@ Lobby = class extends this.BaseSelection {
 	BuildWorldWithoutOptions() {
 		this.ClearWorld()
 		SlashCommand(`/structure load lobby:Spawn -16 4 -16`)
+		SlashCommand(`/gamemode adventure @a`)
 		this.UpdateScore()
 	}
 

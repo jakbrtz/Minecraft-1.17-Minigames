@@ -4,6 +4,7 @@ DroppingBlocks = class extends this.BaseUntimedGame {
 		super()
 		this.layerColours = [2, 1, 10, 4, 3]
 		this.trackedBlocks = new ArrayMultiDimensional([21, 5, 21], [-30, 0, -10])
+		this.GoalIsToFinishFast = false
 	}
 
 	BuildWorld() {

@@ -1,6 +1,6 @@
 GameController = {
 	GameDuration: 5 * 60 * 20,
-	Editor: false,
+	Pause: false,
 	Game: null,
 	Players: new Map(),
 
@@ -26,20 +26,21 @@ GameController = {
 				if (tag.startsWith("JakesGames-")) {
 					SlashCommand(`/tag ${GetName(entity)} remove ${tag}`)
 					tag = tag.substr(11)
-					if (tag == "wantsEnd") {
+					if (tag == "togglePause") {
+						this.Pause = !this.Pause
+                    } else if (tag == "wantsEnd") {
 						this.Game.EndGame()
 						this.Game = null
-						Chat("Game has been Terminated")
-					} else if (tag == "isEditor") {
-						this.Editor = true
 					} else if (tag.startsWith("duration")) {
 						this.GameDuration = tag.substr(8) * 20
-					} else if (this.Game != null) {
+					} else if (this.Game != null && !this.Pause) {
 						this.Game.ReceivedTag(entity, tag)
 					}
 				}
 			})
 		})
+
+		if (this.Pause) return
 
 		if (this.Game != null) {
 			this.Game.Update()
@@ -55,13 +56,13 @@ GameController = {
     },
 
 	EntityDied: function (entity, killer) {
-		if (this.Game != null) {
+		if (this.Game != null && !this.Pause) {
 			this.Game.PlayerDied(entity, killer)
 		}
 	},
 
 	EntityPlacedBlock: function (entity, position) {
-		if (this.Game != null) {
+		if (this.Game != null && !this.Pause) {
 			this.Game.PlayerPlacedBlock(entity, position)
 		}
 	},

@@ -27,7 +27,7 @@ DoorDash = class extends this.BaseUntimedGame {
 	}
 
 	RespawnOverride(player) {
-		SlashCommand(`/spreadplayers ${this.xOffset + Math.floor(this.doors * this.width / 2)} ${this.zOffset - this.depth} 3  ${this.depth - 2} ${player.name}`)
+		SlashCommand(`/tp ${player.name} ${this.xOffset + ((this.doors / 2 + Math.random(-1, 1)) * this.width)} 66 ${this.zOffset - this.depth} facing 0 66 0`)
 		SlashCommand(`/effect ${player.name} speed 30 5 true`)
 	}
 

@@ -24,7 +24,7 @@ Lobby = class extends this.BaseGame {
 		]
 	}
 
-	StartGameOverride() {
+	SetupOverride() {
 		GameController.EnableTeamsPvP(false)
 		this.ClearWorld()
 		SlashCommand(`/structure load lobby:Spawn -16 4 -16`)
@@ -41,6 +41,10 @@ Lobby = class extends this.BaseGame {
 
 		this.UpdateScore()
 	}
+
+	UpdateSetupOverride() {
+		if (this.elapsedGameTime >= 20) this.StartGame()
+    }
 
 	RespawnOverride(player) {
 		SlashCommand(`/tp ${player.name} ${RandomFloat(-3, 3)} 7 ${RandomFloat(-3, 3)}`)

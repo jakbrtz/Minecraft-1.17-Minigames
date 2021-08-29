@@ -16,7 +16,7 @@ BaseGame = class {
         this.stage = 'Setup'
         GameController.Players.forEach(player => {
             player.deathTimer = -1
-            player.needsReviving= false
+            player.needsReviving = false
             player.score = 0
             // todo: a bunch of other generic variables
             if (!this.teams.includes(player.team)) this.teams.push(player.team) 

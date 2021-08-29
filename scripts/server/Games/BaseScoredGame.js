@@ -66,13 +66,13 @@ BaseScoredGame = class extends this.BaseGame {
 		} else if (bestElements.length == domain.length) {
 			msg = "Everyone wins!"
 		} else {
-			msg = "It's a tie between " + bestElements.map(element => `${PlayerOrTeamColourCodeFormat(element)}${element.name}\u00a7r`).join(" and ")
+			msg = bestElements.map(element => `${PlayerOrTeamColourCodeFormat(element)}${element.name}\u00a7r`).join(" and ") + " wins"
         }
 		SlashCommand(`/title @a title ${msg}`)
 		Chat(msg)
 	}
 
-	UpdateScore(showTime) {
+	UpdateScore() {
 		let domain = this.GroupScoreByTeam ? this.teams : GameController.Players
 		let lines = []
 		domain.forEach(element => {

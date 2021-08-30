@@ -13,14 +13,14 @@ Lobby = class extends this.BaseSelection {
 					this.UpdateScore()
 				},
 				options: [
-					{ x: 8, z: 4, team: GetTeam("red") },
-					{ x: 8, z: -4, team: GetTeam("green") },
-					{ x: 4, z: -8, team: GetTeam("blue") },
+					{ x: 8, z: 4, team: GetTeam("blue") },
+					{ x: 8, z: -4, team: GetTeam("orange") },
+					{ x: 4, z: -8, team: GetTeam("red") },
 					{ x: -4, z: -8, team: GetTeam("black") },
-					{ x: -8, z: -4, team: GetTeam("yellow") },
-					{ x: -8, z: 4, team: GetTeam("orange") },
+					{ x: -8, z: -4, team: GetTeam("pink") },
+					{ x: -8, z: 4, team: GetTeam("green") },
 					{ x: -4, z: 8, team: GetTeam("purple") },
-					{ x: 4, z: 8, team: GetTeam("brown") },
+					{ x: 4, z: 8, team: GetTeam("yellow") },
 				]
 			},
 			{

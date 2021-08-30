@@ -2,6 +2,7 @@ BridgesBaseSelection = class extends this.BaseSelection {
 
 	constructor() {
 		super()
+		this.NextGame = new Bridges()
 		this.choices = [
 			{
 				construct: base => SlashCommand(`/structure load ${base.structure} ${base.x - 14} 50 ${base.z - 14} ${SuggestedRotation(base)}_degrees`),
@@ -25,9 +26,6 @@ BridgesBaseSelection = class extends this.BaseSelection {
 	BuildWorldWithoutOptions() {
 		this.ClearWorld()
 		SlashCommand(`/fill -64 64 -64 63 64 63 glass`)
-		GameController.Players.forEach(player => {
-			player.requestedBase = undefined
-		})
 	}
 
 	RespawnOverride(player) {

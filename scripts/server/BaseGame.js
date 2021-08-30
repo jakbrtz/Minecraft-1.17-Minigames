@@ -7,7 +7,7 @@ BaseGame = class {
         this.teams = []
 
         this.DeathCoolDown = 0
-
+        this.NextGame = null
     }
 
     Setup() {

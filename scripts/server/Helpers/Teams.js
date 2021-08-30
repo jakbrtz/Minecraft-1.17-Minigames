@@ -1,47 +1,39 @@
 const TeamInfo = {
     "red": {
         name: "Red",
-        colour: 14,
-        score: 0
+        colour: 14
     },
     "orange": {
         name: "Orange",
-        colour: 1,
-        score: 0
+        colour: 1
     },
     "yellow": {
         name: "Yellow",
-        colour: 4,
-        score: 0
+        colour: 4
     },
     "green": {
         name: "Green",
-        colour: 13,
-        score: 0
+        colour: 13
     },
     "blue": {
         name: "Blue",
-        colour: 11,
-        score: 0
+        colour: 11
     },
     "purple": {
         name: "Purple",
-        colour: 10,
-        score: 0
+        colour: 10
     },
-    "brown": {
-        name: "Brown",
-        colour: 12,
-        score: 0
+    "pink": {
+        name: "Pink",
+        colour: 6
     },
     "black": {
         name: "Black",
-        colour: 7,
-        score: 0
+        colour: 7
     }
 }
 
-const TeamNames = ["red", "orange", "yellow", "green", "blue", "purple", "brown", "black"]
+const TeamNames = ["red", "orange", "yellow", "green", "blue", "purple", "pink", "black"]
 
 GetTeam = function(name) {
     return TeamInfo[name]

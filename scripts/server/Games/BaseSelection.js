@@ -22,7 +22,7 @@ BaseSelection = class extends this.BaseGame {
     }
 
 	UpdateSetupOverride() {
-		if (this.elapsedGameTime >= 5) this.StartGame()
+		if (this.elapsedGameTime >= 20) this.StartGame()
     }
 
 	UpdateGameOverride() {

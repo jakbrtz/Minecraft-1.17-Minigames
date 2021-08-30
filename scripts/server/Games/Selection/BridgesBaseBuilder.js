@@ -3,6 +3,7 @@ BridgesBaseBuilder = class extends this.BaseSelection {
 	constructor() {
 		super()
 
+		this.NextGame = new BridgesBaseSelection()
 		this.choices = [
 			{
 				construct: slot => SlashCommand(`/structure load ${slot.structure} ${slot.x - 14} 50 ${slot.z - 14}`),
@@ -36,6 +37,10 @@ BridgesBaseBuilder = class extends this.BaseSelection {
 			slots[i].structure = `slot${i}`
 		}
 		SlashCommand(`/gamemode creative @a`)
+		SlashCommand(`/give @a concrete 1 14`)
+		GameController.Players.forEach(player => {
+			player.requestedBase = undefined
+		})
 	}
 
 	RespawnOverride(player) {

@@ -30,7 +30,7 @@ GameController = {
 						this.Pause = !this.Pause
                     } else if (tag == "wantsEnd") {
 						this.Game.EndGame()
-						this.Game = null
+						this.ChangeGame(this.Game.NextGame)
 					} else if (tag.startsWith("duration")) {
 						this.GameDuration = tag.substr(8) * 20
 					} else if (this.Game != null && !this.Pause) {
@@ -52,7 +52,9 @@ GameController = {
 
 	ChangeGame: function (game) {
 		this.Game = game
-		this.Game.Setup()
+		if (this.Game != null) {
+			this.Game.Setup()
+		}
 	},
 
 	EntityDied: function (entity, killer) {

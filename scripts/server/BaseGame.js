@@ -18,7 +18,6 @@ BaseGame = class {
             player.deathTimer = -1
             player.needsReviving = false
             player.score = 0
-            // todo: a bunch of other generic variables
             if (!this.teams.includes(player.team)) this.teams.push(player.team) 
         })
         // todo: randomize order of this.teams
@@ -176,7 +175,7 @@ BaseGame = class {
 
     UpdateEndGame() {
         if (this.elapsedGameTime >= 10 * 20) {
-            GameController.game == null
+            GameController.Game = null
         }
     }
 

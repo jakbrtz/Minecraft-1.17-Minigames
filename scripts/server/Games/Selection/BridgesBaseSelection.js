@@ -6,8 +6,8 @@ BridgesBaseSelection = class extends this.BaseSelection {
 			{
 				construct: base => SlashCommand(`/structure load ${base.structure} ${base.x - 14} 50 ${base.z - 14} ${SuggestedRotation(base)}_degrees`),
 				radius: 14,
-				additionalCheck: (player, base) => player.requestedBase != base.structure,
-				onSelect: (player, base) => {
+				additionalCheck: (base, player) => player.requestedBase != base.structure,
+				onSelect: (base, player) => {
 					player.requestedBase = base.structure
 					Chat(`${player.name} likes ${base.structure}`)
 				},

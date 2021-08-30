@@ -6,8 +6,8 @@ Lobby = class extends this.BaseSelection {
 			{
 				construct: dot => SlashCommand(`/fill ${dot.x - 1} 6 ${dot.z - 1} ${dot.x + 1} 6 ${dot.z + 1} concrete ${dot.team.colour}`),
 				radius: 2,
-				additionalCheck: (player, dot) => player.team != dot.team,
-				onSelect: (player, dot) => {
+				additionalCheck: (dot, player) => player.team != dot.team,
+				onSelect: (dot, player) => {
 					player.team = dot.team
 					Chat(`${player.name} is on the ${NumberToColour(player.team.colour)}${player.team.name} team`)
 					this.UpdateScore()
@@ -26,10 +26,7 @@ Lobby = class extends this.BaseSelection {
 			{
 				construct: game => SlashCommand(`/structure load lobby:${game.structure} ${game.x - 3} 4 ${game.z - 3} ${SuggestedRotation(game)}_degrees`),
 				radius: 3,
-				additionalCheck: (player, game) => true,
-				onSelect: (player, game) => {
-					GameController.ChangeGame(game.game)
-				},
+				onSelect: game => GameController.ChangeGame(game.game),
 				options: [
 					{ x: 24, z: 8, structure: "arena", game: new QuickRespawn(false) },
 					{ x: 24, z: -8, structure: "bridges", game: new Bridges() },

@@ -53,7 +53,7 @@ GameController = {
 	ChangeGame: function (game) {
 		this.Game = game
 		this.Game.Setup()
-    },
+	},
 
 	EntityDied: function (entity, killer) {
 		if (this.Game != null && !this.Pause) {
@@ -66,6 +66,12 @@ GameController = {
 			this.Game.PlayerPlacedBlock(entity, position)
 		}
 	},
+
+	EntityTriedToDestroyBlock: function (entity, position) {
+		if (this.Game != null && !this.Pause) {
+			this.Game.PlayerTriedToDestroyBlock(entity, position)
+		}
+    },
 
 	EnableTeamsPvP: function (enabled) {
 		this.Players.forEach(player => {

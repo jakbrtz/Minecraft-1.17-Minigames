@@ -29,13 +29,13 @@ Paint = class extends this.BaseScoredGame {
 					z: Math.floor(player.position.z)
 				}
 				if (this.trackedBlocks.IndicesInRange([position.x, position.z]) && position.y == 64) {
-					let blockTeam = this.trackedBlocks.Get([position.x, position.z])
-					if (blockTeam != player.team) {
-						this.trackedBlocks.Set([position.x, position.z], player.team)
+					let blockPlayer = this.trackedBlocks.Get([position.x, position.z])
+					if (blockPlayer != player.team) {
+						this.trackedBlocks.Set([position.x, position.z], player)
 						SlashCommand(`/setblock ${position.x} ${position.y} ${position.z} concrete ${player.team.colour}`)
-						player.team.score++
-						if (blockTeam != undefined) {
-							blockTeam.score--
+						player.score++
+						if (blockPlayer != undefined) {
+							blockPlayer.score--
 						}
 						this.UpdateScore()
 					}

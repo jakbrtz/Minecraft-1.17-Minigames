@@ -93,7 +93,6 @@ Bridges = class extends this.BaseScoredGame {
 			GameController.Players.forEach(player => {
 				if (player.team != team && PositionsAreClose(player.position, team.goal, 2)) {
 					player.score++
-					player.team.score++
 					this.UpdateScore()
 					SlashCommand("/title " + player.name + " title You earned a point");
 					this.Respawn(player)
@@ -119,9 +118,16 @@ Bridges = class extends this.BaseScoredGame {
 	PlayerPlacedBlockOverride(player, position) {
 		this.teams.forEach(team => {
 			if (PositionsAreClose(position, team.goal, 1) || PositionsAreClose(position, team.spawn, 1)) {
-				SlashCommand(`/msg ${player.name} don't build there`)
+				SlashCommand(`/msg ${player.name} You cannot build here`)
 				SlashCommand(`/setblock ${position.x} ${position.y} ${position.z} air`)
             }
 		})
+	}
+
+	PlayerTriedToDestroyBlockOverride(player, position) {
+		let block = GetBlock(player.entity, position)
+		if (block.__identifier != "minecraft:concrete") {
+
+        }
 	}
 }

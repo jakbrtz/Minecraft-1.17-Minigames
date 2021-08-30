@@ -22,9 +22,6 @@ BaseGame = class {
             if (!this.teams.includes(player.team)) this.teams.push(player.team) 
         })
         // todo: randomize order of this.teams
-        this.teams.forEach(team => {
-            team.score = 0
-        })
         this.SetupOverride()
     }
 
@@ -150,6 +147,16 @@ BaseGame = class {
     }
 
     PlayerPlacedBlockOverride(player, position) {
+
+    }
+
+    PlayerTriedToDestroyBlock(entity, position) {
+        if (!GameController.Players.has(entity.id)) return
+        let player = GameController.Players.get(entity.id)
+        this.PlayerTriedToDestroyBlockOverride(player, position)
+    }
+
+    PlayerTriedToDestroyBlockOverride(player, position) {
 
     }
 

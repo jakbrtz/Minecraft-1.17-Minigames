@@ -31,12 +31,6 @@ NumberToColour = function(n) {
     }
 }
 
-PlayerOrTeamColourCodeFormat = function (element) {
-    if (element.colour != undefined) return NumberToColour(element.colour)
-    if (element.team != undefined) return PlayerOrTeamColourCodeFormat(element.team)
-    return `\u00a7r`
-}
-
 TicksToDuration = function(n) {
     let totalSeconds = Math.ceil(n / 20)
     let seconds = totalSeconds % 60

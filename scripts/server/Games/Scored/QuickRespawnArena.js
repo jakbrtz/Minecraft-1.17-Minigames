@@ -7,17 +7,22 @@ QuickRespawn = class extends this.BaseScoredGame {
 
 	BuildWorld() {
 		this.ClearWorld()
-		SlashCommand(`/fill -10 64 -10 10 64 10 concrete 14`)
+
+		let platforms = ["arenas:desert", "arenas:house", "arenas:nether", "arenas:planks"]
+		SlashCommand(`/structure load ${GetRandomItem(platforms)} -16 63 -16   0_degrees`)
+		SlashCommand(`/structure load ${GetRandomItem(platforms)}   0 63 -16  90_degrees`)
+		SlashCommand(`/structure load ${GetRandomItem(platforms)}   0 63   0 180_degrees`)
+		SlashCommand(`/structure load ${GetRandomItem(platforms)} -16 63   0 270_degrees`)
 
 		let spawns = [
-			{ x: 6, z: 0 },
-			{ x: -6, z: 0 },
-			{ x: 0, z: 6 },
-			{ x: 0, z: -6 },
-			{ x: 4, z: 4 },
-			{ x: -4, z: -4 },
-			{ x: 4, z: -4 },
-			{ x: -4, z: 4 },
+			{ x:  13, z:  13 },
+			{ x: -13, z: -13 },
+			{ x:  13, z: -13 },
+			{ x: -13, z:  13 },
+			{ x:  13, z:   0 },
+			{ x: -13, z:   0 },
+			{ x:   0, z:  13 },
+			{ x:   0, z: -13 },
 		]
 		for (var i = 0; i < this.teams.length; i++) {
 			this.teams[i].spawn = spawns[i]

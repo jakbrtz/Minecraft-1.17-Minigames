@@ -23,7 +23,6 @@
         GameController.EnableTeamsPvP(this.PvPgroupedByTeams)
         this.BuildWorld()
         SlashCommand(`/gamemode ${this.GameMode} @a`)
-        SlashCommand(`/clear @a`)
         GameController.Players.forEach(player => {
             this.Respawn(player)
         })

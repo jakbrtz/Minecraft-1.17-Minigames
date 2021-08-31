@@ -17,7 +17,7 @@
         GameController.Players.forEach(player => {
             player.deathTimer = -1
             player.score = 0
-            if (!this.teams.includes(player.team)) this.teams.push(player.team) 
+            if (!this.teams.includes(player.team)) this.teams.push(player.team)
         })
         // todo: randomize order of this.teams
         GameController.EnableTeamsPvP(this.PvPgroupedByTeams)
@@ -38,7 +38,7 @@
     }
 
     SetupOverride() {
-        
+
     }
 
     UpdateSetup() {
@@ -54,7 +54,7 @@
     }
 
     UpdateSetupOverride() {
-        
+
     }
 
     StartGame() {
@@ -65,7 +65,7 @@
     }
 
     StartGameOverride() {
-        
+
     }
 
     Update() {
@@ -173,11 +173,20 @@
 
     PlayerTriedToDestroyBlock(entity, position) {
         if (!GameController.Players.has(entity.id)) return
-        let player = GameController.Players.get(entity.id)
-        this.PlayerTriedToDestroyBlockOverride(player, position)
+        this.PlayerTriedToDestroyBlockOverride(GameController.Players.get(entity.id), position)
     }
 
     PlayerTriedToDestroyBlockOverride(player, position) {
+
+    }
+
+    EntityAttack(attacker, target) {
+        if (!GameController.Players.has(attacker.id)) return
+        if (!GameController.Players.has(target.id)) return
+        this.EntityAttackOverride(GameController.Players.get(attacker.id), GameController.Players.get(target.id))
+    }
+
+    EntityAttackOverride(attacker, target) {
 
     }
 

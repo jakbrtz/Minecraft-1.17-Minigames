@@ -16,7 +16,8 @@ GameController = {
 					entity: entity,
 					position: Find(entity),
 					name: GetName(entity),
-					team: RandomTeam()
+					team: RandomTeam(),
+					deathTimer: -1,
 				})
 			}
 		})
@@ -73,7 +74,13 @@ GameController = {
 		if (this.Game != null && !this.Pause) {
 			this.Game.PlayerTriedToDestroyBlock(entity, position)
 		}
-    },
+	},
+
+	EntityAttack: function (attacker, target) {
+		if (this.Game != null && !this.Pause) {
+			this.Game.EntityAttack(attacker, target)
+		}
+	},
 
 	EnableTeamsPvP: function (enabled) {
 		this.Players.forEach(player => {

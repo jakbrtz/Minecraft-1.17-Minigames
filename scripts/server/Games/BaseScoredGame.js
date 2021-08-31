@@ -1,30 +1,9 @@
-BaseScoredGame = class extends this.BaseGame {
+﻿BaseScoredGame = class extends this.BaseGame {
 
 	constructor() {
 		super()
 		this.GroupScoreByTeam = true
-	}
-
-	SetupOverride() {
-		GameController.EnableTeamsPvP(this.GroupScoreByTeam)
-		this.BuildWorld()
-		this.UpdateScore()
-		this.StartGame()
-	}
-
-	BuildWorld() {
-
-	}
-
-	StartGameOverride() {
-
-		GameController.Players.forEach(player => {
-			this.Respawn(player)
-		})
-
-		SlashCommand(`/gamemode survival @a`) //todo: sometimes adventure mode
-
-		this.UpdateScore()
+		this.PvPgroupedByTeams = this.GroupScoreByTeam
 	}
 
 	UpdateGameOverride() {
@@ -92,9 +71,10 @@ BaseScoredGame = class extends this.BaseGame {
 			text: element.name,
 			value: element.score
         }})
-		if (this.stage == 'InGame') {
-			lines.push(TicksToDuration(GameController.GameDuration - this.elapsedGameTime))
-		}
+		let remainingTime = GameController.GameDuration - this.elapsedGameTime
+		if (remainingTime < 0) remainingTime = 0
+		if (remainingTime > GameController.GameDuration) remainingTime = GameController.GameDuration
+		lines.push(TicksToDuration(remainingTime))
 		this.CreateScoreboard("Scores", lines)
 	}
 }

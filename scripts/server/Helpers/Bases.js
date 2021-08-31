@@ -7,7 +7,7 @@ const BaseInfo = {
         goal: { x: -4, y: 12, z: -8 },
     },
     "bases:Amethyst": {
-        spawn: { x: 2, y: -7, z: -12 }
+        spawn: { x: 0, y: 0, z: -11 }
     }
 }
 

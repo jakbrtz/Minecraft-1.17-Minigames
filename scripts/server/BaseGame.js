@@ -1,40 +1,107 @@
-BaseGame = class {
+﻿BaseGame = class {
 
     constructor() {
 
-        this.stage = 'Setup'
-        this.elapsedGameTime = 0
         this.teams = []
+        this.GameIsComplete = false
 
+        this.elapsedGameTime = -60
         this.DeathCoolDown = 0
         this.NextGame = null
+        this.PvPgroupedByTeams = false
+        this.GameMode = 'adventure'
+        this.ShowPreGameTimer = true
     }
 
     Setup() {
-        this.DestroyScoreboard()
-        this.elapsedGameTime = 0
-        this.stage = 'Setup'
         GameController.Players.forEach(player => {
             player.deathTimer = -1
-            player.needsReviving = false
             player.score = 0
             if (!this.teams.includes(player.team)) this.teams.push(player.team) 
         })
         // todo: randomize order of this.teams
+        GameController.EnableTeamsPvP(this.PvPgroupedByTeams)
+        this.BuildWorld()
+        SlashCommand(`/gamemode ${this.GameMode} @a`)
+        SlashCommand(`/clear @a`)
+        GameController.Players.forEach(player => {
+            this.Respawn(player)
+        })
+        if (this.ShowPreGameTimer && Math.random() < 0.05) {
+            SlashCommand(`/title @a actionbar ⚠ cross-teaming is bannable or whatever`)
+        }
         this.SetupOverride()
+        this.UpdateScore()
+    }
+
+    BuildWorld() {
+
     }
 
     SetupOverride() {
-        this.StartGame()
+        
+    }
+
+    UpdateSetup() {
+        if (this.elapsedGameTime % 20 == 0 && this.ShowPreGameTimer) {
+            SlashCommand(`/title @a title ${-this.elapsedGameTime / 20}...`);
+        }
+        GameController.Players.forEach(player => {
+            if (this.PlayerIsOutOfBounds(player) || this.PlayerHasLeftStartArea(player)) {
+                this.Respawn(player)
+            }
+        })
+        this.UpdateSetupOverride()
+    }
+
+    UpdateSetupOverride() {
+        
     }
 
     StartGame() {
-        this.elapsedGameTime = 0
-        this.stage = 'InGame'
+        if (this.ShowPreGameTimer) {
+            SlashCommand(`/title @a clear`);
+        }
         this.StartGameOverride()
     }
 
     StartGameOverride() {
+        
+    }
+
+    Update() {
+
+        if (this.elapsedGameTime < 0) {
+            this.UpdateSetup()
+        } else if (this.elapsedGameTime == 0) {
+            this.StartGame()
+        } else {
+            this.UpdateGame()
+            if (!this.GameIsComplete && !this.IsGameInProgress()) {
+                this.EndGame()
+            }
+        }
+
+        GameController.Players.forEach(player => {
+            if (player.needsReviving) {
+                this.AttemptRevivePlayer(player)
+            }
+            if (player.deathTimer >= this.DeathCoolDown) {
+                this.Respawn(player)
+            }
+            if (player.deathTimer >= 0) {
+                player.deathTimer++
+            }
+        })
+
+        this.elapsedGameTime++
+    }
+
+    UpdateGame() {
+        this.UpdateGameOverride()
+    }
+
+    UpdateGameOverride() {
 
     }
 
@@ -64,50 +131,6 @@ BaseGame = class {
     }
 
     RespawnOverride(player) {
-
-    }
-
-    Update() {
-
-        if (this.stage == 'Setup') {
-            this.UpdateSetup()
-        } else if (this.stage == 'InGame') {
-            this.UpdateGame()
-            if (!this.IsGameInProgress()) {
-                this.EndGame()
-            }
-        } else if (this.stage == 'EndGame') {
-            this.UpdateEndGame()
-        }
-
-        GameController.Players.forEach(player => {
-            if (player.needsReviving) {
-                this.AttemptRevivePlayer(player)
-            }
-            if (player.deathTimer >= this.DeathCoolDown) {
-                this.Respawn(player)
-            }
-            if (player.deathTimer >= 0) {
-                player.deathTimer++
-            }
-        })
-
-        this.elapsedGameTime++
-    }
-
-    UpdateSetup() {
-        this.UpdateSetupOverride()
-    }
-
-    UpdateSetupOverride() {
-
-    }
-
-    UpdateGame() {
-        this.UpdateGameOverride()
-    }
-
-    UpdateGameOverride() {
 
     }
 
@@ -163,20 +186,21 @@ BaseGame = class {
         return true
     }
 
+    PlayerIsOutOfBounds(player) {
+        return false
+    }
+
+    PlayerHasLeftStartArea(player) {
+        return false    
+    }
+
     EndGame() {
-        this.stage = 'EndGame'
-        this.elapsedGameTime = 0
+        this.GameIsComplete = true
         this.EndGameOverride()
     }
 
     EndGameOverride() {
         Chat("Game Completed")
-    }
-
-    UpdateEndGame() {
-        if (this.elapsedGameTime >= 10 * 20) {
-            GameController.Game = null
-        }
     }
 
     AppearDead(player) {
@@ -201,6 +225,10 @@ BaseGame = class {
             SlashCommand(`/fill    0 ${layer} -128 127 ${layer} 127 air`)
         }
         SlashCommand(`/kill @e[type=!player]`)
+    }
+
+    UpdateScore() {
+        this.DestroyScoreboard()
     }
 
     CreateScoreboard(title, lines, ascending) {

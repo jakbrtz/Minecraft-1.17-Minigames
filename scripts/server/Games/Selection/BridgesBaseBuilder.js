@@ -3,6 +3,7 @@ BridgesBaseBuilder = class extends this.BaseSelection {
 	constructor() {
 		super()
 
+		this.GameMode = 'creative'
 		this.NextGame = new BridgesBaseSelection()
 		this.choices = [
 			{
@@ -36,7 +37,9 @@ BridgesBaseBuilder = class extends this.BaseSelection {
 			this.choices[0].construct(slots[i])
 			slots[i].structure = `slot${i}`
 		}
-		SlashCommand(`/gamemode creative @a`)
+	}
+
+	SetupOverride() {
 		SlashCommand(`/give @a concrete 1 14`)
 		GameController.Players.forEach(player => {
 			player.requestedBase = undefined

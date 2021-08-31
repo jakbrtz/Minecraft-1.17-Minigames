@@ -19,8 +19,6 @@ Paint = class extends this.BaseScoredGame {
 
 	UpdateGameOverrideOverride() {
 
-		if (this.elapsedGameTime < 20) return
-
 		GameController.Players.forEach(player => {
 			if (player.deathTimer == -1) {
 				let position = {

@@ -3,26 +3,21 @@ BaseSelection = class extends this.BaseGame {
 	constructor() {
 		super()
 		this.choices = []
+		this.elapsedGameTime = -20
+		this.ShowPreGameTimer = false
 	}
 
-	SetupOverride() {
+	BuildWorld() {
 		this.BuildWorldWithoutOptions()
 		this.choices.forEach(choice => {
 			choice.options.forEach(option => {
 				choice.construct(option)
-            })
+			})
 		})
-		GameController.Players.forEach(player => {
-			this.Respawn(player)
-        })
 	}
 
 	BuildWorldWithoutOptions() {
 		this.ClearWorld()
-    }
-
-	UpdateSetupOverride() {
-		if (this.elapsedGameTime >= 20) this.StartGame()
     }
 
 	UpdateGameOverride() {

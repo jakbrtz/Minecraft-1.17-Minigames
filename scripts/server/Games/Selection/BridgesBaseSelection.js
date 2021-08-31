@@ -10,7 +10,7 @@ BridgesBaseSelection = class extends this.BaseSelection {
 				additionalCheck: (base, player) => player.requestedBase != base.structure,
 				onSelect: (base, player) => {
 					player.requestedBase = base.structure
-					Chat(`${player.name} likes ${base.structure}`)
+					Chat(`${player.name} likes ${base.structure.split(':')[1]}`)
 				},
 				options: [
 					{ x: 32, z: 0, structure: "bases:Amethyst" },

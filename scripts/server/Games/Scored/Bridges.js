@@ -3,6 +3,7 @@ Bridges = class extends this.BaseScoredGame {
 	constructor() {
 		super()
 		this.DeathCoolDown = 5 * 20
+		this.GameMode = 'survival'
 	}
 
 	BuildWorld() {
@@ -86,8 +87,6 @@ Bridges = class extends this.BaseScoredGame {
 	}
 
 	UpdateGameOverrideOverride() {
-
-		if (this.elapsedGameTime < 20) return
 
 		this.teams.forEach(team => {
 			GameController.Players.forEach(player => {

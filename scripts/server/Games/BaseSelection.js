@@ -3,7 +3,6 @@ BaseSelection = class extends this.BaseGame {
 	constructor() {
 		super()
 		this.choices = []
-		this.elapsedGameTime = -20
 		this.ShowPreGameTimer = false
 	}
 

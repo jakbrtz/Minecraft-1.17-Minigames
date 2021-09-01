@@ -2,6 +2,8 @@ Lobby = class extends this.BaseSelection {
 
 	constructor() {
 		super()
+		this.serverName = GetRandomItem(["NA", "NA", "NA", "NA", "EU", "EU", "EU", "OCE", "OCE", "SEA", "ANT"])
+		this.serverNumber = RandomInt(60) + 1
 		this.choices = [
 			{
 				construct: dot => SlashCommand(`/fill ${dot.x - 1} 6 ${dot.z - 1} ${dot.x + 1} 6 ${dot.z + 1} concrete ${dot.team.colour}`),
@@ -58,9 +60,13 @@ Lobby = class extends this.BaseSelection {
 		let lines = []
 		GameController.Players.forEach(player => {
 			if (player.team != undefined) {
-				lines.push({text: `${NumberToColour(player.team.colour)}${player.name}\u00a7r`})
+				lines.push(`${NumberToColour(player.team.colour)}${player.name}\u00a7r`)
 			}
 		})
+		if (this.serverNumber < 16) {
+			lines.push("")
+			lines.push(`${this.serverName} #${this.serverNumber}`)
+		}
 		this.CreateScoreboard("Teams", lines)
 	}
 }

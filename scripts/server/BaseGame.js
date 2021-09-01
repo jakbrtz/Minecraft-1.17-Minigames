@@ -76,9 +76,6 @@
             this.StartGame()
         } else {
             this.UpdateGame()
-            if (!this.GameIsComplete && !this.IsGameInProgress()) {
-                this.EndGame()
-            }
         }
 
         GameController.Players.forEach(player => {
@@ -97,7 +94,15 @@
     }
 
     UpdateGame() {
+        GameController.Players.forEach(player => {
+            if (this.PlayerIsOutOfBounds(player)) {
+                this.PlayerDied(player.entity)
+            }
+        })
         this.UpdateGameOverride()
+        if (!this.IsGameInProgress()) {
+            this.EndGame()
+        }
     }
 
     UpdateGameOverride() {
@@ -125,6 +130,7 @@
         SlashCommand(`/effect ${player.name} clear`)
         SlashCommand(`/effect ${player.name} instant_health 1 15 true`)
         SlashCommand(`/effect ${player.name} fire_resistance 1 15 true`)
+        SlashCommand(`/effect ${player.name} saturation 1 15 true`)
         player.deathTimer = -1
         this.RespawnOverride(player)
     }
@@ -203,6 +209,7 @@
     }
 
     EndGame() {
+        if (this.GameIsComplete) return
         this.GameIsComplete = true
         this.EndGameOverride()
     }

@@ -101,6 +101,10 @@ Bridges = class extends this.BaseScoredGame {
 
 	}
 
+	PlayerHasLeftStartArea(player) {
+		return !PositionsAreClose(player.position, player.team.spawn, 3)
+	}
+
 	AttemptRevivePlayerOverride(player) {
 		if (Math.random() < 0.1) {
 			SlashCommand("/execute " + player.name + " ~~~ say " + GetRandomItem([

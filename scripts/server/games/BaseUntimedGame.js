@@ -15,9 +15,7 @@
 
 	UpdateGameOverride() {
 		GameController.Players.forEach(player => {
-			if (this.PlayerIsOutOfBounds(player)) {
-				this.Respawn(player)
-			} else if (player.finishTime == -1 && this.PlayerIsFinished(player)) {
+			if (player.finishTime == -1 && this.PlayerIsFinished(player)) {
 				player.finishTime = this.elapsedGameTime
 				this.UpdateScore()
 			}
@@ -28,14 +26,6 @@
 	PlayerIsFinished(player) {
 		return false
 	}
-
-	PlayerIsOutOfBounds(player) {
-		return false
-	}
-
-	PlayerHasLeftStartArea(player) {
-		return false
-    }
 
 	UpdateGameOverrideOverride() {
 	}

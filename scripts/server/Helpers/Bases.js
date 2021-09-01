@@ -8,12 +8,15 @@ const BaseInfo = {
     },
     "bases:Amethyst": {
         spawn: { x: 0, y: 0, z: -11 }
+    },
+    "bases:Mud": {
+        spawn: { x: 0, y: 0, z: 0 }
     }
 }
 
 StructureSpawn = function (name, center, rotation) {
     if (BaseInfo[name] == undefined || BaseInfo[name].spawn == undefined) {
-        return center
+        return AddWithRotation(center, rotation, { x: 0, y: 1, z: -8 })
     }
     return AddWithRotation(center, rotation, BaseInfo[name].spawn)
 }

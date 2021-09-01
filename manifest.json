@@ -1,15 +1,15 @@
 {
 	"format_version": 2,
 	"header": {
-		"description": "Behaviour pack that runs the Bridges game",
-		"name": "Bridges",
+		"description": "Behaviour pack that runs the multiplayer mini-game",
+		"name": "Server Games Kinda",
 		"uuid": "9061a0de-39a9-4135-acd7-48b7b2a2a564",
 		"version": [1, 0, 0],
 		"min_engine_version": [1, 16, 0]
 	},
 	"modules": [
 		{
-			"description": "Bridges behavior pack module",
+			"description": "Behavior Pack module",
 			"type": "data",
 			"uuid": "7427f748-7ddc-46f9-bace-b6675a091f28",
 			"version": [1, 0, 0]

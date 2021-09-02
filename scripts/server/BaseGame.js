@@ -3,6 +3,7 @@
     constructor() {
 
         this.teams = []
+        this.players = []
         this.GameIsComplete = false
 
         this.elapsedGameTime = -60
@@ -14,15 +15,16 @@
 
     Setup() {
         GameController.Players.forEach(player => {
-            player.deathTimer = -1
-            player.score = 0
-            if (!this.teams.includes(player.team)) this.teams.push(player.team)
+            this.players.push(player)
+            if (!this.teams.includes(player.team)) {
+                this.teams.push(player.team)
+            }
         })
         // todo: randomize order of this.teams
-        GameController.EnableTeamsPvP(this.PvPgroupedByTeams)
+        this.EnableTeamsPvP(this.PvPgroupedByTeams)
         this.BuildWorld()
         SlashCommand(`/gamemode ${this.GameMode} @a`)
-        GameController.Players.forEach(player => {
+        this.players.forEach(player => {
             this.Respawn(player)
         })
         if (this.ShowPreGameTimer && Math.random() < 0.05) {
@@ -30,6 +32,19 @@
         }
         this.SetupOverride()
         this.UpdateScore()
+    }
+
+    EnableTeamsPvP(enabled) {
+        this.players.forEach(player => {
+            SlashCommand(`/tag @a remove team-${player.team.name}`)
+        })
+        this.players.forEach(player => ClearNullifiedDamage(player.entity))
+        if (enabled) {
+            this.players.forEach(player => {
+                SlashCommand(`/tag ${player.name} add team-${player.team.name}`)
+                NullifyDamageFromTag(player.entity, `team-${player.team.name}`)
+            })
+        }
     }
 
     BuildWorld() {
@@ -44,7 +59,7 @@
         if (this.elapsedGameTime % 20 == 0 && this.ShowPreGameTimer) {
             SlashCommand(`/title @a title ${-this.elapsedGameTime / 20}...`);
         }
-        GameController.Players.forEach(player => {
+        this.players.forEach(player => {
             if (this.PlayerIsOutOfBounds(player) || this.PlayerHasLeftStartArea(player)) {
                 this.Respawn(player)
             }
@@ -77,9 +92,9 @@
             this.UpdateGame()
         }
 
-        GameController.Players.forEach(player => {
+        this.players.forEach(player => {
             if (player.needsReviving) {
-                this.AttemptRevivePlayer(player)
+                this.AttemptRevivePlayer(player) // todo: could this go in GameController?
             }
             if (player.deathTimer >= this.DeathCoolDown) {
                 this.Respawn(player)
@@ -93,7 +108,7 @@
     }
 
     UpdateGame() {
-        GameController.Players.forEach(player => {
+        this.players.forEach(player => {
             if (this.PlayerIsOutOfBounds(player)) {
                 this.PlayerDied(player.entity)
             }
@@ -108,10 +123,7 @@
 
     }
 
-    ReceivedTag(entity, tag) {
-        if (!GameController.Players.has(entity.id)) return
-        let player = GameController.Players.get(entity.id)
-
+    ReceivedTag(player, tag) {
         if (tag == "recentlyRevived") {
             player.needsReviving = false
         } else {
@@ -138,15 +150,11 @@
 
     }
 
-    PlayerDied(entity, killer) {
-        if (!GameController.Players.has(entity.id)) return
-        let player = GameController.Players.get(entity.id)
+    PlayerDied(player, killer) {
         player.deathTimer = 0
         player.needsReviving = true
-
         if (killer == undefined) return
-        if (!GameController.Players.has(killer.id)) return
-        this.PlayerKilled(player, GameController.Players.get(killer.id))
+        this.PlayerKilled(player, killer)
     }
 
     PlayerKilled(player, killer) {
@@ -166,9 +174,7 @@
         }
     }
 
-    PlayerPlacedBlock(entity, position) {
-        if (!GameController.Players.has(entity.id)) return
-        let player = GameController.Players.get(entity.id)
+    PlayerPlacedBlock(player, position) {
         this.PlayerPlacedBlockOverride(player, position)
     }
 
@@ -176,9 +182,8 @@
 
     }
 
-    PlayerTriedToDestroyBlock(entity, position) {
-        if (!GameController.Players.has(entity.id)) return
-        this.PlayerTriedToDestroyBlockOverride(GameController.Players.get(entity.id), position)
+    PlayerTriedToDestroyBlock(player, position) {
+        this.PlayerTriedToDestroyBlockOverride(player, position)
     }
 
     PlayerTriedToDestroyBlockOverride(player, position) {
@@ -186,9 +191,7 @@
     }
 
     EntityAttack(attacker, target) {
-        if (!GameController.Players.has(attacker.id)) return
-        if (!GameController.Players.has(target.id)) return
-        this.EntityAttackOverride(GameController.Players.get(attacker.id), GameController.Players.get(target.id))
+        this.EntityAttackOverride(attacker, target)
     }
 
     EntityAttackOverride(attacker, target) {
@@ -262,26 +265,6 @@
 
     DestroyScoreboard() {
         SlashCommand(`/scoreboard objectives remove showtouser`)
-    }
-
-    AnyPlayerIs(condition) {
-        let result = false
-        GameController.Players.forEach(player => {
-            if (condition(player)) {
-                result = true
-            }
-        })
-        return result
-    }
-
-    AllPlayersAre(condition) {
-        let result = true
-        GameController.Players.forEach(player => {
-            if (!condition(player)) {
-                result = false
-            }
-        })
-        return result
     }
 
 }

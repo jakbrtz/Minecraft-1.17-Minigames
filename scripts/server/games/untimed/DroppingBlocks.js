@@ -19,63 +19,59 @@ DroppingBlocks = class extends this.BaseUntimedGame {
 	}
 
 	UpdateGameOverrideOverride() {
-
-		GameController.Players.forEach(player => {
-			if (player.finishTime == -1) {
-				let blocksToChange = [{
-					x: Math.floor(player.position.x),
-					y: Math.floor(player.position.y - 1),
-					z: Math.floor(player.position.z)
-				}]
-				let xfrac = (player.position.x % 1 + 1) % 1 + 0.00001
-				if (xfrac >= 0.7) {
-					blocksToChange = [...blocksToChange, ...blocksToChange.map(block => {
-						return {
-							x: block.x + 1,
-							y: block.y,
-							z: block.z,
-						}
-					})]
-				}
-				if (xfrac <= 0.3) {
-					blocksToChange = [...blocksToChange, ...blocksToChange.map(block => {
-						return {
-							x: block.x - 1,
-							y: block.y,
-							z: block.z,
-						}
-					})]
-				}
-				let zfrac = (player.position.z % 1 + 1) % 1 + 0.00001
-				if (zfrac >= 0.7) {
-					blocksToChange = [...blocksToChange, ...blocksToChange.map(block => {
-						return {
-							x: block.x,
-							y: block.y,
-							z: block.z + 1,
-						}
-					})]
-				}
-				if (zfrac <= 0.3) {
-					blocksToChange = [...blocksToChange, ...blocksToChange.map(block => {
-						return {
-							x: block.x,
-							y: block.y,
-							z: block.z - 1,
-						}
-					})]
-				}
-
-				blocksToChange.forEach(position => {
-					if (this.trackedBlocks.IndicesInRange([position.x, this.YToLayerIndex(position.y), position.z])) {
-						if (this.trackedBlocks.Get([position.x, this.YToLayerIndex(position.y), position.z]) == undefined) {
-							SlashCommand(`/setblock ${position.x} ${position.y} ${position.z} stained_glass ${this.layerColours[this.YToLayerIndex(position.y)]}`)
-							this.trackedBlocks.Set([position.x, this.YToLayerIndex(position.y), position.z], { remainingTime: 20, position: position })
-                        }
-                    }
-				})
-
+		this.players.filter(player => player.finishTime == -1).forEach(player => {
+			let blocksToChange = [{
+				x: Math.floor(player.position.x),
+				y: Math.floor(player.position.y - 1),
+				z: Math.floor(player.position.z)
+			}]
+			let xfrac = (player.position.x % 1 + 1) % 1 + 0.00001
+			if (xfrac >= 0.7) {
+				blocksToChange = [...blocksToChange, ...blocksToChange.map(block => {
+					return {
+						x: block.x + 1,
+						y: block.y,
+						z: block.z,
+					}
+				})]
 			}
+			if (xfrac <= 0.3) {
+				blocksToChange = [...blocksToChange, ...blocksToChange.map(block => {
+					return {
+						x: block.x - 1,
+						y: block.y,
+						z: block.z,
+					}
+				})]
+			}
+			let zfrac = (player.position.z % 1 + 1) % 1 + 0.00001
+			if (zfrac >= 0.7) {
+				blocksToChange = [...blocksToChange, ...blocksToChange.map(block => {
+					return {
+						x: block.x,
+						y: block.y,
+						z: block.z + 1,
+					}
+				})]
+			}
+			if (zfrac <= 0.3) {
+				blocksToChange = [...blocksToChange, ...blocksToChange.map(block => {
+					return {
+						x: block.x,
+						y: block.y,
+						z: block.z - 1,
+					}
+				})]
+			}
+
+			blocksToChange.forEach(position => {
+				if (this.trackedBlocks.IndicesInRange([position.x, this.YToLayerIndex(position.y), position.z])) {
+					if (this.trackedBlocks.Get([position.x, this.YToLayerIndex(position.y), position.z]) == undefined) {
+						SlashCommand(`/setblock ${position.x} ${position.y} ${position.z} stained_glass ${this.layerColours[this.YToLayerIndex(position.y)]}`)
+						this.trackedBlocks.Set([position.x, this.YToLayerIndex(position.y), position.z], { remainingTime: 20, position: position })
+					}
+				}
+			})
 		})
 
 		this.trackedBlocks.forEach(trackedBlock => {

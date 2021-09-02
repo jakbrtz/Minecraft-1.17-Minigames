@@ -61,10 +61,8 @@ Lobby = class extends this.BaseSelection {
 
 	UpdateScore() {
 		let lines = []
-		GameController.Players.forEach(player => {
-			if (player.team != undefined) {
-				lines.push(`${NumberToColour(player.team.colour)}${player.name}\u00a7r`)
-			}
+		this.players.forEach(player => {
+			lines.push(`${NumberToColour(player.team.colour)}${player.name}\u00a7r`)
 		})
 		if (this.serverNumber < 16) {
 			lines.push("")

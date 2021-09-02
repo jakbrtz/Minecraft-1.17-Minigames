@@ -42,9 +42,7 @@ BridgesBaseBuilder = class extends this.BaseSelection {
 
 	SetupOverride() {
 		SlashCommand(`/give @a concrete 1 14`)
-		GameController.Players.forEach(player => {
-			player.requestedBase = undefined
-		})
+		this.players.forEach(player => player.requestedBase = undefined)
 	}
 
 	RespawnOverride(player) {

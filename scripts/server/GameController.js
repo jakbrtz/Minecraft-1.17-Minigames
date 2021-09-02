@@ -1,24 +1,17 @@
 GameController = {
-	GameDuration: 5 * 60 * 20,
-	Pause: false,
 	Game: null,
 	Players: new Map(),
+
+	GameDuration: 5 * 60 * 20,
+	Pause: false,
 
 	Update: function (allEntities) {
 
 		allEntities.forEach(entity => {
 			if (this.Players.has(entity.id)) {
-				let player = this.Players.get(entity.id)
-				player.entity = entity
-				player.position = Find(entity)
+				this.Players.get(entity.id).Update(entity)
 			} else {
-				this.Players.set(entity.id, {
-					entity: entity,
-					position: Find(entity),
-					name: GetName(entity),
-					team: RandomTeam(),
-					deathTimer: -1,
-				})
+				this.Players.set(entity.id, new Player(entity))
 			}
 		})
 
@@ -34,8 +27,8 @@ GameController = {
 						this.ChangeGame(this.Game.NextGame())
 					} else if (tag.startsWith("duration")) {
 						this.GameDuration = tag.substr(8) * 20
-					} else if (this.Game != null && !this.Pause) {
-						this.Game.ReceivedTag(entity, tag)
+					} else if (this.Game != null && !this.Pause && this.Players.has(entity.id)) {
+						this.Game.ReceivedTag(this.Players.get(entity.id), tag)
 					}
 				}
 			})
@@ -47,7 +40,6 @@ GameController = {
 			this.Game.Update()
 		} else if (this.Players.size > 0) {
 			this.ChangeGame(new Lobby())
-			this.EnableTeamsPvP(false)
         }
 	},
 
@@ -60,39 +52,28 @@ GameController = {
 
 	EntityDied: function (entity, killer) {
 		if (this.Game != null && !this.Pause) {
-			this.Game.PlayerDied(entity, killer)
+			if (this.Players.has(entity.id)) {
+				this.Game.PlayerDied(this.Players.get(entity.id), killer != undefined ? this.Players.get(killer.id) : undefined)
+			}
 		}
 	},
 
 	EntityPlacedBlock: function (entity, position) {
-		if (this.Game != null && !this.Pause) {
-			this.Game.PlayerPlacedBlock(entity, position)
+		if (this.Game != null && !this.Pause && this.Players.has(entity.id)) {
+			this.Game.PlayerPlacedBlock(this.Players.get(entity.id), position)
 		}
 	},
 
 	EntityTriedToDestroyBlock: function (entity, position) {
-		if (this.Game != null && !this.Pause) {
-			this.Game.PlayerTriedToDestroyBlock(entity, position)
+		if (this.Game != null && !this.Pause && this.Players.has(entity.id)) {
+			this.Game.PlayerTriedToDestroyBlock(this.Players.get(entity.id), position)
 		}
 	},
 
 	EntityAttack: function (attacker, target) {
-		if (this.Game != null && !this.Pause) {
-			this.Game.EntityAttack(attacker, target)
+		if (this.Game != null && !this.Pause && this.Players.has(attacker.id) && this.Players.has(target.id)) {
+			this.Game.EntityAttack(this.Players.get(attacker.id), this.Players.get(target.id))
 		}
-	},
-
-	EnableTeamsPvP: function (enabled) {
-		this.Players.forEach(player => {
-			SlashCommand(`/tag @a remove team-${player.team.name}`)
-		})
-		this.Players.forEach(player => ClearNullifiedDamage(player.entity))
-		if (enabled) {
-			this.Players.forEach(player => {
-				SlashCommand(`/tag ${player.name} add team-${player.team.name}`)
-				NullifyDamageFromTag(player.entity, `team-${player.team.name}`)
-            })
-        }
-    }
+	}
 
 }

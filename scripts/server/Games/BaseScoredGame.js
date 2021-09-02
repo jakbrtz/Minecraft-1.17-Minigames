@@ -6,6 +6,10 @@
 		this.PvPgroupedByTeams = this.GroupScoreByTeam
 	}
 
+	SetupOverride() {
+		this.players.forEach(player => player.score = 0)
+    }
+
 	UpdateGameOverride() {
 
 		if (this.elapsedGameTime % 20 == 0) {
@@ -26,14 +30,14 @@
 
 	MakeListOfScores() {
 		if (!this.GroupScoreByTeam) {
-			return Array.from(GameController.Players.values())
+			return this.players
 		}
 		let list = this.teams.map(team => { return {
 			ref: team,
 			name: NumberToColour(team.colour) + team.name,
 			score: 0
 		}})
-		GameController.Players.forEach(player => {
+		this.players.forEach(player => {
 			list.filter(item => item.ref == player.team).forEach(item => item.score += player.score)
 		})
 		return list

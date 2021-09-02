@@ -7,14 +7,12 @@
 	}
 
 	SetupOverride() {
-		GameController.Players.forEach(player => {
-			player.finishTime = -1
-		})
+		this.players.forEach(player => player.finishTime = -1)
 		SlashCommand(`/effect @a regeneration 60 1 true`)
 	}
 
 	UpdateGameOverride() {
-		GameController.Players.forEach(player => {
+		this.players.forEach(player => {
 			if (player.finishTime == -1 && this.PlayerIsFinished(player)) {
 				player.finishTime = this.elapsedGameTime
 				this.UpdateScore()
@@ -31,19 +29,19 @@
 	}
 
 	IsGameInProgress() {
-		return this.AnyPlayerIs(player => player.finishTime == -1)
+		return this.players.some(player => player.finishTime == -1)
 	}
 
 	UpdateScore() {
 
-		let finishedPlayers = [...GameController.Players.values()]
+		let finishedPlayers = this.players
 			.filter(player => player.finishTime != -1)
 			.sort((a, b) => (a.finishTime - b.finishTime))
 
 		let lines = []
 
 		for (var i = 0; i < finishedPlayers.length; i++) {
-			lines.push({ text: finishedPlayers[i].name, value: this.GoalIsToFinishFast ? i + 1 : GameController.Players.size - i })
+			lines.push({ text: finishedPlayers[i].name, value: this.GoalIsToFinishFast ? i + 1 : this.players.length - i })
 		}
 
 		if (lines.length > 0) {

@@ -25,7 +25,7 @@ BaseSelection = class extends this.BaseGame {
     }
 
 	UpdateGameOverride() {
-		GameController.Players.forEach(player => {
+		this.players.forEach(player => {
 			this.choices.forEach(choice => {
 				choice.options.forEach(option => {
 					if ((choice.additionalCheck == undefined || choice.additionalCheck(option, player)) && PositionsAreCloseIgnoreY(player.position, option, choice.radius)) {

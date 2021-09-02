@@ -75,7 +75,7 @@ SteppingStones = class extends this.BaseUntimedGame {
 			trackedPlatform.nearbyPlayer = false
 		})
 
-		GameController.Players.forEach(player => {
+		this.players.forEach(player => {
 			let index = this.IndexFromPosition(player.position)
 			if (this.trackedPlatforms.IndicesInRange(index)) {
 				this.trackedPlatforms.Get(index).nearbyPlayer = true

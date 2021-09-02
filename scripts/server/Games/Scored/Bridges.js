@@ -30,11 +30,7 @@ Bridges = class extends this.BaseScoredGame {
 			team.requestedBases = []
 		}
 
-		GameController.Players.forEach(player => {
-			if (player.requestedBase != undefined) {
-				player.team.requestedBases.push(player.requestedBase)
-            }
-        })
+		this.players.filter(player => player.requestedBase != undefined).forEach(player => player.team.requestedBases.push(player.requestedBase))
 
 		this.ClearWorld()
 		this.teams.forEach(team => {
@@ -89,7 +85,7 @@ Bridges = class extends this.BaseScoredGame {
 	UpdateGameOverrideOverride() {
 
 		this.teams.forEach(team => {
-			GameController.Players.forEach(player => {
+			this.players.forEach(player => {
 				if (player.team != team && PositionsAreClose(player.position, team.goal, 2)) {
 					player.score++
 					this.UpdateScore()

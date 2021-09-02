@@ -23,7 +23,7 @@ InverseTag = class extends this.BaseScoredGame {
 
 	UpdateGameOverrideOverride() {
 		if (this.HighlightedPlayer == null || this.HighlightedPlayer.deathTimer != -1) {
-			this.SetHighlightedPlayer(GetRandomItem(Array.from(GameController.Players.values())))
+			this.SetHighlightedPlayer(GetRandomItem(this.players))
 		}
 		if (this.elapsedGameTime % 20 == 0) {
 			this.HighlightedPlayer.score++
@@ -49,13 +49,11 @@ InverseTag = class extends this.BaseScoredGame {
 	}
 
 	MakeListOfScores() {
-		let list = []
-		GameController.Players.forEach(player => {
-			list.push({
+        return this.players.map(player => {
+			return {
 				name: (player == this.HighlightedPlayer ? '\u00a7c' : '') + player.name,
 				score: player.score
-			})
+			}
 		})
-		return list
 	}
 }

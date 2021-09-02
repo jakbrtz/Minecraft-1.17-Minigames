@@ -40,16 +40,16 @@ BridgesBaseBuilder = class extends this.BaseSelection {
 		}
 	}
 
-	SetupOverride() {
+	SetupExtension() {
 		SlashCommand(`/give @a concrete 1 14`)
 		this.players.forEach(player => player.requestedBase = undefined)
 	}
 
-	RespawnOverride(player) {
+	RespawnExtension(player) {
 		SlashCommand(`/tp ${player.name} ${RandomFloat(-10, 10)} 66 ${RandomFloat(-10, 10)}`)
 	}
 
-	EndGameOverride() {
+	EndGameExtension() {
 		this.choices[0].options.forEach(option => {
 			SlashCommand(`/structure save ${option.structure} ${option.x - 14} 50 ${option.z - 14} ${option.x + 14} 110 ${option.z + 14} disk`)
 		})

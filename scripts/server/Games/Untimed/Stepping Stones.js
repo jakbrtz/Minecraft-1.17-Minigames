@@ -64,11 +64,11 @@ SteppingStones = class extends this.BaseUntimedGame {
         }
 	}
 
-	RespawnOverride(player) {
+	RespawnExtension(player) {
 		SlashCommand(`/tp ${player.name} ${this.xOffset + ((this.columns / 2 + Math.random(-1, 1)) * (this.size + this.gap))} 66 ${this.zOffset - 5} facing 0 66 0`)
 	}
 
-	UpdateGameOverrideOverride() {
+	UpdateGameExtensionExtension() {
 
 		this.trackedPlatforms.forEach(trackedPlatform => {
 			trackedPlatform.previousNearbyPlayer = trackedPlatform.nearbyPlayer

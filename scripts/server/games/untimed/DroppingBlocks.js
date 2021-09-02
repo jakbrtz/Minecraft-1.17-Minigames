@@ -14,11 +14,11 @@ DroppingBlocks = class extends this.BaseUntimedGame {
 		}
 	}
 
-	RespawnOverride(player) {
+	RespawnExtension(player) {
 		SlashCommand(`/spreadplayers -20 0 3 6 ${player.name}`)
 	}
 
-	UpdateGameOverrideOverride() {
+	UpdateGameExtensionExtension() {
 		this.players.filter(player => player.finishTime == -1).forEach(player => {
 			let blocksToChange = [{
 				x: Math.floor(player.position.x),

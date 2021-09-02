@@ -24,7 +24,7 @@ BaseSelection = class extends this.BaseGame {
 		return []
     }
 
-	UpdateGameOverride() {
+	UpdateGameExtension() {
 		this.players.forEach(player => {
 			this.choices.forEach(choice => {
 				choice.options.forEach(option => {

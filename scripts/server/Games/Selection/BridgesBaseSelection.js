@@ -30,7 +30,7 @@ BridgesBaseSelection = class extends this.BaseSelection {
 		SlashCommand(`/fill -64 64 -64 63 64 63 glass`)
 	}
 
-	RespawnOverride(player) {
+	RespawnExtension(player) {
 		SlashCommand(`/tp ${player.name} ${RandomFloat(-10, 10)} 66 ${RandomFloat(-10, 10)}`)
 	}
 

@@ -6,26 +6,26 @@
 		this.GameMode = 'adventure'
 	}
 
-	SetupOverride() {
+	SetupExtension() {
 		this.players.forEach(player => player.finishTime = -1)
 		SlashCommand(`/effect @a regeneration 60 1 true`)
 	}
 
-	UpdateGameOverride() {
+	UpdateGameExtension() {
 		this.players.forEach(player => {
 			if (player.finishTime == -1 && this.PlayerIsFinished(player)) {
 				player.finishTime = this.elapsedGameTime
 				this.UpdateScore()
 			}
 		})
-		this.UpdateGameOverrideOverride()
+		this.UpdateGameExtensionExtension()
 	}
 
 	PlayerIsFinished(player) {
 		return false
 	}
 
-	UpdateGameOverrideOverride() {
+	UpdateGameExtensionExtension() {
 	}
 
 	IsGameInProgress() {
@@ -50,6 +50,5 @@
 			this.DestroyScoreboard()
         }
 
-		
 	}
 }

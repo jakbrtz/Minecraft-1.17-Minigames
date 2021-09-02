@@ -17,11 +17,11 @@ InverseTag = class extends this.BaseScoredGame {
 		SlashCommand(`/structure load ${GetRandomItem(platforms)} -16 63   0 270_degrees`)
 	}
 
-	RespawnOverride(player) {
+	RespawnExtension(player) {
 		SlashCommand(`/spreadplayers 0 0 5 15 ${player.name}`)
 	}
 
-	UpdateGameOverrideOverride() {
+	UpdateGameExtensionExtension() {
 		if (this.HighlightedPlayer == null || this.HighlightedPlayer.deathTimer != -1) {
 			this.SetHighlightedPlayer(GetRandomItem(this.players))
 		}
@@ -30,7 +30,7 @@ InverseTag = class extends this.BaseScoredGame {
 		}
 	}
 
-	EntityAttackOverride(attacker, target) {
+	EntityAttack(attacker, target) {
 		Chat(`${attacker.name} smacked ${target.name}`)
 		if (target == this.HighlightedPlayer) {
 			this.SetHighlightedPlayer(attacker)
@@ -44,7 +44,7 @@ InverseTag = class extends this.BaseScoredGame {
 		this.HighlightedPlayer = player
     }
 
-	AttemptRevivePlayerOverride(player) {
+	AttemptRevivePlayerExtension(player) {
 		SlashCommand(`/tp ${player.name} 0 80 0`)
 	}
 

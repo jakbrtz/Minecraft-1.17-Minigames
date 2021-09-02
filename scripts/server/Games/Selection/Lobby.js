@@ -55,7 +55,7 @@ Lobby = class extends this.BaseSelection {
 		this.UpdateScore()
 	}
 
-	RespawnOverride(player) {
+	RespawnExtension(player) {
 		SlashCommand(`/tp ${player.name} ${RandomFloat(-3, 3)} 7 ${RandomFloat(-3, 3)}`)
 	}
 

@@ -30,7 +30,7 @@
         if (this.ShowPreGameTimer && Math.random() < 0.05) {
             SlashCommand(`/title @a actionbar ⚠ cross-teaming is bannable or whatever`)
         }
-        this.SetupOverride()
+        this.SetupExtension()
         this.UpdateScore()
     }
 
@@ -51,7 +51,7 @@
 
     }
 
-    SetupOverride() {
+    SetupExtension() {
 
     }
 
@@ -64,10 +64,10 @@
                 this.Respawn(player)
             }
         })
-        this.UpdateSetupOverride()
+        this.UpdateSetupExtension()
     }
 
-    UpdateSetupOverride() {
+    UpdateSetupExtension() {
 
     }
 
@@ -75,10 +75,10 @@
         if (this.ShowPreGameTimer) {
             SlashCommand(`/title @a clear`);
         }
-        this.StartGameOverride()
+        this.StartGameExtension()
     }
 
-    StartGameOverride() {
+    StartGameExtension() {
 
     }
 
@@ -113,13 +113,13 @@
                 this.PlayerDied(player.entity)
             }
         })
-        this.UpdateGameOverride()
+        this.UpdateGameExtension()
         if (!this.IsGameInProgress()) {
             this.EndGame()
         }
     }
 
-    UpdateGameOverride() {
+    UpdateGameExtension() {
 
     }
 
@@ -127,26 +127,25 @@
         if (tag == "recentlyRevived") {
             player.needsReviving = false
         } else {
-            this.ReceivedTagOverride(player, tag)
+            this.ReceivedTagExtension(player, tag)
         }
     }
 
-    ReceivedTagOverride(player, tag) {
+    ReceivedTagExtension(player, tag) {
 
     }
 
     Respawn(player) {
-
         SlashCommand(`/clear ${player.name}`)
         SlashCommand(`/effect ${player.name} clear`)
         SlashCommand(`/effect ${player.name} instant_health 1 15 true`)
         SlashCommand(`/effect ${player.name} fire_resistance 1 15 true`)
         SlashCommand(`/effect ${player.name} saturation 1 15 true`)
         player.deathTimer = -1
-        this.RespawnOverride(player)
+        this.RespawnExtension(player)
     }
 
-    RespawnOverride(player) {
+    RespawnExtension(player) {
 
     }
 
@@ -164,10 +163,10 @@
     AttemptRevivePlayer(player) {
         SlashCommand(`/tag ${player.name} add JakesGames-recentlyRevived`)
         this.AppearDead(player)
-        this.AttemptRevivePlayerOverride(player)
+        this.AttemptRevivePlayerExtension(player)
     }
 
-    AttemptRevivePlayerOverride(player) {
+    AttemptRevivePlayerExtension(player) {
         // todo: rewrite this nicer so it can handle edge cases like DeathCoolDown==1
         if (this.DeathCoolDown == 0) {
             this.Respawn(player)
@@ -175,27 +174,12 @@
     }
 
     PlayerPlacedBlock(player, position) {
-        this.PlayerPlacedBlockOverride(player, position)
-    }
-
-    PlayerPlacedBlockOverride(player, position) {
-
     }
 
     PlayerTriedToDestroyBlock(player, position) {
-        this.PlayerTriedToDestroyBlockOverride(player, position)
-    }
-
-    PlayerTriedToDestroyBlockOverride(player, position) {
-
     }
 
     EntityAttack(attacker, target) {
-        this.EntityAttackOverride(attacker, target)
-    }
-
-    EntityAttackOverride(attacker, target) {
-
     }
 
     IsGameInProgress() {
@@ -213,10 +197,10 @@
     EndGame() {
         if (this.GameIsComplete) return
         this.GameIsComplete = true
-        this.EndGameOverride()
+        this.EndGameExtension()
     }
 
-    EndGameOverride() {
+    EndGameExtension() {
         Chat("Game Completed")
     }
 

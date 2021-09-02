@@ -29,7 +29,7 @@ QuickRespawn = class extends this.BaseScoredGame {
 		}
 	}
 
-	RespawnOverride(player) {
+	RespawnExtension(player) {
 		SlashCommand(`/give ${player.name} diamond_sword`)
 		if (this.GroupScoreByTeam) {
 			SlashCommand(`/tp ${player.name} ${player.team.spawn.x + RandomFloat(-1, 1)} 66 ${player.team.spawn.z + RandomFloat(-1, 1)}`)

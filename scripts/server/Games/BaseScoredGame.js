@@ -6,21 +6,21 @@
 		this.PvPgroupedByTeams = this.GroupScoreByTeam
 	}
 
-	SetupOverride() {
+	SetupExtension() {
 		this.players.forEach(player => player.score = 0)
     }
 
-	UpdateGameOverride() {
+	UpdateGameExtension() {
 
 		if (this.elapsedGameTime % 20 == 0) {
 			this.UpdateScore()
 		}
 
-		this.UpdateGameOverrideOverride()
+		this.UpdateGameExtensionExtension()
 
 	}
 
-	UpdateGameOverrideOverride() {
+	UpdateGameExtensionExtension() {
 
     }
 
@@ -43,7 +43,7 @@
 		return list
     }
 
-	EndGameOverride() {
+	EndGameExtension() {
 		this.UpdateScore()
 		let bestScore = 1
 		let domain = this.MakeListOfScores()

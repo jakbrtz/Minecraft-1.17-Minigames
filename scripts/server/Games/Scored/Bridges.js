@@ -73,7 +73,7 @@ Bridges = class extends this.BaseScoredGame {
 		})
 	}
 
-	RespawnOverride(player) {
+	RespawnExtension(player) {
 		SlashCommand(`/tp ${player.name} ${player.team.spawn.x} ${player.team.spawn.y} ${player.team.spawn.z} facing 0 70 0`)
 		SlashCommand(`/give ${player.name} iron_sword`)
 		SlashCommand(`/give ${player.name} iron_pickaxe`)
@@ -82,7 +82,7 @@ Bridges = class extends this.BaseScoredGame {
 		SlashCommand(`/give ${player.name} concrete 64 ${player.team.colour}`)
 	}
 
-	UpdateGameOverrideOverride() {
+	UpdateGameExtensionExtension() {
 
 		this.teams.forEach(team => {
 			this.players.forEach(player => {
@@ -101,7 +101,7 @@ Bridges = class extends this.BaseScoredGame {
 		return !PositionsAreClose(player.position, player.team.spawn, 3)
 	}
 
-	AttemptRevivePlayerOverride(player) {
+	AttemptRevivePlayerExtension(player) {
 		if (Math.random() < 0.1) {
 			SlashCommand("/execute " + player.name + " ~~~ say " + GetRandomItem([
 				"I got rekt",
@@ -114,7 +114,7 @@ Bridges = class extends this.BaseScoredGame {
 		SlashCommand(`/tp ${player.name} 0 100 0`)
 	}
 
-	PlayerPlacedBlockOverride(player, position) {
+	PlayerPlacedBlock(player, position) {
 		this.teams.forEach(team => {
 			if (PositionsAreClose(position, team.goal, 1) || PositionsAreClose(position, team.spawn, 1)) {
 				SlashCommand(`/msg ${player.name} You cannot build here`)
@@ -123,7 +123,7 @@ Bridges = class extends this.BaseScoredGame {
 		})
 	}
 
-	PlayerTriedToDestroyBlockOverride(player, position) {
+	PlayerTriedToDestroyBlock(player, position) {
 		let block = GetBlock(player.entity, position)
 		if (block.__identifier != "minecraft:concrete") {
 

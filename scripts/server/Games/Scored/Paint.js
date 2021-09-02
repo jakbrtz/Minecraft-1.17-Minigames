@@ -12,12 +12,12 @@ Paint = class extends this.BaseScoredGame {
 		SlashCommand(`/fill -20 64 -20 20 64 20 concrete 0`)
 	}
 
-	RespawnOverride(player) {
+	RespawnExtension(player) {
 		SlashCommand(`/tp ${player.name} ${RandomFloat(-5, 5)} 66 ${RandomFloat(-5, 5)}`)
 		SlashCommand(`/give ${player.name} filled_map`)
 	}
 
-	UpdateGameOverrideOverride() {
+	UpdateGameExtensionExtension() {
 
 		this.players.filter(player => player.deathTimer == -1).forEach(player => {
 			let position = {
@@ -41,7 +41,7 @@ Paint = class extends this.BaseScoredGame {
 
 	}
 
-	AttemptRevivePlayerOverride(player) {
+	AttemptRevivePlayerExtension(player) {
 		SlashCommand(`/tp ${player.name} 0 100 0`)
 	}
 }

@@ -22,7 +22,7 @@ system.initialize = function () {
 
 system.update = function () {
 	if (skippedTicks >= 50) {
-		GameController.Update(system.getEntitiesFromQuery(simple_query))
+		GameController.Update(system.getEntitiesFromQuery(simple_query).filter(entity => entity.__identifier__ == "minecraft:player"))
 	} else {
 		skippedTicks++
     }

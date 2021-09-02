@@ -43,8 +43,25 @@ Lobby = class extends this.BaseSelection {
 					{ x: -8, z: 24, structure: "arenateam", game: new QuickRespawn(true) },
 					{ x: 8, z: 24, structure: "doordash", game: new DoorDash() },
 					{ x: 20, z: 20, structure: "inversetag", game: new InverseTag() },
+					{ x: -20, z: 20, structure: "shooters", game: new Shooters() },
 				]
-			}
+			},
+			{
+				construct: time => SlashCommand(`/setblock ${time.x} 4 ${time.z} obsidian`),
+				radius: 1,
+				additionalCheck: time => GameController.GameDuration != time.duration,
+				onSelect: time => {
+					GameController.GameDuration = time.duration
+					Chat(`The game duration is now ${TicksToDuration(time.duration)}`)
+				},
+				options: [
+					{ x: -4, z: -31, duration: 30 * 20 },
+					{ x: -2, z: -31, duration: 60 * 20 },
+					{ x: 0, z: -31, duration: 120 * 20 },
+					{ x: 2, z: -31, duration: 300 * 20 },
+					{ x: 4, z: -31, duration: 600 * 20 },
+				]
+            }
 		]
 	}
 

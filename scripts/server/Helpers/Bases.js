@@ -11,6 +11,9 @@ const BaseInfo = {
     },
     "bases:Mud": {
         spawn: { x: 0, y: 0, z: 0 }
+    },
+    "bases:GoldBlocks": {
+        spawn: { x: 0, y: 0, z: 0 }
     }
 }
 

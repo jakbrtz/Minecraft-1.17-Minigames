@@ -1,8 +1,8 @@
-Shooters = class extends this.BaseUntimedGame {
+Shooters = class extends this.BaseRaceOrSurvival {
 
 	constructor() {
 		super()
-		this.GoalIsToFinishFast = false
+		this.IsRace = false
 	}
 
 	BuildWorld() {
@@ -18,7 +18,7 @@ Shooters = class extends this.BaseUntimedGame {
 			SlashCommand(`/fill -10 64 ${i} 10 64 ${i} bone_block`)
 		}
 
-		for (var i = -8; i <= 8; i += 4) {
+		for (var i = -6; i <= 6; i += 6) {
 			SlashCommand(`/summon skeleton ${i} 65 15`)
 			SlashCommand(`/summon skeleton ${i} 65 -15`)
 			SlashCommand(`/summon skeleton 15 65 ${i}`)
@@ -36,7 +36,7 @@ Shooters = class extends this.BaseUntimedGame {
 		SlashCommand(`/effect ${player.name} invisibility 3 15 false`)
 	}
 
-	PlayerIsFinished(player) {
-		return player.position.y < 60
+	PlayerIsOutOfBounds(player) {
+		return player.position.y < 40
 	}
 }

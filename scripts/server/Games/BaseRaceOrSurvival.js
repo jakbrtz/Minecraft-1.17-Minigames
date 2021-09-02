@@ -1,8 +1,8 @@
-﻿BaseUntimedGame = class extends this.BaseGame {
+﻿BaseRaceOrSurvival = class extends this.BaseGame {
 
 	constructor() {
 		super()
-		this.GoalIsToFinishFast = true
+		this.IsRace = true
 		this.GameMode = 'adventure'
 	}
 
@@ -13,7 +13,7 @@
 
 	UpdateGameExtension() {
 		this.players.forEach(player => {
-			if (player.finishTime == -1 && this.PlayerIsFinished(player)) {
+			if (player.finishTime < 0 && this.PlayerIsFinished(player)) {
 				player.finishTime = this.elapsedGameTime
 				this.UpdateScore()
 			}
@@ -28,27 +28,26 @@
 	UpdateGameExtensionExtension() {
 	}
 
+	PlayerDiedExtension(player, killer) {
+		if (!this.IsRace) {
+			player.finishTime = this.elapsedGameTime
+			this.UpdateScore()
+		}
+	}
+
 	IsGameInProgress() {
-		return this.players.some(player => player.finishTime == -1)
+		return this.players.some(player => player.finishTime < 0)
 	}
 
 	UpdateScore() {
-
-		let finishedPlayers = this.players
-			.filter(player => player.finishTime != -1)
+		let lines = this.players
+			.filter(player => player.finishTime > 0)
 			.sort((a, b) => (a.finishTime - b.finishTime))
-
-		let lines = []
-
-		for (var i = 0; i < finishedPlayers.length; i++) {
-			lines.push({ text: finishedPlayers[i].name, value: this.GoalIsToFinishFast ? i + 1 : this.players.length - i })
-		}
-
+			.map((player, i) => { return { text: player.name, value: this.IsRace ? i + 1 : this.players.length - i } })
 		if (lines.length > 0) {
 			this.CreateScoreboard("Results", lines, true)
 		} else {
 			this.DestroyScoreboard()
         }
-
 	}
 }

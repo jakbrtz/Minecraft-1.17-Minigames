@@ -1,10 +1,10 @@
-DroppingBlocks = class extends this.BaseUntimedGame {
+DroppingBlocks = class extends this.BaseRaceOrSurvival {
 
 	constructor() {
 		super()
+		this.IsRace = false
 		this.layerColours = [2, 1, 10, 4, 3]
 		this.trackedBlocks = new ArrayMultiDimensional([21, 5, 21], [-30, 0, -10])
-		this.GoalIsToFinishFast = false
 	}
 
 	BuildWorld() {
@@ -84,8 +84,12 @@ DroppingBlocks = class extends this.BaseUntimedGame {
 	}
 
 	PlayerIsFinished(player) {
-		return player.position.y < this.LayerIndexToY(-5)
+		return player.position.y < this.LayerIndexToY(-1)
 	}
+
+	PlayerIsOutOfBounds(player) {
+		return player.position.y <= 5
+    }
 
 	LayerIndexToY(i) {
 		return 30 + i * 5

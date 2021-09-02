@@ -1,7 +1,8 @@
-DoorDash = class extends this.BaseUntimedGame {
+DoorDash = class extends this.BaseRaceOrSurvival {
 
 	constructor() {
 		super()
+		this.IsRace = true
 
 		this.width = 6
 		this.depth = 8

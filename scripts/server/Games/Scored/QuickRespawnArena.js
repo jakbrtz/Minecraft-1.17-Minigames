@@ -39,8 +39,8 @@ QuickRespawn = class extends this.BaseScoredGame {
         }
 	}
 
-	PlayerKilled(player, killer) {
-		if (!this.GameIsComplete) {
+	PlayerDiedExtension(player, killer) {
+		if (!this.GameIsComplete && killer != undefined) {
 			killer.score++
 			this.UpdateScore()
 		}

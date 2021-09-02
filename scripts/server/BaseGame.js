@@ -110,7 +110,7 @@
     UpdateGame() {
         this.players.forEach(player => {
             if (this.PlayerIsOutOfBounds(player)) {
-                this.PlayerDied(player.entity)
+                this.PlayerDied(player)
             }
         })
         this.UpdateGameExtension()
@@ -151,11 +151,10 @@
     PlayerDied(player, killer) {
         player.deathTimer = 0
         player.needsReviving = true
-        if (killer == undefined) return
-        this.PlayerKilled(player, killer)
+        this.PlayerDiedExtension(player, killer)
     }
 
-    PlayerKilled(player, killer) {
+    PlayerDiedExtension(player, killer) {
 
     }
 

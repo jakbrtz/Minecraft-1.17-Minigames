@@ -1,7 +1,8 @@
-SteppingStones = class extends this.BaseUntimedGame {
+SteppingStones = class extends this.BaseRaceOrSurvival {
 
 	constructor() {
 		super()
+		this.IsRace = true
 
 		this.size = 3
 		this.gap = 1

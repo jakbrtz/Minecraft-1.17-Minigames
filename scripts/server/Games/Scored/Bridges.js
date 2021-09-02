@@ -2,6 +2,7 @@ Bridges = class extends this.BaseScoredGame {
 
 	constructor() {
 		super()
+		this.DefaultGameDuration = 5 * 60 * 20
 		this.DeathCoolDown = 5 * 20
 		this.GameMode = 'survival'
 	}

@@ -2,8 +2,8 @@ Lobby = class extends this.BaseSelection {
 
 	constructor() {
 		super()
-		this.serverName = GetRandomItem(["NA", "NA", "NA", "NA", "EU", "EU", "EU", "OCE", "OCE", "SEA", "ANT"])
-		this.serverNumber = RandomInt(60) + 1
+		this.serverName = GetRandomItem(["NA", "NA", "EU", "EU", "OCE"])
+		this.serverNumber = RandomInt(100) + 1
 	}
 
 	GetChoices() {
@@ -52,14 +52,14 @@ Lobby = class extends this.BaseSelection {
 				additionalCheck: time => GameController.GameDuration != time.duration,
 				onSelect: time => {
 					GameController.GameDuration = time.duration
-					Chat(`The game duration is now ${TicksToDuration(time.duration)}`)
+					Chat(`The game duration is now ${time.duration ? TicksToDuration(time.duration) : "default"}`)
 				},
 				options: [
-					{ x: -4, z: -31, duration: 30 * 20 },
-					{ x: -2, z: -31, duration: 60 * 20 },
-					{ x: 0, z: -31, duration: 120 * 20 },
-					{ x: 2, z: -31, duration: 300 * 20 },
-					{ x: 4, z: -31, duration: 600 * 20 },
+					{ x: -4, z: -31, duration: 0 },
+					{ x: -2, z: -31, duration: 30 * 20 },
+					{ x: 0, z: -31, duration: 60 * 20 },
+					{ x: 2, z: -31, duration: 120 * 20 },
+					{ x: 4, z: -31, duration: 300 * 20 },
 				]
             }
 		]

@@ -2,7 +2,7 @@ GameController = {
 	Game: null,
 	Players: new Map(),
 
-	GameDuration: 5 * 60 * 20,
+	GameDuration: 0,
 	Pause: false,
 
 	Update: function (allEntities) {

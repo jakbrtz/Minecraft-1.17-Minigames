@@ -2,6 +2,7 @@
 
 	constructor() {
 		super()
+		this.DefaultGameDuration = 60 * 20
 		this.GroupScoreByTeam = true
 		this.PvPgroupedByTeams = this.GroupScoreByTeam
 	}
@@ -19,10 +20,14 @@
 
 	UpdateGameExtensionExtension() {
 
+	}
+
+	GameDuration() {
+		return GameController.GameDuration || this.DefaultGameDuration
     }
 
 	IsGameInProgress() {
-		return this.elapsedGameTime < GameController.GameDuration
+		return this.elapsedGameTime < this.GameDuration()
 	}
 
 	MakeListOfScores() {
@@ -72,9 +77,9 @@
 			text: element.name,
 			value: element.score
         }})
-		let remainingTime = GameController.GameDuration - this.elapsedGameTime
+		let remainingTime = this.GameDuration() - this.elapsedGameTime
 		if (remainingTime < 0) remainingTime = 0
-		if (remainingTime > GameController.GameDuration) remainingTime = GameController.GameDuration
+		if (remainingTime > this.GameDuration()) remainingTime = this.GameDuration()
 		lines.push(TicksToDuration(remainingTime))
 		this.CreateScoreboard("Scores", lines)
 	}

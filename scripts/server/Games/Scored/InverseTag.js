@@ -25,7 +25,7 @@ InverseTag = class extends this.BaseScoredGame {
 		if (this.HighlightedPlayer == null || this.HighlightedPlayer.deathTimer != -1) {
 			this.SetHighlightedPlayer(GetRandomItem(this.players))
 		}
-		if (this.elapsedGameTime % 20 == 0) {
+		if (!this.GameIsComplete && this.elapsedGameTime % 20 == 0) {
 			this.HighlightedPlayer.score++
 		}
 	}

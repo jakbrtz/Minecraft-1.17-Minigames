@@ -11,13 +11,10 @@
     }
 
 	UpdateGameExtension() {
-
 		if (this.elapsedGameTime % 20 == 0) {
 			this.UpdateScore()
 		}
-
 		this.UpdateGameExtensionExtension()
-
 	}
 
 	UpdateGameExtensionExtension() {

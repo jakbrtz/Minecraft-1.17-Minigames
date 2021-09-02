@@ -19,6 +19,8 @@ Paint = class extends this.BaseScoredGame {
 
 	UpdateGameExtensionExtension() {
 
+		if (this.GameIsComplete) return
+
 		this.players.filter(player => player.deathTimer == -1).forEach(player => {
 			let position = {
 				x: Math.floor(player.position.x),

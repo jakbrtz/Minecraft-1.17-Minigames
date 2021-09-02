@@ -40,7 +40,9 @@ QuickRespawn = class extends this.BaseScoredGame {
 	}
 
 	PlayerKilled(player, killer) {
-		killer.score++
-		this.UpdateScore()
+		if (!this.GameIsComplete) {
+			killer.score++
+			this.UpdateScore()
+		}
 	}
 }

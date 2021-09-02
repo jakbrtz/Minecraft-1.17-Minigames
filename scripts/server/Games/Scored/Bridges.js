@@ -87,9 +87,11 @@ Bridges = class extends this.BaseScoredGame {
 		this.teams.forEach(team => {
 			this.players.forEach(player => {
 				if (player.team != team && PositionsAreClose(player.position, team.goal, 2)) {
-					player.score++
-					this.UpdateScore()
-					SlashCommand("/title " + player.name + " title You earned a point");
+					if (!this.GameIsComplete) {
+						player.score++
+						this.UpdateScore()
+						SlashCommand("/title " + player.name + " title You earned a point");
+                    }
 					this.Respawn(player)
                 }
             })

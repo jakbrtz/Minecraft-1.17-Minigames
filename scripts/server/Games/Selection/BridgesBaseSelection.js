@@ -3,7 +3,10 @@ BridgesBaseSelection = class extends this.BaseSelection {
 	constructor() {
 		super()
 		this.NextGame = new Bridges()
-		this.choices = [
+	}
+
+	GetChoices() {
+		return [
 			{
 				construct: base => SlashCommand(`/structure load ${base.structure} ${base.x - 14} 50 ${base.z - 14} ${SuggestedRotation(base)}_degrees`),
 				radius: 14,

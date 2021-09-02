@@ -5,7 +5,10 @@ BridgesBaseBuilder = class extends this.BaseSelection {
 
 		this.GameMode = 'creative'
 		this.NextGame = new BridgesBaseSelection()
-		this.choices = [
+	}
+
+	GetChoices() {
+		return [
 			{
 				construct: slot => SlashCommand(`/structure load ${slot.structure} ${slot.x - 14} 50 ${slot.z - 14}`),
 				radius: 14,

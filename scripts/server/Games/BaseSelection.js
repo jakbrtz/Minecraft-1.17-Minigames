@@ -7,6 +7,7 @@ BaseSelection = class extends this.BaseGame {
 	}
 
 	BuildWorld() {
+		this.choices = this.GetChoices()
 		this.BuildWorldWithoutOptions()
 		this.choices.forEach(choice => {
 			choice.options.forEach(option => {
@@ -17,6 +18,10 @@ BaseSelection = class extends this.BaseGame {
 
 	BuildWorldWithoutOptions() {
 		this.ClearWorld()
+	}
+
+	GetChoices() {
+		return []
     }
 
 	UpdateGameOverride() {

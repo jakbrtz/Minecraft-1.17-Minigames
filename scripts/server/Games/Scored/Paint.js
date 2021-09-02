@@ -8,7 +8,7 @@ Paint = class extends this.BaseScoredGame {
 	}
 
 	BuildWorld() {
-		this.ClearWorld()
+		ClearWorld()
 		SlashCommand(`/fill -20 64 -20 20 64 20 concrete 0`)
 	}
 

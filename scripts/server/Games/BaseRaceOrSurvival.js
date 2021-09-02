@@ -45,9 +45,9 @@
 			.sort((a, b) => (a.finishTime - b.finishTime))
 			.map((player, i) => { return { text: player.name, value: this.IsRace ? i + 1 : this.players.length - i } })
 		if (lines.length > 0) {
-			this.CreateScoreboard("Results", lines, true)
+			CreateScoreboard("Results", lines, true)
 		} else {
-			this.DestroyScoreboard()
+			DestroyScoreboard()
         }
 	}
 }

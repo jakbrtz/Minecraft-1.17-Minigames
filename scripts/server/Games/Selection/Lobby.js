@@ -66,7 +66,7 @@ Lobby = class extends this.BaseSelection {
 	}
 
 	BuildWorldWithoutOptions() {
-		this.ClearWorld()
+		ClearWorld()
 		SlashCommand(`/structure load lobby:Spawn -16 4 -16`)
 		SlashCommand(`/gamemode adventure @a`)
 		this.UpdateScore()
@@ -85,6 +85,6 @@ Lobby = class extends this.BaseSelection {
 			lines.push("")
 			lines.push(`${this.serverName} #${this.serverNumber}`)
 		}
-		this.CreateScoreboard("Teams", lines)
+		CreateScoreboard("Teams", lines)
 	}
 }

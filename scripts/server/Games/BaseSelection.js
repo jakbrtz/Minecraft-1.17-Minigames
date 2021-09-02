@@ -17,7 +17,7 @@ BaseSelection = class extends this.BaseGame {
 	}
 
 	BuildWorldWithoutOptions() {
-		this.ClearWorld()
+		ClearWorld()
 	}
 
 	GetChoices() {

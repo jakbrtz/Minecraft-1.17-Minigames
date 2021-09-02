@@ -81,6 +81,6 @@
 		if (remainingTime < 0) remainingTime = 0
 		if (remainingTime > this.GameDuration()) remainingTime = this.GameDuration()
 		lines.push(TicksToDuration(remainingTime))
-		this.CreateScoreboard("Scores", lines)
+		CreateScoreboard("Scores", lines)
 	}
 }

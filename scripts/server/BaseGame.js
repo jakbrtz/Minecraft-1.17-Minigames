@@ -160,7 +160,7 @@
 
     AttemptRevivePlayer(player) {
         SlashCommand(`/tag ${player.name} add JakesGames-recentlyRevived`)
-        this.AppearDead(player)
+        player.AppearDead(this.DeathCoolDown / 20 + 10)
         this.AttemptRevivePlayerExtension(player)
     }
 
@@ -206,47 +206,8 @@
         return null
     }
 
-    AppearDead(player) {
-        let time = this.DeathCoolDown / 20 + 10
-        SlashCommand(`/clear ${player.name}`)
-        SlashCommand(`/effect ${player.name} slow_falling ${time} 15 true`)
-        SlashCommand(`/effect ${player.name} night_vision ${time} 1 true`)
-        SlashCommand(`/effect ${player.name} speed ${time} 1 true`)
-        SlashCommand(`/effect ${player.name} fire_resistance ${time} 100 true`)
-        SlashCommand(`/effect ${player.name} conduit_power ${time} 1 true`)
-        SlashCommand(`/effect ${player.name} invisibility ${time} 1 true`)
-        SlashCommand(`/effect ${player.name} resistance ${time} 100 true`)
-        SlashCommand(`/effect ${player.name} weakness ${time} 100 true`)
-        SlashCommand(`/effect ${player.name} saturation ${time} 100 true`)
-    }
-
-    ClearWorld() {
-        SlashCommand(`/fill -128 3 -128  -1 3 127 grass`)
-        SlashCommand(`/fill    0 3 -128 127 3 127 grass`)
-        for (var layer = 4; layer < 128; layer++) {
-            SlashCommand(`/fill -128 ${layer} -128  -1 ${layer} 127 air`)
-            SlashCommand(`/fill    0 ${layer} -128 127 ${layer} 127 air`)
-        }
-        SlashCommand(`/kill @e[type=!player]`)
-    }
-
     UpdateScore() {
-        this.DestroyScoreboard()
-    }
-
-    CreateScoreboard(title, lines, ascending) {
-        this.DestroyScoreboard()
-        SlashCommand(`/scoreboard objectives add showtouser dummy "${title}"`)
-        SlashCommand(`/scoreboard objectives setdisplay sidebar showtouser ${ascending ? "ascending" : "descending"}`)
-        for (var i = 0; i < 16 && i < lines.length; i++) {
-            let line = lines[i]
-            let colourCharacter = (i < 10) ? i : String.fromCharCode(97 + i - 10)
-            SlashCommand(`/scoreboard players set "\u00a7${colourCharacter}\u00a7r ${line.text || line}  " showtouser ${line.value || 0}`)
-        }
-    }
-
-    DestroyScoreboard() {
-        SlashCommand(`/scoreboard objectives remove showtouser`)
+        DestroyScoreboard()
     }
 
 }

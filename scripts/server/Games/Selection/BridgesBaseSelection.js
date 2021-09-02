@@ -26,7 +26,7 @@ BridgesBaseSelection = class extends this.BaseSelection {
 	}
 
 	BuildWorldWithoutOptions() {
-		this.ClearWorld()
+		ClearWorld()
 		SlashCommand(`/fill -64 64 -64 63 64 63 glass`)
 	}
 

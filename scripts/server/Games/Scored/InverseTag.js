@@ -9,7 +9,7 @@ InverseTag = class extends this.BaseScoredGame {
 	}
 
 	BuildWorld() {
-		this.ClearWorld()
+		ClearWorld()
 		let platforms = ["arenas:desert", "arenas:house", "arenas:nether", "arenas:planks"]
 		SlashCommand(`/structure load ${GetRandomItem(platforms)} -16 63 -16   0_degrees`)
 		SlashCommand(`/structure load ${GetRandomItem(platforms)}   0 63 -16  90_degrees`)

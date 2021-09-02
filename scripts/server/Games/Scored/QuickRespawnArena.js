@@ -6,7 +6,7 @@ QuickRespawn = class extends this.BaseScoredGame {
 	}
 
 	BuildWorld() {
-		this.ClearWorld()
+		ClearWorld()
 
 		let platforms = ["arenas:desert", "arenas:house", "arenas:nether", "arenas:planks"]
 		SlashCommand(`/structure load ${GetRandomItem(platforms)} -16 63 -16   0_degrees`)

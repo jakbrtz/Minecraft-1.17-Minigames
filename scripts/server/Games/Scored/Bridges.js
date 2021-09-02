@@ -33,7 +33,7 @@ Bridges = class extends this.BaseScoredGame {
 
 		this.players.filter(player => player.requestedBase != undefined).forEach(player => player.team.requestedBases.push(player.requestedBase))
 
-		this.ClearWorld()
+		ClearWorld()
 		this.teams.forEach(team => {
 
 			team.selectedBase = (team.requestedBases.length > 0)

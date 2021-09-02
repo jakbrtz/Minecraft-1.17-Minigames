@@ -31,7 +31,7 @@ Lobby = class extends this.BaseSelection {
 			{
 				construct: game => SlashCommand(`/structure load lobby:${game.structure} ${game.x - 3} 4 ${game.z - 3} ${SuggestedRotation(game)}_degrees`),
 				radius: 3,
-				onSelect: game => GameController.ChangeGame(game.game),
+				onSelect: game => GameController.ChangeGame(game.game), // todo: use the NextGame() function
 				options: [
 					{ x: 24, z: 8, structure: "arena", game: new QuickRespawn(false) },
 					{ x: 24, z: -8, structure: "bridges", game: new Bridges() },

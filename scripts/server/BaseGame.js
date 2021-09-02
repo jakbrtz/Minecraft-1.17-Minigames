@@ -7,7 +7,6 @@
 
         this.elapsedGameTime = -60
         this.DeathCoolDown = 0
-        this.NextGame = null
         this.PvPgroupedByTeams = false
         this.GameMode = 'adventure'
         this.ShowPreGameTimer = true
@@ -216,6 +215,10 @@
 
     EndGameOverride() {
         Chat("Game Completed")
+    }
+
+    NextGame() {
+        return null
     }
 
     AppearDead(player) {

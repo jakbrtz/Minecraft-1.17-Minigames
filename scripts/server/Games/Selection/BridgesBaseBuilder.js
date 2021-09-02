@@ -2,9 +2,7 @@ BridgesBaseBuilder = class extends this.BaseSelection {
 
 	constructor() {
 		super()
-
 		this.GameMode = 'creative'
-		this.NextGame = new BridgesBaseSelection()
 	}
 
 	GetChoices() {
@@ -57,5 +55,9 @@ BridgesBaseBuilder = class extends this.BaseSelection {
 		this.choices[0].options.forEach(option => {
 			SlashCommand(`/structure save ${option.structure} ${option.x - 14} 50 ${option.z - 14} ${option.x + 14} 110 ${option.z + 14} disk`)
 		})
+	}
+
+	NextGame() {
+		return new BridgesBaseSelection()
     }
 }

@@ -2,7 +2,6 @@ BridgesBaseSelection = class extends this.BaseSelection {
 
 	constructor() {
 		super()
-		this.NextGame = new Bridges()
 	}
 
 	GetChoices() {
@@ -34,4 +33,8 @@ BridgesBaseSelection = class extends this.BaseSelection {
 	RespawnOverride(player) {
 		SlashCommand(`/tp ${player.name} ${RandomFloat(-10, 10)} 66 ${RandomFloat(-10, 10)}`)
 	}
+
+	NextGame() {
+		return new Bridges()
+    }
 }

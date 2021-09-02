@@ -31,7 +31,7 @@ GameController = {
 						this.Pause = !this.Pause
                     } else if (tag == "wantsEnd") {
 						this.Game.EndGame()
-						this.ChangeGame(this.Game.NextGame)
+						this.ChangeGame(this.Game.NextGame())
 					} else if (tag.startsWith("duration")) {
 						this.GameDuration = tag.substr(8) * 20
 					} else if (this.Game != null && !this.Pause) {

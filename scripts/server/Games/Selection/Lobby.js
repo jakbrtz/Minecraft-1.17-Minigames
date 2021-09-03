@@ -68,7 +68,7 @@ Lobby = class extends this.BaseSelection {
 	BuildWorldWithoutOptions() {
 		ClearWorld()
 		SlashCommand(`/structure load lobby:Spawn -16 4 -16`)
-		SlashCommand(`/gamemode adventure @a`)
+		SlashCommand(`/gamemode adventure @a`) // todo: this goes in setup
 		this.UpdateScore()
 	}
 

@@ -7,3 +7,17 @@ ClearWorld = function() {
     }
     SlashCommand(`/kill @e[type=!player]`)
 }
+
+BuildSphere = function (center, radius, block) {
+    for (var x = 0; x <= radius; x++) {
+        for (var y = 0; y <= radius; y++) {
+            const z = Math.floor(Math.sqrt(radius ** 2 - x ** 2 - y ** 2))
+            if (((x + 1) ** 2 + y ** 2 + z ** 2 <= radius ** 2) ||
+                (x ** 2 + (y + 1) ** 2 + z ** 2 <= radius ** 2) ||
+                (x ** 2 + y ** 2 + (z + 1) ** 2 <= radius ** 2)) {
+                continue;
+            }
+            SlashCommand(`/fill ${center.x - x} ${center.y - y} ${center.z - z} ${center.x + x} ${center.y + y} ${center.z + z} ${block || "stone"}`)
+        }
+    }
+}

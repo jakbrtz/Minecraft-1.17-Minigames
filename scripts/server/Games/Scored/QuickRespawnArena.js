@@ -6,13 +6,13 @@ QuickRespawn = class extends this.BaseScoredGame {
 	}
 
 	BuildWorld() {
-		ClearWorld()
+		WorldBuilding.Clear()
 
 		let platforms = ["arenas:desert", "arenas:house", "arenas:nether", "arenas:planks"]
-		SlashCommand(`/structure load ${GetRandomItem(platforms)} -16 63 -16   0_degrees`)
-		SlashCommand(`/structure load ${GetRandomItem(platforms)}   0 63 -16  90_degrees`)
-		SlashCommand(`/structure load ${GetRandomItem(platforms)}   0 63   0 180_degrees`)
-		SlashCommand(`/structure load ${GetRandomItem(platforms)} -16 63   0 270_degrees`)
+		SlashCommand(`/structure load ${Random.Arr(platforms)} -16 63 -16   0_degrees`)
+		SlashCommand(`/structure load ${Random.Arr(platforms)}   0 63 -16  90_degrees`)
+		SlashCommand(`/structure load ${Random.Arr(platforms)}   0 63   0 180_degrees`)
+		SlashCommand(`/structure load ${Random.Arr(platforms)} -16 63   0 270_degrees`)
 
 		let spawns = [
 			{ x:  13, z:  13 },
@@ -32,10 +32,10 @@ QuickRespawn = class extends this.BaseScoredGame {
 	RespawnExtension(player) {
 		SlashCommand(`/give ${player.name} diamond_sword`)
 		if (this.GroupScoreByTeam) {
-			SlashCommand(`/tp ${player.name} ${player.team.spawn.x + RandomFloat(-1, 1)} 66 ${player.team.spawn.z + RandomFloat(-1, 1)}`)
+			SlashCommand(`/tp ${player.name} ${player.team.spawn.x + Random.Float(-1, 1)} 66 ${player.team.spawn.z + Random.Float(-1, 1)}`)
 		}
 		else {
-			SlashCommand(`/tp ${player.name} ${RandomFloat(-5, 5)} 66 ${RandomFloat(-5, 5)}`)
+			SlashCommand(`/tp ${player.name} ${Random.Float(-5, 5)} 66 ${Random.Float(-5, 5)}`)
         }
 	}
 

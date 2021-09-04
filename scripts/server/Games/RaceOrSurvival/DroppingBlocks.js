@@ -8,7 +8,7 @@ DroppingBlocks = class extends this.BaseRaceOrSurvival {
 	}
 
 	BuildWorld() {
-		this.ClearWorld()
+		WorldBuilding.Clear()
 		for (var i = 0; i < this.layerColours.length; i++) {
 			SlashCommand(`/fill -10 ${this.LayerIndexToY(i)} -10 -30 ${this.LayerIndexToY(i)} 10 concrete ${this.layerColours[i]}`)
 		}

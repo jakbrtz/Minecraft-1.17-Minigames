@@ -17,7 +17,7 @@ BaseSelection = class extends this.BaseGame {
 	}
 
 	BuildWorldWithoutOptions() {
-		ClearWorld()
+		WorldBuilding.Clear()
 	}
 
 	GetChoices() {
@@ -28,7 +28,7 @@ BaseSelection = class extends this.BaseGame {
 		this.players.forEach(player => {
 			this.choices.forEach(choice => {
 				choice.options.forEach(option => {
-					if ((choice.additionalCheck == undefined || choice.additionalCheck(option, player)) && PositionsAreCloseIgnoreY(player.position, option, choice.radius)) {
+					if ((choice.additionalCheck == undefined || choice.additionalCheck(option, player)) && Coordinates.PositionsAreClose(player.position, option, choice.radius, true)) {
 						choice.onSelect(option, player)
                     }
                 })

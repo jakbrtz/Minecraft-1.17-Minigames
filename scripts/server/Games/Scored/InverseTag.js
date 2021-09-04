@@ -9,12 +9,12 @@ InverseTag = class extends this.BaseScoredGame {
 	}
 
 	BuildWorld() {
-		ClearWorld()
+		WorldBuilding.Clear()
 		let platforms = ["arenas:desert", "arenas:house", "arenas:nether", "arenas:planks"]
-		SlashCommand(`/structure load ${GetRandomItem(platforms)} -16 63 -16   0_degrees`)
-		SlashCommand(`/structure load ${GetRandomItem(platforms)}   0 63 -16  90_degrees`)
-		SlashCommand(`/structure load ${GetRandomItem(platforms)}   0 63   0 180_degrees`)
-		SlashCommand(`/structure load ${GetRandomItem(platforms)} -16 63   0 270_degrees`)
+		SlashCommand(`/structure load ${Random.Arr(platforms)} -16 63 -16   0_degrees`)
+		SlashCommand(`/structure load ${Random.Arr(platforms)}   0 63 -16  90_degrees`)
+		SlashCommand(`/structure load ${Random.Arr(platforms)}   0 63   0 180_degrees`)
+		SlashCommand(`/structure load ${Random.Arr(platforms)} -16 63   0 270_degrees`)
 	}
 
 	RespawnExtension(player) {
@@ -23,7 +23,7 @@ InverseTag = class extends this.BaseScoredGame {
 
 	UpdateGameExtensionExtension() {
 		if (this.HighlightedPlayer == null || this.HighlightedPlayer.deathTimer != -1) {
-			this.SetHighlightedPlayer(GetRandomItem(this.players))
+			this.SetHighlightedPlayer(Random.Arr(this.players))
 		}
 		if (!this.GameIsComplete && this.elapsedGameTime % 20 == 0) {
 			this.HighlightedPlayer.score++

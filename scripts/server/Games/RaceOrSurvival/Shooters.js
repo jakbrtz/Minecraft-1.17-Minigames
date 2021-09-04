@@ -6,7 +6,7 @@ Shooters = class extends this.BaseRaceOrSurvival {
 	}
 
 	BuildWorld() {
-		this.ClearWorld()
+		WorldBuilding.Clear()
 
 		SlashCommand(`/structure load shooters:barracks -9 64 -16 0_degrees`)
 		SlashCommand(`/structure load shooters:barracks 14 64 -9 90_degrees`)
@@ -27,10 +27,10 @@ Shooters = class extends this.BaseRaceOrSurvival {
 	}
 
 	RespawnExtension(player) {
-		if (RandomBool()) {
-			SlashCommand(`/tp ${player.name} ${(RandomInt(3) - 1) * 5} 66 ${RandomFloat(-10, 10)}`)
+		if (Random.Bool()) {
+			SlashCommand(`/tp ${player.name} ${(Random.Int(3) - 1) * 5} 66 ${Random.Float(-10, 10)}`)
 		} else {
-			SlashCommand(`/tp ${player.name} ${RandomFloat(-10, 10)} 66 ${(RandomInt(3) - 1) * 5}`)
+			SlashCommand(`/tp ${player.name} ${Random.Float(-10, 10)} 66 ${(Random.Int(3) - 1) * 5}`)
 		}
 		SlashCommand(`/effect ${player.name} resistance 3 15 true`)
 		SlashCommand(`/effect ${player.name} invisibility 3 15 false`)

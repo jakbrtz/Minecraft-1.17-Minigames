@@ -1,44 +1,19 @@
-const TeamInfo = {
-    "red": {
-        name: "Red",
-        colour: 14
+const AllTeams = [
+    { name: "Red", colour: 14 },
+    { name: "Orange", colour: 1 },
+    { name: "Yellow", colour: 4 },
+    { name: "Green", colour: 13 },
+    { name: "Blue", colour: 11 },
+    { name: "Purple", colour: 10 },
+    { name: "Pink", colour: 6 },
+    { name: "Black", colour: 7 },
+]
+
+this.Teams = {
+    Get: function (name) {
+        return AllTeams.find(team => team.name == name)
     },
-    "orange": {
-        name: "Orange",
-        colour: 1
-    },
-    "yellow": {
-        name: "Yellow",
-        colour: 4
-    },
-    "green": {
-        name: "Green",
-        colour: 13
-    },
-    "blue": {
-        name: "Blue",
-        colour: 11
-    },
-    "purple": {
-        name: "Purple",
-        colour: 10
-    },
-    "pink": {
-        name: "Pink",
-        colour: 6
-    },
-    "black": {
-        name: "Black",
-        colour: 7
+    Random: function () {
+        return Random.Arr(AllTeams)
     }
-}
-
-const TeamNames = ["red", "orange", "yellow", "green", "blue", "purple", "pink", "black"]
-
-GetTeam = function(name) {
-    return TeamInfo[name]
-}
-
-RandomTeam = function () {
-    return GetRandomItem(TeamNames.map(name => GetTeam(name)))
 }

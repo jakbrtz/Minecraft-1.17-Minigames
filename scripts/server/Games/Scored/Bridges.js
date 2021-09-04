@@ -10,7 +10,7 @@ Bridges = class extends this.BaseScoredGame {
 	BuildWorld() {
 
 		while (this.teams.length < 2) {
-			let randomTeam = RandomTeam()
+			let randomTeam = Teams.Random()
 			if (!this.teams.includes(randomTeam)) {
 				this.teams.push(randomTeam)
 			}
@@ -33,18 +33,18 @@ Bridges = class extends this.BaseScoredGame {
 
 		this.players.filter(player => player.requestedBase != undefined).forEach(player => player.team.requestedBases.push(player.requestedBase))
 
-		ClearWorld()
+		WorldBuilding.Clear()
 		this.teams.forEach(team => {
 
 			team.selectedBase = (team.requestedBases.length > 0)
-				? GetRandomItem(team.requestedBases)
-				: GetRandomItem(["bases:Amethyst", "bases:GoldBlocks", "bases:Mud", "bases:Temple"])
+				? Random.Arr(team.requestedBases)
+				: Random.Arr(["bases:Amethyst", "bases:GoldBlocks", "bases:Mud", "bases:Temple"])
 
-			team.spawn = StructureSpawn(team.selectedBase, team.center, SuggestedRotation(team.center))
-			team.goal = StructureGoal(team.selectedBase, team.center, SuggestedRotation(team.center))
+			team.spawn = Bases.StructureSpawn(team.selectedBase, team.center, Coordinates.SuggestRotation(team.center))
+			team.goal = Bases.StructureGoal(team.selectedBase, team.center, Coordinates.SuggestRotation(team.center))
 
 			// Place structure
-			SlashCommand(`/structure load ${team.selectedBase} ${team.center.x - 14} ${team.center.y - 15} ${team.center.z - 14} ${SuggestedRotation(team.center)}_degrees`)
+			SlashCommand(`/structure load ${team.selectedBase} ${team.center.x - 14} ${team.center.y - 15} ${team.center.z - 14} ${Coordinates.SuggestRotation(team.center)}_degrees`)
 			// Recolour concrete
 			SlashCommand(`/fill ${team.center.x - 14} ${team.center.y - 15} ${team.center.z - 14} ${team.center.x + 14} ${team.center.y + 15} ${team.center.z + 14} concrete ${team.colour} replace concrete 12`)
 			SlashCommand(`/fill ${team.center.x - 14} ${team.center.y + 16} ${team.center.z - 14} ${team.center.x + 14} ${team.center.y + 45} ${team.center.z + 14} concrete ${team.colour} replace concrete 12`)
@@ -63,7 +63,7 @@ Bridges = class extends this.BaseScoredGame {
 			if (team.center.z < -15) {
 				zlim = team.center.z + 15
 			}
-			if (SuggestedRotation(team.center) % 180 == 0) {
+			if (Coordinates.SuggestRotation(team.center) % 180 == 0) {
 				SlashCommand(`/fill ${xlim} ${team.center.y - 3} ${zlim} ${xlim} ${team.center.y - 10} 0 concrete ${team.colour} keep`)
 				SlashCommand(`/fill ${xlim} ${team.center.y - 3} 0 0 ${team.center.y - 10} 0 concrete ${team.colour} keep`)
 			} else {
@@ -87,7 +87,7 @@ Bridges = class extends this.BaseScoredGame {
 
 		this.teams.forEach(team => {
 			this.players.forEach(player => {
-				if (player.team != team && PositionsAreClose(player.position, team.goal, 2)) {
+				if (player.team != team && Coordinates.PositionsAreClose(player.position, team.goal, 2, false)) {
 					if (!this.GameIsComplete) {
 						player.score++
 						this.UpdateScore()
@@ -101,12 +101,12 @@ Bridges = class extends this.BaseScoredGame {
 	}
 
 	PlayerHasLeftStartArea(player) {
-		return !PositionsAreClose(player.position, player.team.spawn, 3)
+		return !Coordinates.PositionsAreClose(player.position, player.team.spawn, 3, false)
 	}
 
 	AttemptRevivePlayerExtension(player) {
 		if (Math.random() < 0.1) {
-			SlashCommand("/execute " + player.name + " ~~~ say " + GetRandomItem([
+			SlashCommand("/execute " + player.name + " ~~~ say " + Random.Arr([
 				"I got rekt",
 				"aww man",
 				"when I respawn it will be over for you punks",
@@ -119,7 +119,7 @@ Bridges = class extends this.BaseScoredGame {
 
 	PlayerPlacedBlock(player, position) {
 		this.teams.forEach(team => {
-			if (PositionsAreClose(position, team.goal, 1) || PositionsAreClose(position, team.spawn, 1)) {
+			if (Coordinates.PositionsAreClose(position, team.goal, 1, false) || Coordinates.PositionsAreClose(position, team.spawn, 1, false)) {
 				SlashCommand(`/msg ${player.name} You cannot build here`)
 				SlashCommand(`/setblock ${position.x} ${position.y} ${position.z} air`)
             }

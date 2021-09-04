@@ -17,32 +17,35 @@ const BaseInfo = {
     }
 }
 
-StructureSpawn = function (name, center, rotation) {
-    if (BaseInfo[name] == undefined || BaseInfo[name].spawn == undefined) {
-        return AddWithRotation(center, rotation, { x: 0, y: 1, z: -8 })
-    }
-    return AddWithRotation(center, rotation, BaseInfo[name].spawn)
-}
+this.Bases = {
 
-StructureGoal = function (name, center, rotation) {
-    if (BaseInfo[name] == undefined || BaseInfo[name].goal == undefined) {
-        return center
-    }
-    return AddWithRotation(center, rotation, BaseInfo[name].goal)
-}
+    StructureSpawn: function (name, center, rotation) {
+        if (BaseInfo[name] == undefined || BaseInfo[name].spawn == undefined) {
+            return Coordinates.Offset(center, rotation, { x: 0, y: 1, z: -8 })
+        }
+        return Coordinates.Offset(center, rotation, BaseInfo[name].spawn)
+    },
 
-SetStructureSpawn = function (name, position) {
-    if (name in BaseInfo) {
-        BaseInfo[name].spawn = position
-    } else {
-        BaseInfo[name] = { spawn: position }
-    }
-}
+    StructureGoal: function (name, center, rotation) {
+        if (BaseInfo[name] == undefined || BaseInfo[name].goal == undefined) {
+            return center
+        }
+        return Coordinates.Offset(center, rotation, BaseInfo[name].goal)
+    },
 
-SetStructureGoal = function (name, position) {
-    if (name in BaseInfo) {
-        BaseInfo[name].goal = position
-    } else {
-        BaseInfo[name] = { goal: position }
+    SetStructureSpawn: function (name, position) {
+        if (name in BaseInfo) {
+            BaseInfo[name].spawn = position
+        } else {
+            BaseInfo[name] = { spawn: position }
+        }
+    },
+
+    SetStructureGoal: function (name, position) {
+        if (name in BaseInfo) {
+            BaseInfo[name].goal = position
+        } else {
+            BaseInfo[name] = { goal: position }
+        }
     }
 }

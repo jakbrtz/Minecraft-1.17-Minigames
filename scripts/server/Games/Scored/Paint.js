@@ -8,12 +8,12 @@ Paint = class extends this.BaseScoredGame {
 	}
 
 	BuildWorld() {
-		ClearWorld()
+		WorldBuilding.Clear()
 		SlashCommand(`/fill -20 64 -20 20 64 20 concrete 0`)
 	}
 
 	RespawnExtension(player) {
-		SlashCommand(`/tp ${player.name} ${RandomFloat(-5, 5)} 66 ${RandomFloat(-5, 5)}`)
+		SlashCommand(`/tp ${player.name} ${Random.Float(-5, 5)} 66 ${Random.Float(-5, 5)}`)
 		SlashCommand(`/give ${player.name} filled_map`)
 	}
 

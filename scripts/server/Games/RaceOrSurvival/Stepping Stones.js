@@ -23,7 +23,7 @@ SteppingStones = class extends this.BaseRaceOrSurvival {
 	HideMaterialOnceDone(platformIsSafe) { return !platformIsSafe }
 
 	BuildWorld() {
-		this.ClearWorld()
+		WorldBuilding.Clear()
 
 		for (var row = 0; row < this.rows; row++) {
 			let z = this.zOffset + row * (this.size + this.gap)
@@ -41,7 +41,7 @@ SteppingStones = class extends this.BaseRaceOrSurvival {
 
 		let headingRight = true
 		let horizontalDistance = 0
-		let x = RandomInt(this.columns)
+		let x = Random.Int(this.columns)
 		for (var row = 0; row < this.rows; row++) {
 			this.trackedPlatforms.Get([x, row]).safe = true
 			let AllowedRight = (x < this.columns - 1) && (headingRight || horizontalDistance < 2)

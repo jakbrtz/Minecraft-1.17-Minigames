@@ -30,7 +30,7 @@ BridgesBaseBuilder = class extends this.BaseSelection {
 	}
 
 	BuildWorldWithoutOptions() {
-		ClearWorld()
+		WorldBuilding.Clear()
 		SlashCommand(`/fill -64 64 -64 63 64 63 glass`)
 		let slots = this.choices[0].options
 		for (var i = 0; i < slots.length; i++) {
@@ -48,7 +48,7 @@ BridgesBaseBuilder = class extends this.BaseSelection {
 	}
 
 	RespawnExtension(player) {
-		SlashCommand(`/tp ${player.name} ${RandomFloat(-10, 10)} 66 ${RandomFloat(-10, 10)}`)
+		SlashCommand(`/tp ${player.name} ${Random.Float(-10, 10)} 66 ${Random.Float(-10, 10)}`)
 	}
 
 	EndGameExtension() {
@@ -64,13 +64,13 @@ BridgesBaseBuilder = class extends this.BaseSelection {
 	UseItem(player, item) {
 		if (item == "minecraft:apple" || item == "minecraft:carrot") {
 			this.choices[0].options.forEach(option => {
-				if (PositionsAreCloseIgnoreY(player.position, option, this.choices[0].radius)) {
+				if (Coordinates.PositionsAreClose(player.position, option, this.choices[0].radius, true)) {
 					const relativePoint = { x: Math.floor(player.position.x - option.x), y: Math.floor(player.position.y - 65), z: Math.floor(player.position.z - option.z) }
 					if (item == "minecraft:apple") {
-						SetStructureSpawn(option.structure, relativePoint)
+						Bases.SetStructureSpawn(option.structure, relativePoint)
 						Chat(`${player.name} has set the spawn point for ${option.structure} to ${relativePoint.x} ${relativePoint.y} ${relativePoint.z}`)
 					} else {
-						SetStructureGoal(option.structure, relativePoint)
+						bases.SetStructureGoal(option.structure, relativePoint)
 						Chat(`${player.name} has set the goal for ${option.structure} to ${relativePoint.x} ${relativePoint.y} ${relativePoint.z}`)
                     }
 				}

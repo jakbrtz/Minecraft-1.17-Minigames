@@ -8,7 +8,7 @@ BridgesBaseSelection = class extends this.BaseSelection {
 	GetChoices() {
 		return [
 			{
-				construct: base => SlashCommand(`/structure load ${base.structure} ${base.x - 14} 50 ${base.z - 14} ${SuggestedRotation(base)}_degrees`),
+				construct: base => SlashCommand(`/structure load ${base.structure} ${base.x - 14} 50 ${base.z - 14} ${Coordinates.SuggestRotation(base)}_degrees`),
 				radius: 14,
 				additionalCheck: (base, player) => player.requestedBase != base.structure,
 				onSelect: (base, player) => {
@@ -27,12 +27,12 @@ BridgesBaseSelection = class extends this.BaseSelection {
 	}
 
 	BuildWorldWithoutOptions() {
-		ClearWorld()
+		WorldBuilding.Clear()
 		SlashCommand(`/fill -64 64 -64 63 64 63 glass`)
 	}
 
 	RespawnExtension(player) {
-		SlashCommand(`/tp ${player.name} ${RandomFloat(-10, 10)} 66 ${RandomFloat(-10, 10)}`)
+		SlashCommand(`/tp ${player.name} ${Random.Float(-10, 10)} 66 ${Random.Float(-10, 10)}`)
 	}
 
 	NextGame() {

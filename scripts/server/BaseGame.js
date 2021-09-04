@@ -210,7 +210,7 @@
     }
 
     UpdateScore() {
-        DestroyScoreboard()
+        Scoreboard.Destroy()
     }
 
 }

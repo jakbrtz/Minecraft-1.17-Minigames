@@ -2,8 +2,8 @@ Lobby = class extends this.BaseSelection {
 
 	constructor() {
 		super()
-		this.serverName = GetRandomItem(["NA", "NA", "EU", "EU", "OCE"])
-		this.serverNumber = RandomInt(100) + 1
+		this.serverName = Random.Arr(["NA", "NA", "EU", "EU", "OCE"])
+		this.serverNumber = Random.Int(100) + 1
 	}
 
 	GetChoices() {
@@ -14,22 +14,22 @@ Lobby = class extends this.BaseSelection {
 				additionalCheck: (dot, player) => player.team != dot.team,
 				onSelect: (dot, player) => {
 					player.team = dot.team
-					Chat(`${player.name} is on the ${NumberToColour(player.team.colour)}${player.team.name} team`)
+					Chat(`${player.name} is on the ${Scoreboard.NumberToColour(player.team.colour)}${player.team.name} team`)
 					this.UpdateScore()
 				},
 				options: [
-					{ x: 8, z: 4, team: GetTeam("blue") },
-					{ x: 8, z: -4, team: GetTeam("orange") },
-					{ x: 4, z: -8, team: GetTeam("red") },
-					{ x: -4, z: -8, team: GetTeam("black") },
-					{ x: -8, z: -4, team: GetTeam("pink") },
-					{ x: -8, z: 4, team: GetTeam("green") },
-					{ x: -4, z: 8, team: GetTeam("purple") },
-					{ x: 4, z: 8, team: GetTeam("yellow") },
+					{ x: 8, z: 4, team: Teams.Get("Blue") },
+					{ x: 8, z: -4, team: Teams.Get("Orange") },
+					{ x: 4, z: -8, team: Teams.Get("Red") },
+					{ x: -4, z: -8, team: Teams.Get("Black") },
+					{ x: -8, z: -4, team: Teams.Get("Pink") },
+					{ x: -8, z: 4, team: Teams.Get("Green") },
+					{ x: -4, z: 8, team: Teams.Get("Purple") },
+					{ x: 4, z: 8, team: Teams.Get("Yellow") },
 				]
 			},
 			{
-				construct: game => SlashCommand(`/structure load lobby:${game.structure} ${game.x - 3} 4 ${game.z - 3} ${SuggestedRotation(game)}_degrees`),
+				construct: game => SlashCommand(`/structure load lobby:${game.structure} ${game.x - 3} 4 ${game.z - 3} ${Coordinates.SuggestRotation(game)}_degrees`),
 				radius: 3,
 				onSelect: game => GameController.ChangeGame(game.game), // todo: use the NextGame() function
 				options: [
@@ -52,7 +52,7 @@ Lobby = class extends this.BaseSelection {
 				additionalCheck: time => GameController.GameDuration != time.duration,
 				onSelect: time => {
 					GameController.GameDuration = time.duration
-					Chat(`The game duration is now ${time.duration ? TicksToDuration(time.duration) : "default"}`)
+					Chat(`The game duration is now ${time.duration ? Scoreboard.TicksToDuration(time.duration) : "default"}`)
 				},
 				options: [
 					{ x: -4, z: -31, duration: 0 },
@@ -66,25 +66,25 @@ Lobby = class extends this.BaseSelection {
 	}
 
 	BuildWorldWithoutOptions() {
-		ClearWorld()
+		WorldBuilding.Clear()
 		SlashCommand(`/structure load lobby:Spawn -16 4 -16`)
 		SlashCommand(`/gamemode adventure @a`) // todo: this goes in setup
 		this.UpdateScore()
 	}
 
 	RespawnExtension(player) {
-		SlashCommand(`/tp ${player.name} ${RandomFloat(-3, 3)} 7 ${RandomFloat(-3, 3)}`)
+		SlashCommand(`/tp ${player.name} ${Random.Float(-3, 3)} 7 ${Random.Float(-3, 3)}`)
 	}
 
 	UpdateScore() {
 		let lines = []
 		this.players.forEach(player => {
-			lines.push(`${NumberToColour(player.team.colour)}${player.name}\u00a7r`)
+			lines.push(`${Scoreboard.NumberToColour(player.team.colour)}${player.name}\u00a7r`)
 		})
 		if (this.serverNumber < 16) {
 			lines.push("")
 			lines.push(`${this.serverName} #${this.serverNumber}`)
 		}
-		CreateScoreboard("Teams", lines)
+		Scoreboard.Create("Teams", lines)
 	}
 }

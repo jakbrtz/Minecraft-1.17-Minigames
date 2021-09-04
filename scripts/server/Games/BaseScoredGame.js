@@ -36,7 +36,7 @@
 		}
 		let list = this.teams.map(team => { return {
 			ref: team,
-			name: NumberToColour(team.colour) + team.name,
+			name: Scoreboard.NumberToColour(team.colour) + team.name,
 			score: 0
 		}})
 		this.players.forEach(player => {
@@ -80,7 +80,7 @@
 		let remainingTime = this.GameDuration() - this.elapsedGameTime
 		if (remainingTime < 0) remainingTime = 0
 		if (remainingTime > this.GameDuration()) remainingTime = this.GameDuration()
-		lines.push(TicksToDuration(remainingTime))
-		CreateScoreboard("Scores", lines)
+		lines.push(Scoreboard.TicksToDuration(remainingTime))
+		Scoreboard.Create("Scores", lines)
 	}
 }

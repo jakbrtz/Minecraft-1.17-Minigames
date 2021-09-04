@@ -1,15 +1,19 @@
-GetRandomItem = function (arr) {
-    return arr[RandomInt(arr.length)]
-}
+this.Random = {
 
-RandomInt = function (max) {
-    return Math.floor(Math.random() * max)
-}
+    Arr: function (arr) {
+        return arr[this.Int(arr.length)]
+    },
 
-RandomFloat = function (min, max) {
-    return Math.random() * (max - min) + min
-}
+    Int: function (max) {
+        return Math.floor(Math.random() * max)
+    },
 
-RandomBool = function () {
-    return Math.random() < 0.5
+    Float: function (min, max) {
+        return Math.random() * (max - min) + min
+    },
+
+    Bool: function () {
+        return Math.random() < 0.5
+    }
+
 }

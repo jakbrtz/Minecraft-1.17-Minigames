@@ -3,7 +3,7 @@ Player = class {
 		this.entity = entity
 		this.position = Find(entity)
 		this.name = GetName(entity)
-		this.team = RandomTeam()
+		this.team = Teams.Random()
 		this.deathTimer = -1
 	}
 

@@ -10,7 +10,7 @@ BridgesBaseBuilder = class extends this.BaseSelection {
 			{
 				construct: slot => SlashCommand(`/structure load ${slot.structure} ${slot.x - 14} 50 ${slot.z - 14}`),
 				radius: 14,
-				additionalCheck: (slot, player) => player.requestedBase != slot.structure,
+				additionalCheck: (slot, player) => player.requestedBase !== slot.structure,
 				onSelect: (slot, player) => {
 					player.requestedBase = slot.structure
 					SlashCommand(`/tell ${player.name} you are working in ${slot.structure}`)
@@ -62,11 +62,11 @@ BridgesBaseBuilder = class extends this.BaseSelection {
 	}
 
 	UseItem(player, item) {
-		if (item == "minecraft:apple" || item == "minecraft:carrot") {
+		if (item === "minecraft:apple" || item === "minecraft:carrot") {
 			this.choices[0].options.forEach(option => {
 				if (Coordinates.PositionsAreClose(player.position, option, this.choices[0].radius, true)) {
 					const relativePoint = { x: Math.floor(player.position.x - option.x), y: Math.floor(player.position.y - 65), z: Math.floor(player.position.z - option.z) }
-					if (item == "minecraft:apple") {
+					if (item === "minecraft:apple") {
 						Bases.SetStructureSpawn(option.structure, relativePoint)
 						Chat(`${player.name} has set the spawn point for ${option.structure} to ${relativePoint.x} ${relativePoint.y} ${relativePoint.z}`)
 					} else {

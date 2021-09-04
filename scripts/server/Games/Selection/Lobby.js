@@ -11,7 +11,7 @@ Lobby = class extends this.BaseSelection {
 			{
 				construct: dot => SlashCommand(`/fill ${dot.x - 1} 6 ${dot.z - 1} ${dot.x + 1} 6 ${dot.z + 1} concrete ${dot.team.colour}`),
 				radius: 2,
-				additionalCheck: (dot, player) => player.team != dot.team,
+				additionalCheck: (dot, player) => player.team !== dot.team,
 				onSelect: (dot, player) => {
 					player.team = dot.team
 					Chat(`${player.name} is on the ${Scoreboard.NumberToColour(player.team.colour)}${player.team.name} team`)
@@ -49,7 +49,7 @@ Lobby = class extends this.BaseSelection {
 			{
 				construct: time => SlashCommand(`/setblock ${time.x} 4 ${time.z} obsidian`),
 				radius: 1,
-				additionalCheck: time => GameController.GameDuration != time.duration,
+				additionalCheck: time => GameController.GameDuration !== time.duration,
 				onSelect: time => {
 					GameController.GameDuration = time.duration
 					Chat(`The game duration is now ${time.duration ? Scoreboard.TicksToDuration(time.duration) : "default"}`)

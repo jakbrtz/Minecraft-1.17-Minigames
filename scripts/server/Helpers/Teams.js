@@ -11,7 +11,7 @@ const AllTeams = [
 
 this.Teams = {
     Get: function (name) {
-        return AllTeams.find(team => team.name == name)
+        return AllTeams.find(team => team.name === name)
     },
     Random: function () {
         return Random.Arr(AllTeams)

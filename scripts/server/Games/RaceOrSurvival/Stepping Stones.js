@@ -85,7 +85,7 @@ SteppingStones = class extends this.BaseRaceOrSurvival {
 
 		this.trackedPlatforms.forEach((trackedPlatform) => {
 			let [column, row] = this.IndexFromPosition(trackedPlatform.position)
-			if (trackedPlatform.previousNearbyPlayer != trackedPlatform.nearbyPlayer) {
+			if (trackedPlatform.previousNearbyPlayer !== trackedPlatform.nearbyPlayer) {
 				if (trackedPlatform.nearbyPlayer) {
 					let material = trackedPlatform.safe ? this.SafeMaterial(column, row) : this.DangerMaterial(column, row)
 					SlashCommand(`/fill ${trackedPlatform.position.x} ${trackedPlatform.position.y} ${trackedPlatform.position.z} ${trackedPlatform.position.x + this.size - 1} ${trackedPlatform.position.y} ${trackedPlatform.position.z + this.size - 1}  ${material}`)

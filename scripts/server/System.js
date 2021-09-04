@@ -23,7 +23,7 @@ system.initialize = function () {
 
 system.update = function () {
 	if (skippedTicks >= 50) {
-		GameController.Update(system.getEntitiesFromQuery(simple_query).filter(entity => entity.__identifier__ == "minecraft:player"))
+		GameController.Update(system.getEntitiesFromQuery(simple_query).filter(entity => entity.__identifier__ === "minecraft:player"))
 	} else {
 		skippedTicks++
     }
@@ -69,7 +69,7 @@ this.Find = function (entity) {
 }
 
 this.GetName = function (entity) {
-	if (entity.__type__ == "item_entity")
+	if (entity.__type__ === "item_entity")
 		return entity.__identifier__
 	return system.getComponent(entity, "minecraft:nameable").data.name
 }
@@ -85,7 +85,7 @@ this.GetTags = function (entity) {
 
 this.NullifyDamageFromTag = function (entity, tag) {
 	let damageSensorComponent = system.getComponent(entity, "minecraft:damage_sensor");
-	if (damageSensorComponent == null) {
+	if (damageSensorComponent == null) { // todo: could this be undefined?
 		damageSensorComponent = system.createComponent(entity, "minecraft:damage_sensor");
 	}
 	damageSensorComponent.data.push({

@@ -33,13 +33,13 @@ this.Coordinates = {
         let x = point.x
         let z = point.z
 
-        if (Math.abs(x) < z || (x == -z && x < 0)) {
+        if (Math.abs(x) < z || (x === -z && x < 0)) {
             return 0
         }
-        if (Math.abs(x) < -z || (x == -z && x > 0)) {
+        if (Math.abs(x) < -z || (x === -z && x > 0)) {
             return 180
         }
-        if (Math.abs(z) < x || (x == z && x > 0)) {
+        if (Math.abs(z) < x || (x === z && x > 0)) {
             return 270
         }
         return 90

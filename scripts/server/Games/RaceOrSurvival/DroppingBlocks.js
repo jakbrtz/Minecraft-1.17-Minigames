@@ -19,7 +19,7 @@ DroppingBlocks = class extends this.BaseRaceOrSurvival {
 	}
 
 	UpdateGameExtensionExtension() {
-		this.players.filter(player => player.finishTime == -1).forEach(player => {
+		this.players.filter(player => player.finishTime === -1).forEach(player => {
 			let blocksToChange = [{
 				x: Math.floor(player.position.x),
 				y: Math.floor(player.position.y - 1),
@@ -66,7 +66,7 @@ DroppingBlocks = class extends this.BaseRaceOrSurvival {
 
 			blocksToChange.forEach(position => {
 				if (this.trackedBlocks.IndicesInRange([position.x, this.YToLayerIndex(position.y), position.z])) {
-					if (this.trackedBlocks.Get([position.x, this.YToLayerIndex(position.y), position.z]) == undefined) {
+					if (this.trackedBlocks.Get([position.x, this.YToLayerIndex(position.y), position.z]) === undefined) {
 						SlashCommand(`/setblock ${position.x} ${position.y} ${position.z} stained_glass ${this.layerColours[this.YToLayerIndex(position.y)]}`)
 						this.trackedBlocks.Set([position.x, this.YToLayerIndex(position.y), position.z], { remainingTime: 20, position: position })
 					}
@@ -76,7 +76,7 @@ DroppingBlocks = class extends this.BaseRaceOrSurvival {
 
 		this.trackedBlocks.forEach(trackedBlock => {
 			trackedBlock.remainingTime--
-			if (trackedBlock.remainingTime == 0) {
+			if (trackedBlock.remainingTime === 0) {
 				SlashCommand(`/setblock ${trackedBlock.position.x} ${trackedBlock.position.y} ${trackedBlock.position.z} air`)
 			}
 		})

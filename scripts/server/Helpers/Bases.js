@@ -20,14 +20,14 @@ const BaseInfo = {
 this.Bases = {
 
     StructureSpawn: function (name, center, rotation) {
-        if (BaseInfo[name] == undefined || BaseInfo[name].spawn == undefined) {
+        if (BaseInfo[name] === undefined || BaseInfo[name].spawn === undefined) {
             return Coordinates.Offset(center, rotation, { x: 0, y: 1, z: -8 })
         }
         return Coordinates.Offset(center, rotation, BaseInfo[name].spawn)
     },
 
     StructureGoal: function (name, center, rotation) {
-        if (BaseInfo[name] == undefined || BaseInfo[name].goal == undefined) {
+        if (BaseInfo[name] === undefined || BaseInfo[name].goal === undefined) {
             return center
         }
         return Coordinates.Offset(center, rotation, BaseInfo[name].goal)

@@ -21,19 +21,19 @@ Paint = class extends this.BaseScoredGame {
 
 		if (this.GameIsComplete) return
 
-		this.players.filter(player => player.deathTimer == -1).forEach(player => {
+		this.players.filter(player => player.deathTimer === -1).forEach(player => {
 			let position = {
 				x: Math.floor(player.position.x),
 				y: Math.floor(player.position.y - 1),
 				z: Math.floor(player.position.z)
 			}
-			if (this.trackedBlocks.IndicesInRange([position.x, position.z]) && position.y == 64) {
+			if (this.trackedBlocks.IndicesInRange([position.x, position.z]) && position.y === 64) {
 				let blockPlayer = this.trackedBlocks.Get([position.x, position.z])
-				if (blockPlayer != player.team) {
+				if (blockPlayer !== player) {
 					this.trackedBlocks.Set([position.x, position.z], player)
 					SlashCommand(`/setblock ${position.x} ${position.y} ${position.z} concrete ${player.team.colour}`)
 					player.score++
-					if (blockPlayer != undefined) {
+					if (blockPlayer !== undefined) {
 						blockPlayer.score--
 					}
 					this.UpdateScore()

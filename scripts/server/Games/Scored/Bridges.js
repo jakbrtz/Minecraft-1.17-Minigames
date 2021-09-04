@@ -31,7 +31,7 @@ Bridges = class extends this.BaseScoredGame {
 			team.requestedBases = []
 		}
 
-		this.players.filter(player => player.requestedBase != undefined).forEach(player => player.team.requestedBases.push(player.requestedBase))
+		this.players.filter(player => player.requestedBase !== undefined).forEach(player => player.team.requestedBases.push(player.requestedBase))
 
 		WorldBuilding.Clear()
 		this.teams.forEach(team => {
@@ -63,7 +63,7 @@ Bridges = class extends this.BaseScoredGame {
 			if (team.center.z < -15) {
 				zlim = team.center.z + 15
 			}
-			if (Coordinates.SuggestRotation(team.center) % 180 == 0) {
+			if (Coordinates.SuggestRotation(team.center) % 180 === 0) {
 				SlashCommand(`/fill ${xlim} ${team.center.y - 3} ${zlim} ${xlim} ${team.center.y - 10} 0 concrete ${team.colour} keep`)
 				SlashCommand(`/fill ${xlim} ${team.center.y - 3} 0 0 ${team.center.y - 10} 0 concrete ${team.colour} keep`)
 			} else {
@@ -87,7 +87,7 @@ Bridges = class extends this.BaseScoredGame {
 
 		this.teams.forEach(team => {
 			this.players.forEach(player => {
-				if (player.team != team && Coordinates.PositionsAreClose(player.position, team.goal, 2, false)) {
+				if (player.team !== team && Coordinates.PositionsAreClose(player.position, team.goal, 2, false)) {
 					if (!this.GameIsComplete) {
 						player.score++
 						this.UpdateScore()
@@ -128,7 +128,7 @@ Bridges = class extends this.BaseScoredGame {
 
 	PlayerTriedToDestroyBlock(player, position) {
 		let block = GetBlock(player.entity, position)
-		if (block.__identifier != "minecraft:concrete") {
+		if (block.__identifier !== "minecraft:concrete") {
 
         }
 	}

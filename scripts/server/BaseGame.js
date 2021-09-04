@@ -56,7 +56,7 @@
     }
 
     UpdateSetup() {
-        if (this.elapsedGameTime % 20 == 0 && this.ShowPreGameTimer) {
+        if (this.elapsedGameTime % 20 === 0 && this.ShowPreGameTimer) {
             SlashCommand(`/title @a title ${-this.elapsedGameTime / 20}...`);
         }
         this.players.forEach(player => {
@@ -86,7 +86,7 @@
 
         if (this.elapsedGameTime < 0) {
             this.UpdateSetup()
-        } else if (this.elapsedGameTime == 0) {
+        } else if (this.elapsedGameTime === 0) {
             this.StartGame()
         } else {
             this.UpdateGame()
@@ -124,7 +124,7 @@
     }
 
     ReceivedTag(player, tag) {
-        if (tag == "recentlyRevived") {
+        if (tag === "recentlyRevived") {
             player.needsReviving = false
         } else {
             this.ReceivedTagExtension(player, tag)
@@ -165,8 +165,8 @@
     }
 
     AttemptRevivePlayerExtension(player) {
-        // todo: rewrite this nicer so it can handle edge cases like DeathCoolDown==1
-        if (this.DeathCoolDown == 0) {
+        // todo: rewrite this nicer so it can handle edge cases like DeathCoolDown===1
+        if (this.DeathCoolDown === 0) {
             this.Respawn(player)
         }
     }

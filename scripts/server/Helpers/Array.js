@@ -28,7 +28,7 @@ ArrayMultiDimensional = class {
 
     IndicesInRange(indices) {
         for (var i = 0; i < this.sizes.length || i < indices.length || i < this.offsets.length; i++) {
-            if (indices[i] % 1 != 0) {
+            if (indices[i] % 1 !== 0) {
                 return false
             }
             if ((indices[i] || 0) < (this.offsets[i] || 0)) {

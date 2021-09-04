@@ -12,7 +12,7 @@
     }
 
 	UpdateGameExtension() {
-		if (this.elapsedGameTime % 20 == 0) {
+		if (this.elapsedGameTime % 20 === 0) {
 			this.UpdateScore()
 		}
 		this.UpdateGameExtensionExtension()
@@ -40,7 +40,7 @@
 			score: 0
 		}})
 		this.players.forEach(player => {
-			list.filter(item => item.ref == player.team).forEach(item => item.score += player.score)
+			list.filter(item => item.ref === player.team).forEach(item => item.score += player.score)
 		})
 		return list
     }
@@ -54,16 +54,16 @@
 			if (element.score > bestScore) {
 				bestElements = [ element ]
 				bestScore = element.score
-			} else if (element.score == bestScore) {
+			} else if (element.score === bestScore) {
 				bestElements.push(element)
             }
 		})
 		var msg
-		if (bestElements.length == 0) {
+		if (bestElements.length === 0) {
 			msg = "No one won"
-		} else if (bestElements.length == 1) {
+		} else if (bestElements.length === 1) {
 			msg = `${bestElements[0].name} wins`
-		} else if (bestElements.length == domain.length) {
+		} else if (bestElements.length === domain.length) {
 			msg = "Everyone wins!"
 		} else {
 			msg = bestElements.map(element => `${element.name}\u00a7r`).join(" and ") + " wins"

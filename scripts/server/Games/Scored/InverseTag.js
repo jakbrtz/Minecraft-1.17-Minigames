@@ -22,17 +22,17 @@ InverseTag = class extends this.BaseScoredGame {
 	}
 
 	UpdateGameExtensionExtension() {
-		if (this.HighlightedPlayer == null || this.HighlightedPlayer.deathTimer != -1) {
+		if (this.HighlightedPlayer === null || this.HighlightedPlayer.deathTimer !== -1) {
 			this.SetHighlightedPlayer(Random.Arr(this.players))
 		}
-		if (!this.GameIsComplete && this.elapsedGameTime % 20 == 0) {
+		if (!this.GameIsComplete && this.elapsedGameTime % 20 === 0) {
 			this.HighlightedPlayer.score++
 		}
 	}
 
 	EntityAttack(attacker, target) {
 		Chat(`${attacker.name} smacked ${target.name}`)
-		if (target == this.HighlightedPlayer) {
+		if (target === this.HighlightedPlayer) {
 			this.SetHighlightedPlayer(attacker)
         }
 	}
@@ -51,7 +51,7 @@ InverseTag = class extends this.BaseScoredGame {
 	MakeListOfScores() {
         return this.players.map(player => {
 			return {
-				name: (player == this.HighlightedPlayer ? '\u00a7c' : '') + player.name,
+				name: (player === this.HighlightedPlayer ? '\u00a7c' : '') + player.name,
 				score: player.score
 			}
 		})

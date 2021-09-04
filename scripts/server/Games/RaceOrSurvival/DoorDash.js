@@ -19,7 +19,7 @@ DoorDash = class extends this.BaseRaceOrSurvival {
 			let clearDoor1 = Random.Int(this.doors)
 			let clearDoor2 = Random.Int(this.doors)
 			for (var door = 0; door < this.doors; door++) {
-				let structureName = (door == clearDoor1 || door == clearDoor2) ? "doordash:clear" : "doordash:blocked"
+				let structureName = (door === clearDoor1 || door === clearDoor2) ? "doordash:clear" : "doordash:blocked"
 				SlashCommand(`/structure load ${structureName} ${(door * this.width + this.xOffset)} 64 ${row * this.depth + this.zOffset}`)
 			}
 		}

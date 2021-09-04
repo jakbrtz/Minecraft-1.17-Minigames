@@ -10,7 +10,7 @@ BridgesBaseSelection = class extends this.BaseSelection {
 			{
 				construct: base => SlashCommand(`/structure load ${base.structure} ${base.x - 14} 50 ${base.z - 14} ${Coordinates.SuggestRotation(base)}_degrees`),
 				radius: 14,
-				additionalCheck: (base, player) => player.requestedBase != base.structure,
+				additionalCheck: (base, player) => player.requestedBase !== base.structure,
 				onSelect: (base, player) => {
 					player.requestedBase = base.structure
 					Chat(`${player.name} likes ${base.structure.split(':')[1]}`)

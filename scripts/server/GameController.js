@@ -22,7 +22,7 @@ GameController = {
 					tag = tag.substr(11)
 					if (tag == "togglePause") {
 						this.Pause = !this.Pause
-                    } else if (tag == "wantsEnd") {
+					} else if (tag == "wantsEnd") {
 						this.Game.EndGame()
 						this.ChangeGame(this.Game.NextGame())
 					} else if (tag.startsWith("duration")) {
@@ -40,7 +40,7 @@ GameController = {
 			this.Game.Update()
 		} else if (this.Players.size > 0) {
 			this.ChangeGame(new Lobby())
-        }
+		}
 	},
 
 	ChangeGame: function (game) {
@@ -56,6 +56,15 @@ GameController = {
 				this.Game.PlayerDied(this.Players.get(entity.id), killer != undefined ? this.Players.get(killer.id) : undefined)
 			}
 		}
+	},
+
+
+	UseItem: function (entity, item) {
+		if (this.Game != null && !this.Pause) {
+			if (this.Players.has(entity.id)) {
+				this.Game.UseItem(this.Players.get(entity.id), item)
+			}
+        }
 	},
 
 	EntityPlacedBlock: function (entity, position) {

@@ -2,6 +2,7 @@ BridgesBaseSelection = class extends this.BaseSelection {
 
 	constructor() {
 		super()
+		this.GameMode = 'creative'
 	}
 
 	GetChoices() {

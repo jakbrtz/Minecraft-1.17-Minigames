@@ -41,7 +41,9 @@ BridgesBaseBuilder = class extends this.BaseSelection {
 	}
 
 	SetupExtension() {
-		SlashCommand(`/give @a concrete 1 14`)
+		SlashCommand(`/give @a concrete 1 12`)
+		SlashCommand(`/give @a apple`)
+		SlashCommand(`/give @a carrot`)
 		this.players.forEach(player => player.requestedBase = undefined)
 	}
 
@@ -57,5 +59,22 @@ BridgesBaseBuilder = class extends this.BaseSelection {
 
 	NextGame() {
 		return new BridgesBaseSelection()
-    }
+	}
+
+	UseItem(player, item) {
+		if (item == "minecraft:apple" || item == "minecraft:carrot") {
+			this.choices[0].options.forEach(option => {
+				if (PositionsAreCloseIgnoreY(player.position, option, this.choices[0].radius)) {
+					const relativePoint = { x: Math.floor(player.position.x - option.x), y: Math.floor(player.position.y - 65), z: Math.floor(player.position.z - option.z) }
+					if (item == "minecraft:apple") {
+						SetStructureSpawn(option.structure, relativePoint)
+						Chat(`${player.name} has set the spawn point for ${option.structure} to ${relativePoint.x} ${relativePoint.y} ${relativePoint.z}`)
+					} else {
+						SetStructureGoal(option.structure, relativePoint)
+						Chat(`${player.name} has set the goal for ${option.structure} to ${relativePoint.x} ${relativePoint.y} ${relativePoint.z}`)
+                    }
+				}
+			})
+        }
+	}
 }

@@ -171,6 +171,9 @@
         }
     }
 
+    UseItem(player, item) {
+    }
+
     PlayerPlacedBlock(player, position) {
     }
 

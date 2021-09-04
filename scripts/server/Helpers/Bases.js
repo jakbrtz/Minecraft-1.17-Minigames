@@ -30,3 +30,19 @@ StructureGoal = function (name, center, rotation) {
     }
     return AddWithRotation(center, rotation, BaseInfo[name].goal)
 }
+
+SetStructureSpawn = function (name, position) {
+    if (name in BaseInfo) {
+        BaseInfo[name].spawn = position
+    } else {
+        BaseInfo[name] = { spawn: position }
+    }
+}
+
+SetStructureGoal = function (name, position) {
+    if (name in BaseInfo) {
+        BaseInfo[name].goal = position
+    } else {
+        BaseInfo[name] = { goal: position }
+    }
+}

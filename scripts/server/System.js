@@ -8,6 +8,7 @@ system.initialize = function () {
 	simple_query = this.registerQuery();
 
 	this.listenForEvent("minecraft:entity_death", entity_death);
+	this.listenForEvent("minecraft:entity_use_item", entity_use_item);
 	this.listenForEvent("minecraft:player_placed_block", entity_placed_block);
 	this.listenForEvent("minecraft:block_destruction_started", block_destruction_started);
 	this.listenForEvent("minecraft:entity_attack", entity_attack)
@@ -33,6 +34,10 @@ system.shutdown = function () {
 
 function entity_death(eventData) {
 	GameController.EntityDied(eventData.data.entity, eventData.data.killer)
+}
+
+function entity_use_item(eventData) {
+	GameController.UseItem(eventData.data.entity, eventData.data.item_stack.item)
 }
 
 function entity_placed_block(eventData) {

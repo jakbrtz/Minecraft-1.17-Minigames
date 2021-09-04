@@ -20,7 +20,7 @@
                 this.teams.push(player.team)
             }
         })
-        // todo: randomize order of this.teams
+        Random.Shuffle(this.teams)
         this.EnableTeamsPvP(this.PvPgroupedByTeams)
         this.BuildWorld()
         SlashCommand(`/gamemode ${this.GameMode} @a`)

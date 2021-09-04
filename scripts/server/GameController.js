@@ -11,7 +11,12 @@ GameController = {
 			if (this.Players.has(entity.id)) {
 				this.Players.get(entity.id).Update(entity)
 			} else {
-				this.Players.set(entity.id, new Player(entity))
+				const player = new Player(entity)
+				this.Players.set(entity.id, player)
+				if (this.Game !== null) {
+					this.Game.Respawn(player)
+					SlashCommand(`/gamemode ${this.Game.GameMode} ${player.name}`)
+                }
 			}
 		})
 

@@ -21,6 +21,10 @@ InverseTag = class extends this.BaseScoredGame {
 		SlashCommand(`/spreadplayers 0 0 5 15 ${player.name}`)
 	}
 
+	SetupExtensionExtension() {
+		this.SetHighlightedPlayer(Random.Arr(this.players))
+	}
+
 	UpdateGameExtensionExtension() {
 		if (this.HighlightedPlayer === null || this.HighlightedPlayer.deathTimer !== -1) {
 			this.SetHighlightedPlayer(Random.Arr(this.players))

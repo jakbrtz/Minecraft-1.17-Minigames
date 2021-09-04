@@ -9,6 +9,10 @@
 
 	SetupExtension() {
 		this.players.forEach(player => player.score = 0)
+		this.SetupExtensionExtension()
+	}
+
+	SetupExtensionExtension() {
     }
 
 	UpdateGameExtension() {

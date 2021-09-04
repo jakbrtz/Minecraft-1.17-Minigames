@@ -14,6 +14,15 @@ this.Random = {
 
     Bool: function () {
         return Math.random() < 0.5
+    },
+
+    Shuffle: function (arr) {
+        for (var i = 1; i < arr.length; i++) {
+            const j = Random.Int(i)
+            const tmp = arr[j]
+            arr[j] = arr[i]
+            arr[i] = tmp
+        }
     }
 
 }

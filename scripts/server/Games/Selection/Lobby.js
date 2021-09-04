@@ -48,7 +48,7 @@ Lobby = class extends this.BaseSelection {
 			},
 			{
 				construct: time => SlashCommand(`/setblock ${time.x} 4 ${time.z} obsidian`),
-				radius: 1,
+				radius: 0.5,
 				additionalCheck: time => GameController.GameDuration !== time.duration,
 				onSelect: time => {
 					GameController.GameDuration = time.duration
@@ -68,8 +68,13 @@ Lobby = class extends this.BaseSelection {
 	BuildWorldWithoutOptions() {
 		WorldBuilding.Clear()
 		SlashCommand(`/structure load lobby:Spawn -16 4 -16`)
-		SlashCommand(`/gamemode adventure @a`) // todo: this goes in setup
 		this.UpdateScore()
+
+		const testarr = [1, 2, 3, 4, 5]
+		for (var i = 0; i < 10; i++) {
+			Random.Shuffle(testarr)
+			Chat(testarr)
+        }
 	}
 
 	RespawnExtension(player) {

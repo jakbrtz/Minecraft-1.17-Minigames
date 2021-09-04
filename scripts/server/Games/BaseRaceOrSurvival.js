@@ -29,7 +29,7 @@
 	}
 
 	PlayerDiedExtension(player, killer) {
-		if (!this.IsRace) {
+		if (!this.IsRace && player.finishTime < 0) {
 			player.finishTime = this.elapsedGameTime
 			this.UpdateScore()
 		}

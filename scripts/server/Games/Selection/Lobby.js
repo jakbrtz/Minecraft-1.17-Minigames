@@ -44,6 +44,7 @@ Lobby = class extends this.BaseSelection {
 					{ x: 8, z: 24, structure: "doordash", game: new DoorDash() },
 					{ x: 20, z: 20, structure: "inversetag", game: new InverseTag() },
 					{ x: -20, z: 20, structure: "shooters", game: new Shooters() },
+					{ x: -20, z: -20, structure: "hill", game: new KingOfTheHill() },
 				]
 			},
 			{
@@ -69,12 +70,6 @@ Lobby = class extends this.BaseSelection {
 		WorldBuilding.Clear()
 		SlashCommand(`/structure load lobby:Spawn -16 4 -16`)
 		this.UpdateScore()
-
-		const testarr = [1, 2, 3, 4, 5]
-		for (var i = 0; i < 10; i++) {
-			Random.Shuffle(testarr)
-			Chat(testarr)
-        }
 	}
 
 	RespawnExtension(player) {

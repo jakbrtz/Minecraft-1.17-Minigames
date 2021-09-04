@@ -140,6 +140,7 @@
         SlashCommand(`/effect ${player.name} clear`)
         SlashCommand(`/effect ${player.name} instant_health 1 15 true`)
         SlashCommand(`/effect ${player.name} saturation 1 15 true`)
+        SlashCommand(`/xp -2147483648L ${player.name}`)
         if (this.GameIsComplete) {
             SlashCommand(`/give ${player.name} potion`)
         }

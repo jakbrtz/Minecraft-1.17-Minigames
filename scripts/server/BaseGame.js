@@ -140,6 +140,9 @@
         SlashCommand(`/effect ${player.name} clear`)
         SlashCommand(`/effect ${player.name} instant_health 1 15 true`)
         SlashCommand(`/effect ${player.name} saturation 1 15 true`)
+        if (this.GameIsComplete) {
+            SlashCommand(`/give ${player.name} potion`)
+        }
         player.deathTimer = -1
         this.RespawnExtension(player)
     }
@@ -172,6 +175,14 @@
     }
 
     UseItem(player, item) {
+        if (this.GameIsComplete && item === "minecraft:potion") {
+            GameController.ChangeGame(this.NextGame())
+        } else {
+            this.UseItemExtension(player, item)
+        }
+    }
+
+    UseItemExtension(player, item) {
     }
 
     PlayerPlacedBlock(player, position) {
@@ -198,6 +209,7 @@
     EndGame() {
         if (this.GameIsComplete) return
         this.GameIsComplete = true
+        SlashCommand(`/give @a potion`)
         this.EndGameExtension()
     }
 

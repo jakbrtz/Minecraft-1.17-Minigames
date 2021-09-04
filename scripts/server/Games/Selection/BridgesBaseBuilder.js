@@ -61,7 +61,7 @@ BridgesBaseBuilder = class extends this.BaseSelection {
 		return new BridgesBaseSelection()
 	}
 
-	UseItem(player, item) {
+	UseItemExtension(player, item) {
 		if (item === "minecraft:apple" || item === "minecraft:carrot") {
 			this.choices[0].options.forEach(option => {
 				if (Coordinates.PositionsAreClose(player.position, option, this.choices[0].radius, true)) {
@@ -70,7 +70,7 @@ BridgesBaseBuilder = class extends this.BaseSelection {
 						Bases.SetStructureSpawn(option.structure, relativePoint)
 						Chat(`${player.name} has set the spawn point for ${option.structure} to ${relativePoint.x} ${relativePoint.y} ${relativePoint.z}`)
 					} else {
-						bases.SetStructureGoal(option.structure, relativePoint)
+						Bases.SetStructureGoal(option.structure, relativePoint)
 						Chat(`${player.name} has set the goal for ${option.structure} to ${relativePoint.x} ${relativePoint.y} ${relativePoint.z}`)
                     }
 				}

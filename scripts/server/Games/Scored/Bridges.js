@@ -10,12 +10,12 @@ Bridges = class extends this.BaseScoredGame {
 	BuildWorld() {
 
 		while (this.teams.length < 2) {
-			let randomTeam = Teams.Random()
+			const randomTeam = Teams.Random()
 			if (!this.teams.includes(randomTeam)) {
 				this.teams.push(randomTeam)
 			}
 		}
-		let centers = [
+		const centers = [
 			{ x: 48, y: 65, z: 0 },
 			{ x: -48, y: 65, z: 0 },
 			{ x: 0, y: 65, z: 48 },
@@ -26,7 +26,7 @@ Bridges = class extends this.BaseScoredGame {
 			{ x: 32, y: 65, z: -32 },
 		]
 		for (var i = 0; i < this.teams.length; i++) {
-			let team = this.teams[i]
+			const team = this.teams[i]
 			team.center = centers[i]
 			team.requestedBases = []
 		}
@@ -127,7 +127,7 @@ Bridges = class extends this.BaseScoredGame {
 	}
 
 	PlayerTriedToDestroyBlock(player, position) {
-		let block = GetBlock(player.entity, position)
+		const block = GetBlock(player.entity, position)
 		if (block.__identifier !== "minecraft:concrete") {
 
         }

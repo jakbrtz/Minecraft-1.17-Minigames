@@ -32,7 +32,7 @@ BridgesBaseBuilder = class extends this.BaseSelection {
 	BuildWorldWithoutOptions() {
 		WorldBuilding.Clear()
 		SlashCommand(`/fill -64 64 -64 63 64 63 glass`)
-		let slots = this.choices[0].options
+		const slots = this.choices[0].options
 		for (var i = 0; i < slots.length; i++) {
 			slots[i].structure = `bases:Basic`
 			this.choices[0].construct(slots[i])

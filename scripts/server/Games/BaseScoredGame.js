@@ -34,7 +34,7 @@
 		if (!this.GroupScoreByTeam) {
 			return this.players
 		}
-		let list = this.teams.map(team => { return {
+		const list = this.teams.map(team => { return {
 			ref: team,
 			name: Scoreboard.NumberToColour(team.colour) + team.name,
 			score: 0
@@ -47,8 +47,8 @@
 
 	EndGameExtension() {
 		this.UpdateScore()
+		const domain = this.MakeListOfScores()
 		let bestScore = 1
-		let domain = this.MakeListOfScores()
 		let bestElements = []
 		domain.forEach(element => {
 			if (element.score > bestScore) {
@@ -73,7 +73,7 @@
 	}
 
 	UpdateScore() {
-		let lines = this.MakeListOfScores().map(element => { return {
+		const lines = this.MakeListOfScores().map(element => { return {
 			text: element.name,
 			value: element.score
         }})

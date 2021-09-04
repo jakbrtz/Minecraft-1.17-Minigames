@@ -13,7 +13,7 @@ system.initialize = function () {
 	this.listenForEvent("minecraft:block_destruction_started", block_destruction_started);
 	this.listenForEvent("minecraft:entity_attack", entity_attack)
 
-	let loggerData = system.createEventData("minecraft:script_logger_config");
+	const loggerData = system.createEventData("minecraft:script_logger_config");
 	loggerData.data.log_information = true;
 	loggerData.data.log_warnings = true;
 	loggerData.data.log_errors = true;

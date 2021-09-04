@@ -8,13 +8,13 @@ QuickRespawn = class extends this.BaseScoredGame {
 	BuildWorld() {
 		WorldBuilding.Clear()
 
-		let platforms = ["arenas:desert", "arenas:house", "arenas:nether", "arenas:planks"]
+		const platforms = ["arenas:desert", "arenas:house", "arenas:nether", "arenas:planks"]
 		SlashCommand(`/structure load ${Random.Arr(platforms)} -16 63 -16   0_degrees`)
 		SlashCommand(`/structure load ${Random.Arr(platforms)}   0 63 -16  90_degrees`)
 		SlashCommand(`/structure load ${Random.Arr(platforms)}   0 63   0 180_degrees`)
 		SlashCommand(`/structure load ${Random.Arr(platforms)} -16 63   0 270_degrees`)
 
-		let spawns = [
+		const spawns = [
 			{ x:  13, z:  13 },
 			{ x: -13, z: -13 },
 			{ x:  13, z: -13 },

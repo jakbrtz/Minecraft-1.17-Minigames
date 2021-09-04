@@ -20,12 +20,12 @@ DroppingBlocks = class extends this.BaseRaceOrSurvival {
 
 	UpdateGameExtensionExtension() {
 		this.players.filter(player => player.finishTime === -1).forEach(player => {
-			let blocksToChange = [{
+			const blocksToChange = [{
 				x: Math.floor(player.position.x),
 				y: Math.floor(player.position.y - 1),
 				z: Math.floor(player.position.z)
 			}]
-			let xfrac = (player.position.x % 1 + 1) % 1 + 0.00001
+			const xfrac = (player.position.x % 1 + 1) % 1 + 0.00001
 			if (xfrac >= 0.7) {
 				blocksToChange = [...blocksToChange, ...blocksToChange.map(block => {
 					return {
@@ -44,7 +44,7 @@ DroppingBlocks = class extends this.BaseRaceOrSurvival {
 					}
 				})]
 			}
-			let zfrac = (player.position.z % 1 + 1) % 1 + 0.00001
+			const zfrac = (player.position.z % 1 + 1) % 1 + 0.00001
 			if (zfrac >= 0.7) {
 				blocksToChange = [...blocksToChange, ...blocksToChange.map(block => {
 					return {

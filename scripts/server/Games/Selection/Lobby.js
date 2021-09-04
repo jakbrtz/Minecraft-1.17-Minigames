@@ -77,7 +77,7 @@ Lobby = class extends this.BaseSelection {
 	}
 
 	UpdateScore() {
-		let lines = []
+		const lines = []
 		this.players.forEach(player => {
 			lines.push(`${Scoreboard.NumberToColour(player.team.colour)}${player.name}\u00a7r`)
 		})

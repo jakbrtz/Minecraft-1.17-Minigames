@@ -34,8 +34,9 @@ Thieves = class extends this.BaseScoredGame {
 
 		WorldBuilding.Clear()
 		WorldBuilding.Circle({ x: 0, y: 64, z: 0 }, 31.5, "grass")
+		const structure = "minibases:" + Random.Arr(["house", "pond", "monument"])
 		this.teams.forEach(team => {
-			SlashCommand(`/structure load minibases:house ${team.center.x - 4} ${team.center.y} ${team.center.z - 4} ${Coordinates.SuggestRotation(team.center)}_degrees`)
+			SlashCommand(`/structure load ${structure} ${team.center.x - 4} ${team.center.y} ${team.center.z - 4} ${Coordinates.SuggestRotation(team.center)}_degrees`)
 			SlashCommand(`/fill ${team.center.x - 4} ${team.center.y} ${team.center.z - 4} ${team.center.x + 4} ${team.center.y + 10} ${team.center.z + 4} concrete ${team.colour} replace concrete 12`)
 		})
 	}

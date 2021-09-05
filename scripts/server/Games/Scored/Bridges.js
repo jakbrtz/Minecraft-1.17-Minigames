@@ -111,7 +111,8 @@ Bridges = class extends this.BaseScoredGame {
 				"aww man",
 				"when I respawn it will be over for you punks",
 				"If I was better then I wouldn't be so bad",
-				"I'll get my revenge... probably"
+				"I'll get my revenge... probably",
+				"Jamblers!"
 			]))
 		}
 		SlashCommand(`/tp ${player.name} 0 100 0`)

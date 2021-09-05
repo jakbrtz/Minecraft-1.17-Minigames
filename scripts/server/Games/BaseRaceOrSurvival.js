@@ -9,7 +9,11 @@
 	SetupExtension() {
 		this.players.forEach(player => player.finishTime = -1)
 		SlashCommand(`/effect @a regeneration 60 1 true`)
+		this.SetupExtensionExtension()
 	}
+
+	SetupExtensionExtension() {
+    }
 
 	UpdateGameExtension() {
 		this.players.forEach(player => {

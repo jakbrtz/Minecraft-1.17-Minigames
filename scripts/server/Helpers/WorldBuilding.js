@@ -21,6 +21,16 @@ this.WorldBuilding = {
                 SlashCommand(`/fill ${center.x - x} ${center.y - y} ${center.z - z} ${center.x + x} ${center.y + y} ${center.z + z} ${block || "stone"}`)
             }
         }
+    },
+
+    Circle: function (center, radius, block) {
+        for (var x = 0; x < radius; x++) {
+            const z = Math.floor(Math.sqrt(radius ** 2 - x ** 2))
+            if (((x + 1) ** 2 + z ** 2 <= radius ** 2)) {
+                continue
+            }
+            SlashCommand(`/fill ${center.x - x} ${center.y} ${center.z - z} ${center.x + x} ${center.y} ${center.z + z} ${block || "stone"}`)
+        }
     }
 
 }

@@ -6,16 +6,21 @@ KingOfTheHill = class extends this.BaseScoredGame {
 		this.DeathCoolDown = 5 * 20
 
 		this.HighlightedPlayer = null
-		this.hillSize = 5
+		this.size = 5
 	}
 
 	BuildWorld() {
 		WorldBuilding.Clear()
 		// todo
 		SlashCommand(`/fill -20 64 -20 20 64 20 grass`)
-		for (var i = 0; i <= this.hillSize; i++) {
-			SlashCommand(`/fill ${i - this.hillSize} ${65 + i} ${i - this.hillSize} ${this.hillSize - i} ${65 + i} ${this.hillSize - i} stone`)
-        }
+		for (var i = 0; i < this.size; i++) {
+			SlashCommand(`/fill ${i - this.size} ${65 + i} ${i - this.size} ${this.size - i} ${65 + i} ${this.size - i} stone`)
+			SlashCommand(`/fill ${i - this.size} ${65 + i} ${i - this.size} ${this.size - i} ${65 + i} ${i - this.size} normal_stone_stairs 2`)
+			SlashCommand(`/fill ${i - this.size} ${65 + i} ${i - this.size} ${i - this.size} ${65 + i} ${this.size - i} normal_stone_stairs 0`)
+			SlashCommand(`/fill ${this.size - i} ${65 + i} ${this.size - i} ${i - this.size} ${65 + i} ${this.size - i} normal_stone_stairs 3`)
+			SlashCommand(`/fill ${this.size - i} ${65 + i} ${this.size - i} ${this.size - i} ${65 + i} ${i - this.size} normal_stone_stairs 1`)
+		}
+		SlashCommand(`/setblock 0 ${65 + this.size} 0 stone_slab4 2`)
 	}
 
 	RespawnExtension(player) {
@@ -44,8 +49,12 @@ KingOfTheHill = class extends this.BaseScoredGame {
         }
 	}
 
+	PlayerHasLeftStartArea(player) {
+		return this.PositionOnHill(player.position)
+	}
+
 	PositionOnHill(position) {
-		return Coordinates.PositionsAreClose(position, { x: 0, z: 0 }, this.hillSize + 1, true)
+		return Coordinates.PositionsAreClose(position, { x: 0, z: 0 }, this.size + 1, true)
     }
 
 	AttemptRevivePlayerExtension(player) {

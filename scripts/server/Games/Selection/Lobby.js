@@ -48,6 +48,7 @@ Lobby = class extends this.BaseSelection {
 					{ x: -32, z: -32, structure: "bombsaway", game: new BombsAway() },
 					{ x: -32, z: 32, structure: "parkour", game: new Parkour() },
 					{ x: 32, z: 32, game: new Thieves() },
+					{ x: 32, z: -32, game: new Match() },
 				]
 			},
 			{

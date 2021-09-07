@@ -1,4 +1,4 @@
-Parkour = class extends this.BaseRaceOrSurvival {
+Parkour = class extends this.RaceOrSurvival {
 
 	constructor() {
 		super()

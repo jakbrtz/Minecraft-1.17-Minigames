@@ -1,4 +1,4 @@
-BridgesBaseSelection = class extends this.BaseSelection {
+BridgesBaseSelection = class extends this.Selection {
 
 	constructor() {
 		super()

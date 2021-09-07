@@ -1,4 +1,4 @@
-QuickRespawn = class extends this.BaseScoredGame {
+QuickRespawn = class extends this.ScoredGame {
 
 	constructor(teams) {
 		super()

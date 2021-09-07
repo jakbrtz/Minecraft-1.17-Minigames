@@ -1,4 +1,4 @@
-Lobby = class extends this.BaseSelection {
+Lobby = class extends this.Selection {
 
 	constructor() {
 		super()

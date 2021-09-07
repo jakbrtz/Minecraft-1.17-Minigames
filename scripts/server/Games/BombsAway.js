@@ -1,4 +1,4 @@
-BombsAway = class extends this.BaseRaceOrSurvival {
+BombsAway = class extends this.RaceOrSurvival {
 
 	constructor() {
 		super()

@@ -1,4 +1,4 @@
-﻿BaseScoredGame = class extends this.BaseGame {
+﻿ScoredGame = class extends this.Game {
 
 	constructor() {
 		super()

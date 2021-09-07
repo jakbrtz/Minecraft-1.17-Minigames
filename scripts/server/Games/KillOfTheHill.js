@@ -1,4 +1,4 @@
-KingOfTheHill = class extends this.BaseScoredGame {
+KingOfTheHill = class extends this.ScoredGame {
 
 	constructor() {
 		super()

@@ -1,4 +1,4 @@
-DroppingBlocks = class extends this.BaseRaceOrSurvival {
+DroppingBlocks = class extends this.RaceOrSurvival {
 
 	constructor() {
 		super()

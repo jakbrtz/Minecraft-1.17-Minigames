@@ -1,4 +1,4 @@
-BaseSelection = class extends this.BaseGame {
+Selection = class extends this.Game {
 
 	constructor() {
 		super()

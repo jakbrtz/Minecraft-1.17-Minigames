@@ -1,4 +1,4 @@
-Match = class extends this.BaseRaceOrSurvival {
+Match = class extends this.RaceOrSurvival {
 
 	constructor() {
 		super()

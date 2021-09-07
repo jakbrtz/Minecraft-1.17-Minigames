@@ -1,4 +1,4 @@
-DoorDash = class extends this.BaseRaceOrSurvival {
+DoorDash = class extends this.RaceOrSurvival {
 
 	constructor() {
 		super()

@@ -1,4 +1,4 @@
-SteppingStones = class extends this.BaseRaceOrSurvival {
+SteppingStones = class extends this.RaceOrSurvival {
 
 	constructor() {
 		super()

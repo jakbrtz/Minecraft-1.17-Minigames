@@ -1,4 +1,4 @@
-﻿BaseGame = class {
+﻿Game = class {
 
     constructor() {
 

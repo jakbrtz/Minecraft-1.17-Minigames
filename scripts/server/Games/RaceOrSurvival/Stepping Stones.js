@@ -65,7 +65,7 @@ SteppingStones = class extends this.BaseRaceOrSurvival {
         }
 	}
 
-	RespawnExtension(player) {
+	RespawnExtensionExtension(player) {
 		SlashCommand(`/tp ${player.name} ${this.xOffset + ((this.columns / 2 + Math.random(-1, 1)) * (this.size + this.gap))} 66 ${this.zOffset - 5} facing 0 66 0`)
 	}
 

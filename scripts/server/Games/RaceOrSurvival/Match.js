@@ -29,7 +29,7 @@ Match = class extends this.BaseRaceOrSurvival {
 		SlashCommand(`/fill ${platform.x} 64 ${platform.z} ${platform.x + 3} 64 ${platform.z + 3} ${block} ${platform.c}`)
     }
 
-	RespawnExtension(player) {
+	RespawnExtensionExtension(player) {
 		SlashCommand(`/tp ${player.name} 0 66 0`) // todo: wait for platform to respawn
 	}
 

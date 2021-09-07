@@ -4,6 +4,7 @@
 		super()
 		this.IsRace = true
 		this.GameMode = 'adventure'
+		// IsRace in constructor
 	}
 
 	SetupExtension() {
@@ -38,6 +39,16 @@
 			this.UpdateScore()
 		}
 	}
+
+	RespawnExtension(player) {
+		this.RespawnExtensionExtension(player)
+		if (!this.IsRace && this.elapsedGameTime > 0) {
+			player.AppearDead(2147483647)
+        }
+	}
+
+	RespawnExtensionExtension(player) {
+    }
 
 	IsGameInProgress() {
 		return this.players.some(player => player.finishTime < 0)

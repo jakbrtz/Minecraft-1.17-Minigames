@@ -14,7 +14,7 @@ DroppingBlocks = class extends this.BaseRaceOrSurvival {
 		}
 	}
 
-	RespawnExtension(player) {
+	RespawnExtensionExtension(player) {
 		SlashCommand(`/spreadplayers -20 0 3 6 ${player.name}`)
 	}
 

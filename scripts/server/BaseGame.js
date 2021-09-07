@@ -141,11 +141,11 @@
         SlashCommand(`/effect ${player.name} instant_health 1 15 true`)
         SlashCommand(`/effect ${player.name} saturation 1 15 true`)
         SlashCommand(`/xp -2147483648L ${player.name}`)
+        player.deathTimer = -1
+        this.RespawnExtension(player)
         if (this.GameIsComplete) {
             SlashCommand(`/give ${player.name} potion`)
         }
-        player.deathTimer = -1
-        this.RespawnExtension(player)
     }
 
     RespawnExtension(player) {

@@ -17,12 +17,19 @@
 		}
 	}
 
-	GameDuration() {
-		return GameController.GameDuration || this.DefaultGameDuration
+	RemainingTime() {
+		let totalTime = GameController.GameDuration || this.DefaultGameDuration
+		if (this.elapsedGameTime > totalTime) {
+			return 0
+		}
+		if (this.elapsedGameTime > 0) {
+			return totalTime - this.elapsedGameTime
+		}
+		return totalTime
     }
 
 	IsGameInProgress() {
-		return this.elapsedGameTime < this.GameDuration()
+		return this.RemainingTime() > 0
 	}
 
 	MakeListOfScores() {
@@ -72,10 +79,7 @@
 			text: element.name,
 			value: element.score
         }})
-		let remainingTime = this.GameDuration() - this.elapsedGameTime
-		if (remainingTime < 0) remainingTime = 0
-		if (remainingTime > this.GameDuration()) remainingTime = this.GameDuration()
-		lines.push(Scoreboard.TicksToDuration(remainingTime))
+		lines.push(Scoreboard.TicksToDuration(this.RemainingTime()))
 		Scoreboard.Create("Scores", lines)
 	}
 }

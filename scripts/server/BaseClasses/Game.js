@@ -20,6 +20,7 @@
                 this.teams.push(player.team)
             }
         })
+        Random.Shuffle(this.players)
         Random.Shuffle(this.teams)
         this.EnableTeamsPvP(this.PvPgroupedByTeams)
         this.BuildWorld()
@@ -55,41 +56,14 @@
 
     }
 
-    UpdateSetup() {
-        if (this.elapsedGameTime % 20 === 0 && this.ShowPreGameTimer) {
-            SlashCommand(`/title @a title ${-this.elapsedGameTime / 20}...`);
-        }
-        this.players.forEach(player => {
-            if (this.PlayerIsOutOfBounds(player) || this.PlayerHasLeftStartArea(player)) {
-                this.Respawn(player)
-            }
-        })
-        this.UpdateSetupExtension()
-    }
-
-    UpdateSetupExtension() {
-
-    }
-
-    StartGame() {
-        if (this.ShowPreGameTimer) {
-            SlashCommand(`/title @a clear`);
-        }
-        this.StartGameExtension()
-    }
-
-    StartGameExtension() {
-
-    }
-
     Update() {
 
         if (this.elapsedGameTime < 0) {
-            this.UpdateSetup()
+            this.UpdateSetupBase()
         } else if (this.elapsedGameTime === 0) {
-            this.StartGame()
+            this.StartGameBase()
         } else {
-            this.UpdateGame()
+            this.UpdateGameBase()
         }
 
         this.players.forEach(player => {
@@ -107,19 +81,41 @@
         this.elapsedGameTime++
     }
 
-    UpdateGame() {
+    UpdateSetupBase() {
+        if (this.elapsedGameTime % 20 === 0 && this.ShowPreGameTimer) {
+            SlashCommand(`/title @a title ${-this.elapsedGameTime / 20}...`);
+        }
+        this.players.forEach(player => {
+            if (this.PlayerIsOutOfBounds(player) || this.PlayerHasLeftStartArea(player)) {
+                this.Respawn(player)
+            }
+        })
+    }
+
+    StartGameBase() {
+        if (this.ShowPreGameTimer) {
+            SlashCommand(`/title @a clear`);
+        }
+    }
+
+    UpdateGameBase() {
         this.players.forEach(player => {
             if (this.PlayerIsOutOfBounds(player)) {
                 this.PlayerDied(player)
             }
         })
         this.UpdateGameExtension()
+        this.UpdateGameGeneral()
         if (!this.IsGameInProgress()) {
             this.EndGame()
         }
     }
 
     UpdateGameExtension() {
+
+    }
+
+    UpdateGameGeneral() {
 
     }
 
@@ -165,6 +161,9 @@
     AttemptRevivePlayer(player) {
         SlashCommand(`/tag ${player.name} add JakesGames-recentlyRevived`)
         player.AppearDead(this.DeathCoolDown / 20 + 10)
+        if (this.GameIsComplete) {
+            SlashCommand(`/give ${player.name} potion`)
+        }
         this.AttemptRevivePlayerExtension(player)
     }
 
@@ -172,6 +171,8 @@
         // todo: rewrite this nicer so it can handle edge cases like DeathCoolDown===1
         if (this.DeathCoolDown === 0) {
             this.Respawn(player)
+        } else {
+            SlashCommand(`/tp ${player.name} 0 80 0`)
         }
     }
 

@@ -9,21 +9,12 @@
 
 	SetupExtension() {
 		this.players.forEach(player => player.score = 0)
-		this.SetupExtensionExtension()
 	}
 
-	SetupExtensionExtension() {
-    }
-
-	UpdateGameExtension() {
+	UpdateGameGeneral() {
 		if (this.elapsedGameTime % 20 === 0) {
 			this.UpdateScore()
 		}
-		this.UpdateGameExtensionExtension()
-	}
-
-	UpdateGameExtensionExtension() {
-
 	}
 
 	GameDuration() {

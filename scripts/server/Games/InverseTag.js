@@ -19,13 +19,12 @@ InverseTag = class extends this.ScoredGame {
 
 	RespawnExtension(player) {
 		SlashCommand(`/spreadplayers 0 0 5 15 ${player.name}`)
+		if (this.HighlightedPlayer === null) {
+			this.SetHighlightedPlayer(player)
+		}
 	}
 
-	SetupExtensionExtension() {
-		this.SetHighlightedPlayer(Random.Arr(this.players))
-	}
-
-	UpdateGameExtensionExtension() {
+	UpdateGameExtension() {
 		if (this.HighlightedPlayer === null || this.HighlightedPlayer.deathTimer !== -1) {
 			this.SetHighlightedPlayer(Random.Arr(this.players))
 		}
@@ -47,10 +46,6 @@ InverseTag = class extends this.ScoredGame {
 		Chat(`${player.name} is it!`)
 		this.HighlightedPlayer = player
     }
-
-	AttemptRevivePlayerExtension(player) {
-		SlashCommand(`/tp ${player.name} 0 80 0`)
-	}
 
 	MakeListOfScores() {
         return this.players.map(player => {

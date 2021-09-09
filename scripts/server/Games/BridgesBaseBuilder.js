@@ -40,13 +40,10 @@ BridgesBaseBuilder = class extends this.Selection {
 		}
 	}
 
-	SetupExtension() {
-		SlashCommand(`/give @a concrete 1 12`)
-		this.players.forEach(player => player.requestedBase = undefined)
-	}
-
 	RespawnExtension(player) {
 		SlashCommand(`/tp ${player.name} ${Random.Float(-10, 10)} 66 ${Random.Float(-10, 10)}`)
+		SlashCommand(`/give @a concrete 1 12`)
+		player.requestedBase = undefined
 	}
 
 	EndGameExtension() {

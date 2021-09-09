@@ -22,7 +22,7 @@ Shooters = class extends this.RaceOrSurvival {
         }
 	}
 
-	RespawnExtensionExtension(player) {
+	RespawnExtension(player) {
 		if (Random.Bool()) {
 			SlashCommand(`/tp ${player.name} ${(Random.Int(4) - 1.5) * 6} 66 ${Random.Float(-9, 9)}`)
 		} else {

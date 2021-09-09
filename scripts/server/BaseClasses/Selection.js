@@ -24,7 +24,7 @@ Selection = class extends this.Game {
 		return []
     }
 
-	UpdateGameExtension() {
+	UpdateGameGeneral() {
 		this.players.forEach(player => {
 			this.choices.forEach(choice => {
 				choice.options.forEach(option => {

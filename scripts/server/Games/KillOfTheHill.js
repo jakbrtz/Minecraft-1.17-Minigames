@@ -33,7 +33,7 @@ KingOfTheHill = class extends this.ScoredGame {
 		SlashCommand(`/tp ${player.name} ${x} 66 ${z}`)
 	}
 
-	UpdateGameExtensionExtension() {
+	UpdateGameExtension() {
 		const previousHighlightedPlayer = this.HighlightedPlayer
 		this.HighlightedPlayer = this.players.filter(player => player.deathTimer < 0 && this.PositionOnHill(player.position)).sort((a,b)=>a.position.y-b.position.y)[0]||null
 		if (!this.GameIsComplete && this.elapsedGameTime % 20 === 0 && this.HighlightedPlayer !== null) {
@@ -56,10 +56,6 @@ KingOfTheHill = class extends this.ScoredGame {
 	PositionOnHill(position) {
 		return Coordinates.PositionsAreClose(position, { x: 0, z: 0 }, this.size + 1, true)
     }
-
-	AttemptRevivePlayerExtension(player) {
-		SlashCommand(`/tp ${player.name} 0 80 0`)
-	}
 
 	MakeListOfScores() {
         return this.players.map(player => {

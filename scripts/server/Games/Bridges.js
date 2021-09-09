@@ -83,7 +83,7 @@ Bridges = class extends this.ScoredGame {
 		SlashCommand(`/give ${player.name} concrete 64 ${player.team.colour}`)
 	}
 
-	UpdateGameExtensionExtension() {
+	UpdateGameExtension() {
 
 		this.teams.forEach(team => {
 			this.players.forEach(player => {
@@ -104,18 +104,8 @@ Bridges = class extends this.ScoredGame {
 		return !Coordinates.PositionsAreClose(player.position, player.team.spawn, 3, false)
 	}
 
-	AttemptRevivePlayerExtension(player) {
-		if (Math.random() < 0.1) {
-			SlashCommand("/execute " + player.name + " ~~~ say " + Random.Arr([
-				"I got rekt",
-				"aww man",
-				"when I respawn it will be over for you punks",
-				"If I was better then I wouldn't be so bad",
-				"I'll get my revenge... probably",
-				"Jamblers!"
-			]))
-		}
-		SlashCommand(`/tp ${player.name} 0 100 0`)
+	PlayerIsOutOfBounds(player) {
+		return player.position.y < 30
 	}
 
 	PlayerPlacedBlock(player, position) {

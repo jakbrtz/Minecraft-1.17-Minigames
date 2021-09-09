@@ -47,7 +47,7 @@ Thieves = class extends this.ScoredGame {
 		player.carrying = false
 	}
 
-	UpdateGameExtensionExtension() {
+	UpdateGameExtension() {
 
 		this.teams.forEach(team => {
 			this.players.forEach(player => {
@@ -76,9 +76,5 @@ Thieves = class extends this.ScoredGame {
 
 	PlayerHasLeftStartArea(player) {
 		return !Coordinates.PositionsAreClose(player.position, player.team.spawn, 3, false)
-	}
-
-	AttemptRevivePlayerExtension(player) {
-		SlashCommand(`/tp ${player.name} 0 100 0`)
 	}
 }

@@ -29,11 +29,11 @@ Match = class extends this.RaceOrSurvival {
 		SlashCommand(`/fill ${platform.x} 64 ${platform.z} ${platform.x + 3} 64 ${platform.z + 3} ${block} ${platform.c}`)
     }
 
-	RespawnExtensionExtension(player) {
+	RespawnExtension(player) {
 		SlashCommand(`/tp ${player.name} 0 66 0`) // todo: wait for platform to respawn
 	}
 
-	UpdateGameExtensionExtension() {
+	UpdateGameExtension() {
 
 		switch (this.elapsedGameTime % 150) {
 			case 1:

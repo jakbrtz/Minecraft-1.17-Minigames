@@ -27,7 +27,7 @@ DoorDash = class extends this.RaceOrSurvival {
 		SlashCommand(`/fill ${this.xOffset} 64 ${this.rows * this.depth + this.zOffset} ${this.xOffset + this.doors * this.width - 1} 64 ${(this.rows + 2) * this.depth + this.zOffset} concrete 1`)
 	}
 
-	RespawnExtensionExtension(player) {
+	RespawnExtension(player) {
 		SlashCommand(`/tp ${player.name} ${this.xOffset + ((this.doors / 2 + Math.random(-1, 1)) * this.width)} 66 ${this.zOffset - this.depth} facing 0 66 0`)
 		SlashCommand(`/effect ${player.name} speed 30 5 true`)
 	}

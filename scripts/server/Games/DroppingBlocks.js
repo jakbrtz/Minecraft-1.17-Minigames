@@ -14,11 +14,11 @@ DroppingBlocks = class extends this.RaceOrSurvival {
 		}
 	}
 
-	RespawnExtensionExtension(player) {
+	RespawnExtension(player) {
 		SlashCommand(`/spreadplayers -20 0 3 6 ${player.name}`)
 	}
 
-	UpdateGameExtensionExtension() {
+	UpdateGameExtension() {
 		this.players.filter(player => player.finishTime === -1).forEach(player => {
 			let blocksToChange = [{
 				x: Math.floor(player.position.x),

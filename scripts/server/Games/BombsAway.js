@@ -10,7 +10,7 @@ BombsAway = class extends this.RaceOrSurvival {
 		SlashCommand(`/fill -15 64 -15 15 64 15 bedrock`)
 	}
 
-	RespawnExtensionExtension(player) {
+	RespawnExtension(player) {
 		SlashCommand(`/tp ${player.name} ${Random.Float(-13, 13)} 66 ${Random.Float(-13, 13)}`)
 	}
 
@@ -18,7 +18,7 @@ BombsAway = class extends this.RaceOrSurvival {
 		return player.position.y < 40
 	}
 
-	UpdateGameExtensionExtension() {
+	UpdateGameExtension() {
 		if (this.elapsedGameTime % 10 === 0) {
 			SlashCommand(`/summon tnt ${Random.Float(-15, 15)} 70 ${Random.Float(-15, 15)}`)
         }

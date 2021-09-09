@@ -65,11 +65,11 @@ SteppingStones = class extends this.RaceOrSurvival {
         }
 	}
 
-	RespawnExtensionExtension(player) {
+	RespawnExtension(player) {
 		SlashCommand(`/tp ${player.name} ${this.xOffset + ((this.columns / 2 + Math.random(-1, 1)) * (this.size + this.gap))} 66 ${this.zOffset - 5} facing 0 66 0`)
 	}
 
-	UpdateGameExtensionExtension() {
+	UpdateGameExtension() {
 
 		this.trackedPlatforms.forEach(trackedPlatform => {
 			trackedPlatform.previousNearbyPlayer = trackedPlatform.nearbyPlayer

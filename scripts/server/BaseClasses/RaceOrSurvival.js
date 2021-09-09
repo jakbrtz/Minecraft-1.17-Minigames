@@ -1,4 +1,4 @@
-﻿RaceOrSurvival = class extends this.Game {
+RaceOrSurvival = class extends this.Game {
 
 	constructor() {
 		super()
@@ -10,27 +10,20 @@
 	SetupExtension() {
 		this.players.forEach(player => player.finishTime = -1)
 		SlashCommand(`/effect @a regeneration 60 1 true`)
-		this.SetupExtensionExtension()
+		if (!this.IsRace) this.DeathCoolDown = 10000000 //todo: what about end-game potion?
 	}
 
-	SetupExtensionExtension() {
-    }
-
-	UpdateGameExtension() {
+	UpdateGameGeneral() {
 		this.players.forEach(player => {
 			if (player.finishTime < 0 && this.PlayerIsFinished(player)) {
 				player.finishTime = this.elapsedGameTime
 				this.UpdateScore()
 			}
 		})
-		this.UpdateGameExtensionExtension()
 	}
 
 	PlayerIsFinished(player) {
 		return false
-	}
-
-	UpdateGameExtensionExtension() {
 	}
 
 	PlayerDiedExtension(player, killer) {
@@ -39,16 +32,6 @@
 			this.UpdateScore()
 		}
 	}
-
-	RespawnExtension(player) {
-		this.RespawnExtensionExtension(player)
-		if (!this.IsRace && this.elapsedGameTime > 0) {
-			player.AppearDead(2147483647)
-        }
-	}
-
-	RespawnExtensionExtension(player) {
-    }
 
 	IsGameInProgress() {
 		return this.players.some(player => player.finishTime < 0)

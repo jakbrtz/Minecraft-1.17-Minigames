@@ -17,7 +17,7 @@ Paint = class extends this.ScoredGame {
 		SlashCommand(`/give ${player.name} filled_map`)
 	}
 
-	UpdateGameExtensionExtension() {
+	UpdateGameExtension() {
 
 		if (this.GameIsComplete) return
 
@@ -41,9 +41,5 @@ Paint = class extends this.ScoredGame {
 			}
 		})
 
-	}
-
-	AttemptRevivePlayerExtension(player) {
-		SlashCommand(`/tp ${player.name} 0 100 0`)
 	}
 }

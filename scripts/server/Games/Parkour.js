@@ -34,7 +34,7 @@ Parkour = class extends this.RaceOrSurvival {
 		this.players.forEach(player => player.checkPoint = 0) // todo: is this the right place to put it?
 	}
 
-	RespawnExtensionExtension(player) {
+	RespawnExtension(player) {
 		const x = this.checkPoints[player.checkPoint % 4].x + Random.Float(-3, 3)
 		const z = this.checkPoints[player.checkPoint % 4].z + Random.Float(-3, 3)
 		const facingX = this.checkPoints[(player.checkPoint + 1) % 4].x
@@ -54,7 +54,7 @@ Parkour = class extends this.RaceOrSurvival {
 		return player.checkPoint >= 4
 	}
 
-	UpdateGameExtensionExtension() {
+	UpdateGameExtension() {
 
 		this.players.forEach(player => {
 			if (player.position.y > 64 && Coordinates.PositionsAreClose(player.position, this.checkPoints[(player.checkPoint + 1) % 4], 6, true)) {

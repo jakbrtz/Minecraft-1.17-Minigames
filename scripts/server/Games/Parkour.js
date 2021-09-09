@@ -16,7 +16,7 @@ Parkour = class extends this.RaceOrSurvival {
 		WorldBuilding.Clear()
 
 		let order = []
-		for (var i = 0; i < 8; i++) {
+		for (var i = 0; i < 9; i++) {
 			order.push(`parkour:parkour${i}`)
 		}
 		Random.Shuffle(order)

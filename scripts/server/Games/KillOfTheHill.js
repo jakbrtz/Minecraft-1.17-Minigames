@@ -35,18 +35,13 @@ KingOfTheHill = class extends this.ScoredGame {
 
 	UpdateGameExtension() {
 		const previousHighlightedPlayer = this.HighlightedPlayer
-		this.HighlightedPlayer = this.players.filter(player => player.deathTimer < 0 && this.PositionOnHill(player.position)).sort((a,b)=>a.position.y-b.position.y)[0]||null
+		this.HighlightedPlayer = this.players.filter(player => player.deathTimer < 0 && this.PositionOnHill(player.position)).sort((a, b) => b.position.y - a.position.y)[0] || null
 		if (!this.GameIsComplete && this.elapsedGameTime % 20 === 0 && this.HighlightedPlayer !== null) {
 			this.HighlightedPlayer.score++
 		}
 		if (previousHighlightedPlayer !== this.HighlightedPlayer) {
-			if (this.HighlightedPlayer !== null) {
-				Chat(`${this.HighlightedPlayer.name} rules the hill`)
-			} else {
-				Chat(`The hill has no ruler`)
-			}
 			this.UpdateScore()
-        }
+		}
 	}
 
 	PlayerHasLeftStartArea(player) {

@@ -10,9 +10,7 @@ Selection = class extends this.Game {
 		this.choices = this.GetChoices()
 		this.BuildWorldWithoutOptions()
 		this.choices.forEach(choice => {
-			choice.options.forEach(option => {
-				choice.construct(option)
-			})
+			choice.options.forEach(choice.construct)
 		})
 	}
 

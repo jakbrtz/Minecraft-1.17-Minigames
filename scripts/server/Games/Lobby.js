@@ -29,26 +29,32 @@ Lobby = class extends this.Selection {
 				]
 			},
 			{
-				construct: game => SlashCommand(`/structure load lobby:${game.structure || "default"} ${game.x - 3} 4 ${game.z - 3} ${Coordinates.SuggestRotation(game)}_degrees`),
+				construct: (game, i) => {
+					let radius = 40
+					game.x = Math.round(radius * Math.sin(i * 2 * Math.PI / this.choices[1].options.length))
+					game.z = Math.round(radius * Math.cos(i * 2 * Math.PI / this.choices[1].options.length))
+					SlashCommand(`/structure load lobby:${game.structure || "default"} ${game.x - 3} 4 ${game.z - 3} ${Coordinates.SuggestRotation(game)}_degrees`)
+				},
 				radius: 3,
 				onSelect: game => GameController.ChangeGame(game.game), // todo: use the NextGame() function
 				options: [
-					{ x: 24, z: 8, structure: "arena", game: new QuickRespawn(false) },
-					{ x: 24, z: -8, structure: "bridges", game: new Bridges() },
-					{ x: 20, z: -20, structure: "bridgeselect", game: new BridgesBaseSelection() },
-					{ x: 8, z: -24, structure: "bridgebuild", game: new BridgesBaseBuilder() },
-					{ x: -8, z: -24, structure: "droppers", game: new DroppingBlocks() },
-					{ x: -24, z: -8, structure: "paint", game: new Paint() },
-					{ x: -24, z: 8, structure: "steppingstones", game: new SteppingStones() },
-					{ x: -8, z: 24, structure: "arenateam", game: new QuickRespawn(true) },
-					{ x: 8, z: 24, structure: "doordash", game: new DoorDash() },
-					{ x: 20, z: 20, structure: "inversetag", game: new InverseTag() },
-					{ x: -20, z: 20, structure: "shooters", game: new Shooters() },
-					{ x: -20, z: -20, structure: "hill", game: new KingOfTheHill() },
-					{ x: -32, z: -32, structure: "bombsaway", game: new BombsAway() },
-					{ x: -32, z: 32, structure: "parkour", game: new Parkour() },
-					{ x: 32, z: 32, game: new Thieves() },
-					{ x: 32, z: -32, structure: "match", game: new Match() },
+					{ structure: "arena", game: new QuickRespawn(false) },
+					{ structure: "bridges", game: new Bridges() },
+					{ structure: "bridgeselect", game: new BridgesBaseSelection() },
+					{ structure: "bridgebuild", game: new BridgesBaseBuilder() },
+					{ structure: "droppers", game: new DroppingBlocks() },
+					{ structure: "paint", game: new Paint() },
+					{ structure: "steppingstones", game: new SteppingStones() },
+					{ structure: "arenateam", game: new QuickRespawn(true) },
+					{ structure: "doordash", game: new DoorDash() },
+					{ structure: "inversetag", game: new InverseTag() },
+					{ structure: "shooters", game: new Shooters() },
+					{ structure: "hill", game: new KingOfTheHill() },
+					{ structure: "bombsaway", game: new BombsAway() },
+					{ structure: "parkour", game: new Parkour() },
+					{ structure: "spleef", game: new Spleef() },
+					{ game: new Thieves() },
+					{ structure: "match", game: new Match() },
 				]
 			},
 			{

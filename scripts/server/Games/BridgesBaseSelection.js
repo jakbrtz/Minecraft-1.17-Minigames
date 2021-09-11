@@ -16,11 +16,11 @@ BridgesBaseSelection = class extends this.Selection {
 					Chat(`${player.name} likes ${base.structure.split(':')[1]}`)
 				},
 				options: [
-					{ x: 32, z: 0, structure: "bases:Amethyst" },
-					{ x: 0, z: -32, structure: "bases:GoldBlocks" },
-					{ x: -32, z: 0, structure: "bases:Mud" },
-					{ x: 0, z: 32, structure: "bases:Temple" },
-					{ x: 32, z: 32, structure: "bases:EndIslands" },
+					{ x: 32, z: 0, structure: "bridges:Amethyst" },
+					{ x: 0, z: -32, structure: "bridges:GoldBlocks" },
+					{ x: -32, z: 0, structure: "bridges:Mud" },
+					{ x: 0, z: 32, structure: "bridges:Temple" },
+					{ x: 32, z: 32, structure: "bridges:EndIslands" },
 				]
 			}
 		]

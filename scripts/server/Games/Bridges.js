@@ -38,10 +38,15 @@ Bridges = class extends this.ScoredGame {
 
 			team.selectedBase = (team.requestedBases.length > 0)
 				? Random.Arr(team.requestedBases)
-				: Random.Arr(["bases:Amethyst", "bases:GoldBlocks", "bases:Mud", "bases:Temple"])
+				: (this.teams[0].requestedBases.length > 0)
+					? Random.Arr(this.teams[0].requestedBases)
+					: ("bridges:" + Random.Arr(["Amethyst", "GoldBlocks", "Mud", "Temple"]))
 
-			team.spawn = Bases.StructureSpawn(team.selectedBase, team.center, Coordinates.SuggestRotation(team.center))
-			team.goal = Bases.StructureGoal(team.selectedBase, team.center, Coordinates.SuggestRotation(team.center))
+			team.spawn = Coordinates.Offset(team.center, Coordinates.SuggestRotation(team.center), { x: 0, y: 1, z: -8 })
+			team.goal = ["bridges:Temple", "bridges:GoldBlocks", "slot2", "slot3"].includes(team.selectedBase)
+				? team.center
+				: Coordinates.Offset(team.center, Coordinates.SuggestRotation(team.center), { x: 0, y: 1, z: 8 })
+
 
 			// Place structure
 			SlashCommand(`/structure load ${team.selectedBase} ${team.center.x - 14} ${team.center.y - 15} ${team.center.z - 14} ${Coordinates.SuggestRotation(team.center)}_degrees`)

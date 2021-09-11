@@ -34,7 +34,7 @@ BridgesBaseBuilder = class extends this.Selection {
 		SlashCommand(`/fill -64 64 -64 63 64 63 glass`)
 		const slots = this.choices[0].options
 		for (var i = 0; i < slots.length; i++) {
-			slots[i].structure = `bases:Basic`
+			slots[i].structure = `bridges:Basic`
 			this.choices[0].construct(slots[i])
 			slots[i].structure = `slot${i}`
 		}

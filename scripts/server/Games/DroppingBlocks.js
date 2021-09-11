@@ -1,8 +1,7 @@
 DroppingBlocks = class extends this.RaceOrSurvival {
 
 	constructor() {
-		super()
-		this.IsRace = false
+		super(false)
 		this.layerColours = [2, 1, 10, 4, 3]
 		this.trackedBlocks = new ArrayMultiDimensional([21, 5, 21], [-30, 0, -10])
 	}

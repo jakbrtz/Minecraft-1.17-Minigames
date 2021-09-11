@@ -1,21 +1,22 @@
 RaceOrSurvival = class extends this.Game {
 
-	constructor() {
+	constructor(isRace, endWhenOneRemains) {
 		super()
-		this.IsRace = true
+		this.IsRace = isRace
+		this.EndWhenOneRemains = endWhenOneRemains
 		this.GameMode = 'adventure'
-		// IsRace in constructor
 	}
 
 	SetupExtension() {
 		this.players.forEach(player => player.finishTime = -1)
 		SlashCommand(`/effect @a regeneration 60 1 true`)
-		if (!this.IsRace) this.DeathCoolDown = 10000000 //todo: what about end-game potion?
+		if (!this.IsRace) this.DeathCoolDown = 10000000
 	}
 
 	UpdateGameGeneral() {
-		this.players.forEach(player => {
-			if (player.finishTime < 0 && this.PlayerIsFinished(player)) {
+		const remainingPlayers = this.players.filter(player => player.finishTime < 0)
+		remainingPlayers.forEach(player => {
+			if (this.PlayerIsFinished(player) || (this.EndWhenOneRemains && remainingPlayers.length === 1)) {
 				player.finishTime = this.elapsedGameTime
 				this.UpdateScore()
 			}

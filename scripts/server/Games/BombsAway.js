@@ -1,8 +1,7 @@
 BombsAway = class extends this.RaceOrSurvival {
 
 	constructor() {
-		super()
-		this.IsRace = false
+		super(false)
 	}
 
 	BuildWorld() {

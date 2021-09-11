@@ -1,8 +1,7 @@
 SteppingStones = class extends this.RaceOrSurvival {
 
 	constructor() {
-		super()
-		this.IsRace = true
+		super(true)
 
 		this.size = 3
 		this.gap = 1

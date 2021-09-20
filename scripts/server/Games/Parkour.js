@@ -33,6 +33,10 @@ Parkour = class extends this.RaceOrSurvival {
 		this.players.forEach(player => player.checkPoint = 0) // todo: is this the right place to put it?
 	}
 
+	AddPlayerExtension(player) {
+		player.checkPoint = 0
+	}
+
 	RespawnExtension(player) {
 		const x = this.checkPoints[player.checkPoint % 4].x + Random.Float(-3, 3)
 		const z = this.checkPoints[player.checkPoint % 4].z + Random.Float(-3, 3)

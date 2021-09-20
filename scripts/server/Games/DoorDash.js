@@ -7,12 +7,13 @@ DoorDash = class extends this.RaceOrSurvival {
 		this.depth = 8
 		this.rows = 8
 		this.doors = 4
-		this.xOffset = -Math.floor(this.doors * this.width / 2)
-		this.zOffset = -Math.floor(this.rows * this.depth / 2)
 	}
 
 	BuildWorld() {
 		WorldBuilding.Clear()
+
+		this.xOffset = -Math.floor(this.doors * this.width / 2)
+		this.zOffset = -Math.floor(this.rows * this.depth / 2)
 
 		for (var row = 0; row < this.rows; row++) {
 			const clearDoor1 = Random.Int(this.doors)

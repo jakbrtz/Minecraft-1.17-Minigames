@@ -2,13 +2,12 @@ Paint = class extends this.ScoredGame {
 
 	constructor() {
 		super()
-
 		this.DeathCoolDown = 5 * 20
-		this.trackedBlocks = new ArrayMultiDimensional([41, 41], [-20, -20])
 	}
 
 	BuildWorld() {
 		WorldBuilding.Clear()
+		this.trackedBlocks = new ArrayMultiDimensional([41, 41], [-20, -20])
 		SlashCommand(`/fill -20 64 -20 20 64 20 concrete 0`)
 	}
 

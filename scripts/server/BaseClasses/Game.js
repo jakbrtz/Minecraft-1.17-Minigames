@@ -1,43 +1,68 @@
 ﻿Game = class {
 
     constructor() {
-
-        this.teams = []
-        this.players = []
-        this.GameIsComplete = false
-
-        this.elapsedGameTime = -60
         this.DeathCoolDown = 0
         this.PvPgroupedByTeams = false
         this.GameMode = 'adventure'
         this.ShowPreGameTimer = true
+        this.TeamsCanBeAddedAfterStart = true
     }
 
     Setup() {
-        GameController.Players.forEach(player => {
-            this.players.push(player)
-            if (!this.teams.includes(player.team)) {
-                this.teams.push(player.team)
-            }
-        })
-        Random.Shuffle(this.players)
-        Random.Shuffle(this.teams)
-        this.EnableTeamsPvP(this.PvPgroupedByTeams)
+        this.teams = []
+        this.players = []
+        this.elapsedGameTime = -60
+        this.GameIsComplete = false
         this.BuildWorld()
-        SlashCommand(`/gamemode ${this.GameMode} @a`)
-        this.players.forEach(player => {
-            this.Respawn(player)
-        })
-        if (this.ShowPreGameTimer && Math.random() < 0.05) {
-            SlashCommand(`/title @a actionbar ⚠ cross-teaming is bannable or whatever`)
+    }
+
+    AddPlayer(player) {
+        this.players.push(player)
+
+        if (this.teams.some(team => team.name === player.team.name)) {
+            player.team = this.teams.find(team => team.name === player.team.name)
+        } else if (this.elapsedGameTime > 0 && !this.TeamsCanBeAddedAfterStart) {
+            player.team = Random.Arr(this.teams) // todo: pick team with least number of players
+        } else {
+            player.team = Teams.Get(player.team.name)
         }
-        this.SetupExtension()
+        this.AddTeam(player.team)
+
+        this.AddPlayerGeneral(player)
+        this.AddPlayerExtension(player)
+        this.Respawn(player)
+        if (this.ShowPreGameTimer && Math.random() < 0.05) {
+            SlashCommand(`/title ${player.name} actionbar ⚠ cross-teaming is bannable or whatever`)
+        }
         this.UpdateScore()
+        this.EnableTeamsPvP(this.PvPgroupedByTeams) // todo: this needs to take the game as a parameter too
+    }
+
+    AddPlayerGeneral(player) {
+
+    }
+
+    AddPlayerExtension(player) {
+
+    }
+
+    AddTeam(team) {
+        if (this.teams.includes(team)) return
+        this.teams.push(team)
+        this.AddTeamExtension(team)
+    }
+
+    AddTeamExtension(team) {
+
+    }
+
+    RemovePlayer(player) {
+        this.players = this.players.filter(p => p !== player)
     }
 
     EnableTeamsPvP(enabled) {
         this.players.forEach(player => {
-            SlashCommand(`/tag @a remove team-${player.team.name}`)
+            SlashCommand(`/tag ${player.name} remove team-${player.team.name}`)
         })
         this.players.forEach(player => ClearNullifiedDamage(player.entity))
         if (enabled) {
@@ -82,10 +107,10 @@
     }
 
     UpdateSetupBase() {
-        if (this.elapsedGameTime % 20 === 0 && this.ShowPreGameTimer) {
-            SlashCommand(`/title @a title ${-this.elapsedGameTime / 20}...`);
-        }
         this.players.forEach(player => {
+            if (this.elapsedGameTime % 20 === 0 && this.ShowPreGameTimer) {
+                SlashCommand(`/title ${player.name} title ${-this.elapsedGameTime / 20}...`);
+            }
             if (this.PlayerIsOutOfBounds(player) || this.PlayerHasLeftStartArea(player)) {
                 this.Respawn(player)
             }
@@ -94,8 +119,13 @@
 
     StartGameBase() {
         if (this.ShowPreGameTimer) {
-            SlashCommand(`/title @a clear`);
+            this.players.forEach(player => SlashCommand(`/title ${player.name} clear`))
         }
+        this.StartGameExtension()
+    }
+
+    StartGameExtension() {
+
     }
 
     UpdateGameBase() {
@@ -137,6 +167,7 @@
         SlashCommand(`/effect ${player.name} instant_health 1 15 true`)
         SlashCommand(`/effect ${player.name} saturation 1 15 true`)
         SlashCommand(`/xp -2147483648L ${player.name}`)
+        SlashCommand(`/gamemode ${this.GameMode} ${player.name}`)
         player.deathTimer = -1
         this.RespawnExtension(player)
         if (this.GameIsComplete) {
@@ -211,12 +242,11 @@
     EndGame() {
         if (this.GameIsComplete) return
         this.GameIsComplete = true
-        SlashCommand(`/give @a potion`)
+        this.players.forEach(player => SlashCommand(`/give ${player.name} potion`))
         this.EndGameExtension()
     }
 
     EndGameExtension() {
-        Chat("Game Completed")
     }
 
     NextGame() {

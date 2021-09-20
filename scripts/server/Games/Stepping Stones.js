@@ -7,10 +7,6 @@ SteppingStones = class extends this.RaceOrSurvival {
 		this.gap = 1
 		this.rows = 7
 		this.columns = 5
-
-		this.xOffset = -Math.floor(this.columns * (this.size + this.gap) / 2)
-		this.zOffset = -Math.floor(this.rows * (this.size + this.gap) / 2)
-		this.trackedPlatforms = new ArrayMultiDimensional([this.columns, this.rows])
 	}
 
 	UnknownMaterial(column, row) { return (row + column) % 2 ? "deepslate_bricks" : "polished_blackstone_bricks" }
@@ -23,6 +19,11 @@ SteppingStones = class extends this.RaceOrSurvival {
 
 	BuildWorld() {
 		WorldBuilding.Clear()
+
+		this.trackedPlatforms = new ArrayMultiDimensional([this.columns, this.rows])
+
+		this.xOffset = -Math.floor(this.columns * (this.size + this.gap) / 2)
+		this.zOffset = -Math.floor(this.rows * (this.size + this.gap) / 2)
 
 		for (var row = 0; row < this.rows; row++) {
 			const z = this.zOffset + row * (this.size + this.gap)

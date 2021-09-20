@@ -7,8 +7,8 @@
 		this.PvPgroupedByTeams = this.GroupScoreByTeam
 	}
 
-	SetupExtension() {
-		this.players.forEach(player => player.score = 0)
+	AddPlayerGeneral(player) {
+		player.score = 0
 	}
 
 	UpdateGameGeneral() {
@@ -69,8 +69,8 @@
 			msg = "Everyone wins!"
 		} else {
 			msg = bestElements.map(element => `${element.name}\u00a7r`).join(" and ") + " wins"
-        }
-		SlashCommand(`/title @a title ${msg}`)
+		}
+		this.players.forEach(player => SlashCommand(`/title ${player.name} title ${msg}`))
 		Chat(msg)
 	}
 

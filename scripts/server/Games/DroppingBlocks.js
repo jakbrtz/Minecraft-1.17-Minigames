@@ -2,19 +2,19 @@ DroppingBlocks = class extends this.RaceOrSurvival {
 
 	constructor() {
 		super(false)
-		this.layerColours = [2, 1, 10, 4, 3]
-		this.trackedBlocks = new ArrayMultiDimensional([21, 5, 21], [-30, 0, -10])
 	}
 
 	BuildWorld() {
 		WorldBuilding.Clear()
+		this.layerColours = [2, 1, 10, 4, 3]
+		this.trackedBlocks = new ArrayMultiDimensional([21, 5, 21], [-10, 0, -10])
 		for (var i = 0; i < this.layerColours.length; i++) {
-			SlashCommand(`/fill -10 ${this.LayerIndexToY(i)} -10 -30 ${this.LayerIndexToY(i)} 10 concrete ${this.layerColours[i]}`)
+			SlashCommand(`/fill -10 ${this.LayerIndexToY(i)} -10 10 ${this.LayerIndexToY(i)} 10 concrete ${this.layerColours[i]}`)
 		}
 	}
 
 	RespawnExtension(player) {
-		SlashCommand(`/spreadplayers -20 0 3 6 ${player.name}`)
+		SlashCommand(`/spreadplayers 0 0 3 6 ${player.name}`)
 	}
 
 	UpdateGameExtension() {

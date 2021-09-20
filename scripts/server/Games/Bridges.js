@@ -8,13 +8,12 @@ Bridges = class extends this.ScoredGame {
 	}
 
 	BuildWorld() {
+		WorldBuilding.Clear()
+		// Bases will be built as players join
+	}
 
-		while (this.teams.length < 2) {
-			const randomTeam = Teams.Random()
-			if (!this.teams.includes(randomTeam)) {
-				this.teams.push(randomTeam)
-			}
-		}
+	AddTeamExtension(team) {
+
 		const centers = [
 			{ x: 48, y: 65, z: 0 },
 			{ x: -48, y: 65, z: 0 },
@@ -25,58 +24,56 @@ Bridges = class extends this.ScoredGame {
 			{ x: -32, y: 65, z: 32 },
 			{ x: 32, y: 65, z: -32 },
 		]
-		for (var i = 0; i < this.teams.length; i++) {
-			const team = this.teams[i]
-			team.center = centers[i]
-			team.requestedBases = []
+
+		team.center = centers[this.teams.length - 1]
+		const options = this.players.filter(player => player.requestedBase && player.team === team).map(player => player.requestedBase)
+
+		team.selectedBase = options.length > 0 // todo: must we write the '>0'?
+			? Random.Arr(options)
+			: (team !== this.teams[0])
+				? this.teams[0].selectedBase
+				: ("bridges:" + Random.Arr(["Amethyst", "GoldBlocks", "Mud", "Temple"]))
+
+		team.spawn = Coordinates.Offset(team.center, Coordinates.SuggestRotation(team.center), { x: 0, y: 1, z: -8 })
+		team.goal = ["bridges:Temple", "bridges:GoldBlocks", "slot2", "slot3"].includes(team.selectedBase)
+			? team.center
+			: Coordinates.Offset(team.center, Coordinates.SuggestRotation(team.center), { x: 0, y: 1, z: 8 })
+
+		// Place structure
+		SlashCommand(`/structure load ${team.selectedBase} ${team.center.x - 14} ${team.center.y - 15} ${team.center.z - 14} ${Coordinates.SuggestRotation(team.center)}_degrees`)
+		// Recolour concrete
+		SlashCommand(`/fill ${team.center.x - 14} ${team.center.y - 15} ${team.center.z - 14} ${team.center.x + 14} ${team.center.y + 15} ${team.center.z + 14} concrete ${team.colour} replace concrete 12`)
+		SlashCommand(`/fill ${team.center.x - 14} ${team.center.y + 16} ${team.center.z - 14} ${team.center.x + 14} ${team.center.y + 45} ${team.center.z + 14} concrete ${team.colour} replace concrete 12`)
+		// Build bridge
+		let xlim = 0
+		let zlim = 0
+		if (team.center.x > 15) {
+			xlim = team.center.x - 15
 		}
+		if (team.center.x < -15) {
+			xlim = team.center.x + 15
+		}
+		if (team.center.z > 15) {
+			zlim = team.center.z - 15
+		}
+		if (team.center.z < -15) {
+			zlim = team.center.z + 15
+		}
+		if (Coordinates.SuggestRotation(team.center) % 180 === 0) {
+			SlashCommand(`/fill ${xlim} ${team.center.y - 3} ${zlim} ${xlim} ${team.center.y - 10} 0 concrete ${team.colour} keep`)
+			SlashCommand(`/fill ${xlim} ${team.center.y - 3} 0 0 ${team.center.y - 10} 0 concrete ${team.colour} keep`)
+		} else {
+			SlashCommand(`/fill ${xlim} ${team.center.y - 3} ${zlim} 0 ${team.center.y - 10} ${zlim} concrete ${team.colour} keep`)
+			SlashCommand(`/fill 0 ${team.center.y - 3} ${zlim} 0 ${team.center.y - 10} 0 concrete ${team.colour} keep`)
+		}
+		SlashCommand(`/fill 0 ${team.center.y - 3} 0 0 ${team.center.y - 10} 0 air`)
 
-		this.players.filter(player => player.requestedBase !== undefined).forEach(player => player.team.requestedBases.push(player.requestedBase))
+	}
 
-		WorldBuilding.Clear()
-		this.teams.forEach(team => {
-
-			team.selectedBase = (team.requestedBases.length > 0)
-				? Random.Arr(team.requestedBases)
-				: (this.teams[0].requestedBases.length > 0)
-					? Random.Arr(this.teams[0].requestedBases)
-					: ("bridges:" + Random.Arr(["Amethyst", "GoldBlocks", "Mud", "Temple"]))
-
-			team.spawn = Coordinates.Offset(team.center, Coordinates.SuggestRotation(team.center), { x: 0, y: 1, z: -8 })
-			team.goal = ["bridges:Temple", "bridges:GoldBlocks", "slot2", "slot3"].includes(team.selectedBase)
-				? team.center
-				: Coordinates.Offset(team.center, Coordinates.SuggestRotation(team.center), { x: 0, y: 1, z: 8 })
-
-
-			// Place structure
-			SlashCommand(`/structure load ${team.selectedBase} ${team.center.x - 14} ${team.center.y - 15} ${team.center.z - 14} ${Coordinates.SuggestRotation(team.center)}_degrees`)
-			// Recolour concrete
-			SlashCommand(`/fill ${team.center.x - 14} ${team.center.y - 15} ${team.center.z - 14} ${team.center.x + 14} ${team.center.y + 15} ${team.center.z + 14} concrete ${team.colour} replace concrete 12`)
-			SlashCommand(`/fill ${team.center.x - 14} ${team.center.y + 16} ${team.center.z - 14} ${team.center.x + 14} ${team.center.y + 45} ${team.center.z + 14} concrete ${team.colour} replace concrete 12`)
-			// Build bridge
-			let xlim = 0
-			let zlim = 0
-			if (team.center.x > 15) {
-				xlim = team.center.x - 15
-			}
-			if (team.center.x < -15) {
-				xlim = team.center.x + 15
-			}
-			if (team.center.z > 15) {
-				zlim = team.center.z - 15
-			}
-			if (team.center.z < -15) {
-				zlim = team.center.z + 15
-			}
-			if (Coordinates.SuggestRotation(team.center) % 180 === 0) {
-				SlashCommand(`/fill ${xlim} ${team.center.y - 3} ${zlim} ${xlim} ${team.center.y - 10} 0 concrete ${team.colour} keep`)
-				SlashCommand(`/fill ${xlim} ${team.center.y - 3} 0 0 ${team.center.y - 10} 0 concrete ${team.colour} keep`)
-			} else {
-				SlashCommand(`/fill ${xlim} ${team.center.y - 3} ${zlim} 0 ${team.center.y - 10} ${zlim} concrete ${team.colour} keep`)
-				SlashCommand(`/fill 0 ${team.center.y - 3} ${zlim} 0 ${team.center.y - 10} 0 concrete ${team.colour} keep`)
-			}
-			SlashCommand(`/fill 0 ${team.center.y - 3} 0 0 ${team.center.y - 10} 0 air`)
-		})
+	StartGameExtension() {
+		while (this.teams.length < 2) {
+			this.AddTeam(Teams.Random())
+		}
 	}
 
 	RespawnExtension(player) {

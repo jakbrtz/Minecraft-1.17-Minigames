@@ -7,23 +7,32 @@ GameController = {
 
 	Update: function (allEntities) {
 
+		// update player info or add new players
 		allEntities.forEach(entity => {
 			if (this.Players.has(entity.id)) {
 				this.Players.get(entity.id).Update(entity)
 			} else {
 				const player = new Player(entity)
 				this.Players.set(entity.id, player)
-				if (this.Game !== null) {
-					this.Game.Respawn(player)
-					SlashCommand(`/gamemode ${this.Game.GameMode} ${player.name}`)
-                }
 			}
 		})
 
+		// delete players that have left
+		for (let [id, player] of this.Players) {
+			if (!allEntities.some(entity => entity === player.entity)) {
+				if (this.Game) {
+					this.Game.RemovePlayer(player)
+				}
+				this.Players.delete(id)
+			}
+		}
+
+		// check if any player has a tag
 		allEntities.forEach(entity => {
 			GetTags(entity).forEach(tag => {
 				if (tag.startsWith("JakesGames-")) {
-					SlashCommand(`/tag ${GetName(entity)} remove ${tag}`)
+					const player = this.Players.get(entity.id)
+					SlashCommand(`/tag ${player.name} remove ${tag}`)
 					tag = tag.substr(11)
 					if (tag === "togglePause") {
 						this.Pause = !this.Pause
@@ -32,26 +41,27 @@ GameController = {
 						this.ChangeGame(this.Game.NextGame())
 					} else if (tag.startsWith("duration")) {
 						this.GameDuration = tag.substr(8) * 20
-					} else if (this.Game !== null && !this.Pause && this.Players.has(entity.id)) {
-						this.Game.ReceivedTag(this.Players.get(entity.id), tag)
+					} else if (this.Game !== null && !this.Pause && player) {
+						this.Game.ReceivedTag(player, tag)
 					}
 				}
 			})
 		})
 
-		if (this.Pause) return
-
-		if (this.Game !== null) {
-			this.Game.Update()
+		if (this.Game) {
+			if (!this.Pause) {
+				this.Game.Update()
+            }
 		} else if (this.Players.size > 0) {
 			this.ChangeGame(new Lobby())
-		}
+        }
 	},
 
 	ChangeGame: function (game) {
 		this.Game = game
 		if (this.Game !== null) {
 			this.Game.Setup()
+			this.Players.forEach(player => this.Game.AddPlayer(player))
 		}
 	},
 

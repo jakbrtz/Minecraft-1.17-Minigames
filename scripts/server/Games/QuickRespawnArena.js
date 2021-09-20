@@ -7,13 +7,14 @@ QuickRespawn = class extends this.ScoredGame {
 
 	BuildWorld() {
 		WorldBuilding.Clear()
-
 		const platforms = ["arenas:desert", "arenas:house", "arenas:nether", "arenas:planks"]
 		SlashCommand(`/structure load ${Random.Arr(platforms)} -16 63 -16   0_degrees`)
 		SlashCommand(`/structure load ${Random.Arr(platforms)}   0 63 -16  90_degrees`)
 		SlashCommand(`/structure load ${Random.Arr(platforms)}   0 63   0 180_degrees`)
 		SlashCommand(`/structure load ${Random.Arr(platforms)} -16 63   0 270_degrees`)
+	}
 
+	AddTeamExtension(team) {
 		const spawns = [
 			{ x:  13, z:  13 },
 			{ x: -13, z: -13 },
@@ -24,9 +25,7 @@ QuickRespawn = class extends this.ScoredGame {
 			{ x:   0, z:  13 },
 			{ x:   0, z: -13 },
 		]
-		for (var i = 0; i < this.teams.length; i++) {
-			this.teams[i].spawn = spawns[i]
-		}
+		team.spawn = spawns[this.teams.length - 1]
 	}
 
 	RespawnExtension(player) {

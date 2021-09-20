@@ -5,16 +5,17 @@ Thieves = class extends this.ScoredGame {
 		this.DefaultGameDuration = 5 * 60 * 20
 		this.DeathCoolDown = 5 * 20
 		this.GameMode = 'adventure'
+		this.TeamsCanBeAddedAfterStart = false
 	}
 
 	BuildWorld() {
+		WorldBuilding.Clear()
+		WorldBuilding.Circle({ x: 0, y: 64, z: 0 }, 31.5, "grass")
+		// Bases will be built as players join
+	}
 
-		while (this.teams.length < 2) {
-			const randomTeam = Teams.Random()
-			if (!this.teams.includes(randomTeam)) {
-				this.teams.push(randomTeam)
-			}
-		}
+	AddTeamExtension(team) {
+
 		const centers = [
 			{ x: 24, y: 65, z: 0 },
 			{ x: -24, y: 65, z: 0 },
@@ -25,20 +26,20 @@ Thieves = class extends this.ScoredGame {
 			{ x: -16, y: 65, z: 16 },
 			{ x: 16, y: 65, z: -16 },
 		]
-		for (var i = 0; i < this.teams.length; i++) {
-			const team = this.teams[i]
-			team.center = centers[i]
-			team.spawn = { x: team.center.x, y: team.center.y + 1, z: team.center.z }
-			team.goal = { x: team.center.x, y: team.center.y + 6, z: team.center.z }
-		}
 
-		WorldBuilding.Clear()
-		WorldBuilding.Circle({ x: 0, y: 64, z: 0 }, 31.5, "grass")
+		team.center = centers[this.teams.length - 1]
+		team.spawn = { x: team.center.x, y: team.center.y + 1, z: team.center.z }
+		team.goal = { x: team.center.x, y: team.center.y + 6, z: team.center.z }
+		
 		const structure = "thieves:" + Random.Arr(["house", "pond", "monument", "rich", "treehouse"])
-		this.teams.forEach(team => {
-			SlashCommand(`/structure load ${structure} ${team.center.x - 4} ${team.center.y} ${team.center.z - 4} ${Coordinates.SuggestRotation(team.center)}_degrees`)
-			SlashCommand(`/fill ${team.center.x - 4} ${team.center.y} ${team.center.z - 4} ${team.center.x + 4} ${team.center.y + 10} ${team.center.z + 4} concrete ${team.colour} replace concrete 12`)
-		})
+		SlashCommand(`/structure load ${structure} ${team.center.x - 4} ${team.center.y} ${team.center.z - 4} ${Coordinates.SuggestRotation(team.center)}_degrees`)
+		SlashCommand(`/fill ${team.center.x - 4} ${team.center.y} ${team.center.z - 4} ${team.center.x + 4} ${team.center.y + 10} ${team.center.z + 4} concrete ${team.colour} replace concrete 12`)
+	}
+
+	StartGameExtension() {
+		while (this.teams.length < 2) {
+			this.AddTeam(Teams.Random())
+		}
 	}
 
 	RespawnExtension(player) {

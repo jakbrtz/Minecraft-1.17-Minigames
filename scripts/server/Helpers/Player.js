@@ -4,7 +4,8 @@ Player = class {
 		this.position = Find(entity)
 		this.name = GetName(entity)
 		this.team = Teams.Random()
-		this.deathTimer = -1
+        this.deathTimer = -1
+        this.needsReviving = true
 	}
 
 	Update(entity) {

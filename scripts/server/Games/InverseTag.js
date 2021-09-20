@@ -34,16 +34,14 @@ InverseTag = class extends this.ScoredGame {
 	}
 
 	EntityAttack(attacker, target) {
-		Chat(`${attacker.name} smacked ${target.name}`)
 		if (target === this.HighlightedPlayer) {
 			this.SetHighlightedPlayer(attacker)
         }
 	}
 
 	SetHighlightedPlayer(player) {
-		SlashCommand(`/clear @a`)
+		SlashCommand(`/clear ${this.HighlightedPlayer.name}`)
 		SlashCommand(`/replaceitem entity ${player.name} slot.armor.chest 0 diamond_chestplate 1 0`)
-		Chat(`${player.name} is it!`)
 		this.HighlightedPlayer = player
     }
 

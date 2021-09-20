@@ -5,12 +5,12 @@ RaceOrSurvival = class extends this.Game {
 		this.IsRace = isRace
 		this.EndWhenOneRemains = endWhenOneRemains
 		this.GameMode = 'adventure'
+		this.DeathCoolDown = this.IsRace ? 0 : 10000000
 	}
 
-	SetupExtension() {
-		this.players.forEach(player => player.finishTime = -1)
-		SlashCommand(`/effect @a regeneration 60 1 true`)
-		if (!this.IsRace) this.DeathCoolDown = 10000000
+	AddPlayerGeneral(player) {
+		player.finishTime = -1
+		SlashCommand(`/effect ${player.name} regeneration 60 1 true`)
 	}
 
 	UpdateGameGeneral() {

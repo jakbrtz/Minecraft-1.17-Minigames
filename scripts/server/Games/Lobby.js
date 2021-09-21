@@ -53,6 +53,7 @@ Lobby = class extends this.Selection {
 					{ structure: "spleef", game: new Spleef() },
 					{ game: new Thieves() },
 					{ structure: "match", game: new Match() },
+					{ game: new Maze() },
 				]
 			},
 			{

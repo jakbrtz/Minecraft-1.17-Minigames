@@ -10,11 +10,8 @@ InverseTag = class extends this.ScoredGame {
 
 	BuildWorld() {
 		WorldBuilding.Clear()
-		const platforms = ["arenas:desert", "arenas:house", "arenas:nether", "arenas:planks"]
-		SlashCommand(`/structure load ${Random.Arr(platforms)} -16 63 -16   0_degrees`)
-		SlashCommand(`/structure load ${Random.Arr(platforms)}   0 63 -16  90_degrees`)
-		SlashCommand(`/structure load ${Random.Arr(platforms)}   0 63   0 180_degrees`)
-		SlashCommand(`/structure load ${Random.Arr(platforms)} -16 63   0 270_degrees`)
+		const platforms = ["arenas:nether", "arenas:oasis"]
+		SlashCommand(`/structure load ${Random.Arr(platforms)} -16 63 -16`)
 	}
 
 	RespawnExtension(player) {

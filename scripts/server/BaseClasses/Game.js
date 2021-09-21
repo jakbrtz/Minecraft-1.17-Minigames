@@ -77,14 +77,10 @@
 
     }
 
-    SetupExtension() {
-
-    }
-
     Update() {
 
         if (this.elapsedGameTime < 0) {
-            this.UpdateSetupBase()
+            this.UpdateSetup()
         } else if (this.elapsedGameTime === 0) {
             this.StartGameBase()
         } else {
@@ -106,7 +102,7 @@
         this.elapsedGameTime++
     }
 
-    UpdateSetupBase() {
+    UpdateSetup() {
         this.players.forEach(player => {
             if (this.elapsedGameTime % 20 === 0 && this.ShowPreGameTimer) {
                 SlashCommand(`/title ${player.name} title ${-this.elapsedGameTime / 20}...`);

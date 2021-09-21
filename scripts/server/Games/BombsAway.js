@@ -1,7 +1,8 @@
 BombsAway = class extends this.RaceOrSurvival {
 
-	constructor() {
+	constructor(timeBetweenBombs) {
 		super(false)
+		this.TimeBetweenBombs = timeBetweenBombs
 	}
 
 	BuildWorld() {
@@ -18,7 +19,7 @@ BombsAway = class extends this.RaceOrSurvival {
 	}
 
 	UpdateGameExtension() {
-		if (this.elapsedGameTime % 10 === 0) {
+		if (this.elapsedGameTime % this.TimeBetweenBombs === 0) {
 			SlashCommand(`/summon tnt ${Random.Float(-15, 15)} 70 ${Random.Float(-15, 15)}`)
         }
 	}

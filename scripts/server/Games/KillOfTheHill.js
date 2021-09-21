@@ -11,7 +11,6 @@ KingOfTheHill = class extends this.ScoredGame {
 
 	BuildWorld() {
 		WorldBuilding.Clear()
-		// todo
 		SlashCommand(`/fill -20 64 -20 20 64 20 grass`)
 		for (var i = 0; i < this.size; i++) {
 			SlashCommand(`/fill ${i - this.size} ${65 + i} ${i - this.size} ${this.size - i} ${65 + i} ${this.size - i} stone`)

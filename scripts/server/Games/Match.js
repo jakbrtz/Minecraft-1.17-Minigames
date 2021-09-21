@@ -12,17 +12,21 @@ Match = class extends this.RaceOrSurvival {
 			{ x: -3, z: -5, c: 9 },
 			{ x: 1, z: -5, c: 11 },
 		]
-		this.nextPlatform = this.platforms[0]
 	}
 
 	BuildWorld() {
 		WorldBuilding.Clear()
 		this.PutBackPlatforms()
+		this.PickNextPlatform()
 	}
 
 	PutBackPlatforms() {
 		this.platforms.forEach(platform => this.ReplacePlatform(platform, "concrete"))
 	}
+
+	PickNextPlatform() {
+		this.nextPlatform = Random.Arr(this.platforms)
+    }
 
 	ReplacePlatform(platform, block) {
 		SlashCommand(`/fill ${platform.x} 64 ${platform.z} ${platform.x + 3} 64 ${platform.z + 3} ${block} ${platform.c}`)
@@ -34,21 +38,21 @@ Match = class extends this.RaceOrSurvival {
 
 	UpdateGameExtension() {
 
-		switch (this.elapsedGameTime % 150) {
-			case 1:
-				this.PutBackPlatforms();
-				this.nextPlatform = Random.Arr(this.platforms)
+		switch (this.elapsedGameTime % 100) {
+			case 0:
+				this.PutBackPlatforms()
+				this.PickNextPlatform()
 				SlashCommand(`/fill -20 66 -20  20 70 -20 concrete ${this.nextPlatform.c}`)
 				SlashCommand(`/fill -20 66 -20 -20 70  20 concrete ${this.nextPlatform.c}`)
 				SlashCommand(`/fill  20 66  20  20 70 -20 concrete ${this.nextPlatform.c}`)
 				SlashCommand(`/fill  20 66  20 -20 70  20 concrete ${this.nextPlatform.c}`)
 				break;
-			case 90:
+			case 70:
 				this.platforms.filter(platform => platform !== this.nextPlatform).forEach(platform => {
 					this.ReplacePlatform(platform, "stained_glass")
 				})
 				break;
-			case 100:
+			case 80:
 				this.platforms.filter(platform => platform !== this.nextPlatform).forEach(platform => {
 					this.ReplacePlatform(platform, "air")
 				})

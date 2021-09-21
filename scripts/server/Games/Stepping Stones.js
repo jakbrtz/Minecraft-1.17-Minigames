@@ -22,22 +22,22 @@ SteppingStones = class extends this.RaceOrSurvival {
 
 		this.trackedPlatforms = new ArrayMultiDimensional([this.columns, this.rows])
 
-		this.xOffset = -Math.floor(this.columns * (this.size + this.gap) / 2)
-		this.zOffset = -Math.floor(this.rows * (this.size + this.gap) / 2)
+		this.xStart = -Math.floor(this.columns * (this.size + this.gap) / 2)
+		this.zStart = -Math.floor(this.rows * (this.size + this.gap) / 2)
 
 		for (var row = 0; row < this.rows; row++) {
-			const z = this.zOffset + row * (this.size + this.gap)
+			const z = this.zStart + row * (this.size + this.gap)
 			const y = 64 // - row
-			SlashCommand(`/fill ${this.xOffset - 1} ${y-1} ${z-1} ${this.xOffset + this.columns * (this.size + this.gap) - this.gap} ${y} ${z+2} ${this.GapMaterial()}`)
+			SlashCommand(`/fill ${this.xStart - 1} ${y-1} ${z-1} ${this.xStart + this.columns * (this.size + this.gap) - this.gap} ${y} ${z+2} ${this.GapMaterial()}`)
 			for (var column = 0; column < this.columns; column++) {
-				const x = this.xOffset + column * (this.size + this.gap)
+				const x = this.xStart + column * (this.size + this.gap)
 				SlashCommand(`/fill ${x} ${y} ${z} ${x + this.size - 1} ${y} ${z + this.size - 1} ${this.UnknownMaterial(column, row)}`)
 				this.trackedPlatforms.Set([column, row], { safe: false, nearbyPlayer: false, previousNearbyPlayer: false, position: { x: x, y: y, z: z } })
 			}
 		}
-		SlashCommand(`/fill ${this.xOffset} 64 ${this.zOffset - 10} ${this.xOffset + this.columns * (this.size + this.gap) - 1 - this.gap} 64 ${this.zOffset - 1} ${this.StartMaterial()}`)
+		SlashCommand(`/fill ${this.xStart} 64 ${this.zStart - 10} ${this.xStart + this.columns * (this.size + this.gap) - 1 - this.gap} 64 ${this.zStart - 1} ${this.StartMaterial()}`)
 		const endHeight = 64 // - this.rows
-		SlashCommand(`/fill ${this.xOffset} ${endHeight} ${this.rows * (this.size + this.gap) + this.zOffset - this.gap} ${this.xOffset + this.columns * (this.size + this.gap) - 1 - this.gap}  ${endHeight} ${(this.rows + 2) * (this.size + this.gap) + this.zOffset} ${this.StartMaterial()}`)
+		SlashCommand(`/fill ${this.xStart} ${endHeight} ${this.rows * (this.size + this.gap) + this.zStart - this.gap} ${this.xStart + this.columns * (this.size + this.gap) - 1 - this.gap}  ${endHeight} ${(this.rows + 2) * (this.size + this.gap) + this.zStart} ${this.StartMaterial()}`)
 
 		let headingRight = true
 		let horizontalDistance = 0
@@ -66,7 +66,7 @@ SteppingStones = class extends this.RaceOrSurvival {
 	}
 
 	RespawnExtension(player) {
-		SlashCommand(`/tp ${player.name} ${this.xOffset + ((this.columns / 2 + Math.random(-1, 1)) * (this.size + this.gap))} 66 ${this.zOffset - 5} facing 0 66 0`)
+		SlashCommand(`/tp ${player.name} ${this.xStart + ((this.columns / 2 + Math.random(-1, 1)) * (this.size + this.gap))} 66 ${this.zStart - 5} facing 0 66 0`)
 	}
 
 	UpdateGameExtension() {
@@ -102,17 +102,17 @@ SteppingStones = class extends this.RaceOrSurvival {
 	}
 
 	PlayerHasLeftStartArea(player) {
-		return player.position.z >= this.zOffset
+		return player.position.z >= this.zStart
 	}
 
 	PlayerIsFinished(player) {
-		return player.position.z >= this.rows * (this.size + this.gap) + this.zOffset
+		return player.position.z >= this.rows * (this.size + this.gap) + this.zStart
 	}
 
 	IndexFromPosition(position) {
 		return [
-			Math.floor((position.x - this.xOffset + (this.gap / 2)) / (this.size + this.gap)),
-			Math.floor((position.z - this.zOffset + (this.gap / 2)) / (this.size + this.gap))
+			Math.floor((position.x - this.xStart + (this.gap / 2)) / (this.size + this.gap)),
+			Math.floor((position.z - this.zStart + (this.gap / 2)) / (this.size + this.gap))
 		]
 	}
 }

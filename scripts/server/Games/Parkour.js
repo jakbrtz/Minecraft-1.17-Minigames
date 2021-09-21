@@ -29,8 +29,6 @@ Parkour = class extends this.RaceOrSurvival {
 		SlashCommand(`/structure load ${order[1]}  11 61 -10  90_degrees`)
 		SlashCommand(`/structure load ${order[2]} -10 61  11 180_degrees`)
 		SlashCommand(`/structure load ${order[3]} -21 61 -10 270_degrees`)
-
-		this.players.forEach(player => player.checkPoint = 0) // todo: is this the right place to put it?
 	}
 
 	AddPlayerExtension(player) {

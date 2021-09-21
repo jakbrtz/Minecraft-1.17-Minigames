@@ -5,6 +5,7 @@ Bridges = class extends this.ScoredGame {
 		this.DefaultGameDuration = 5 * 60 * 20
 		this.DeathCoolDown = 5 * 20
 		this.GameMode = 'survival'
+		this.TeamsCanBeAddedAfterStart = false
 	}
 
 	BuildWorld() {

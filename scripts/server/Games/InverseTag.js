@@ -19,13 +19,13 @@ InverseTag = class extends this.ScoredGame {
 
 	RespawnExtension(player) {
 		SlashCommand(`/spreadplayers 0 0 5 15 ${player.name}`)
-		if (this.HighlightedPlayer === null) {
+		if (this.HighlightedPlayerNeedsReplacing()) {
 			this.SetHighlightedPlayer(player)
 		}
 	}
 
 	UpdateGameExtension() {
-		if (this.HighlightedPlayer === null || this.HighlightedPlayer.deathTimer !== -1) {
+		if (this.HighlightedPlayerNeedsReplacing()) {
 			this.SetHighlightedPlayer(Random.Arr(this.players))
 		}
 		if (!this.GameIsComplete && this.elapsedGameTime % 20 === 0) {
@@ -39,8 +39,14 @@ InverseTag = class extends this.ScoredGame {
         }
 	}
 
+	HighlightedPlayerNeedsReplacing() {
+		return this.HighlightedPlayer === null || this.HighlightedPlayer.deathTimer !== -1 || !this.players.includes(this.HighlightedPlayer)
+    }
+
 	SetHighlightedPlayer(player) {
-		SlashCommand(`/clear ${this.HighlightedPlayer.name}`)
+		if (this.HighlightedPlayer) {
+			SlashCommand(`/clear ${this.HighlightedPlayer.name}`)
+		}
 		SlashCommand(`/replaceitem entity ${player.name} slot.armor.chest 0 diamond_chestplate 1 0`)
 		this.HighlightedPlayer = player
     }

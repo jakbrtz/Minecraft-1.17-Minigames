@@ -14,28 +14,9 @@ QuickRespawn = class extends this.ScoredGame {
 		SlashCommand(`/structure load ${Random.Arr(platforms)} -16 63   0 270_degrees`)
 	}
 
-	AddTeamExtension(team) {
-		const spawns = [
-			{ x:  13, z:  13 },
-			{ x: -13, z: -13 },
-			{ x:  13, z: -13 },
-			{ x: -13, z:  13 },
-			{ x:  13, z:   0 },
-			{ x: -13, z:   0 },
-			{ x:   0, z:  13 },
-			{ x:   0, z: -13 },
-		]
-		team.spawn = spawns[this.teams.length - 1]
-	}
-
 	RespawnExtension(player) {
 		SlashCommand(`/give ${player.name} diamond_sword`)
-		if (this.GroupScoreByTeam) {
-			SlashCommand(`/tp ${player.name} ${player.team.spawn.x + Random.Float(-1, 1)} 66 ${player.team.spawn.z + Random.Float(-1, 1)}`)
-		}
-		else {
-			SlashCommand(`/tp ${player.name} ${Random.Float(-5, 5)} 66 ${Random.Float(-5, 5)}`)
-        }
+		SlashCommand(`/spreadplayers 0 0 5 15 ${player.name}`)
 	}
 
 	PlayerDiedExtension(player, killer) {

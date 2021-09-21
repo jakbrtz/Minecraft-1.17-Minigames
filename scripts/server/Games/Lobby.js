@@ -2,8 +2,6 @@ Lobby = class extends this.Selection {
 
 	constructor() {
 		super()
-		this.serverName = Random.Arr(["NA", "NA", "EU", "EU", "OCE"])
-		this.serverNumber = Random.Int(100) + 1
 	}
 
 	GetChoices() {
@@ -50,7 +48,7 @@ Lobby = class extends this.Selection {
 					{ structure: "inversetag", game: new InverseTag() },
 					{ structure: "shooters", game: new Shooters() },
 					{ structure: "hill", game: new KingOfTheHill() },
-					{ structure: "bombsaway", game: new BombsAway() },
+					{ structure: "bombsaway", game: new BombsAway(10) },
 					{ structure: "parkour", game: new Parkour() },
 					{ structure: "spleef", game: new Spleef() },
 					{ game: new Thieves() },
@@ -59,7 +57,6 @@ Lobby = class extends this.Selection {
 			},
 			{
 				construct: time => SlashCommand(`/setblock ${time.x} 4 ${time.z} obsidian`),
-				radius: 0.5,
 				additionalCheck: time => GameController.GameDuration !== time.duration,
 				onSelect: time => {
 					GameController.GameDuration = time.duration
@@ -77,6 +74,8 @@ Lobby = class extends this.Selection {
 	}
 
 	BuildWorldWithoutOptions() {
+		this.serverName = Random.Arr(["NA", "NA", "EU", "EU", "OCE"])
+		this.serverNumber = Random.Int(100) + 1
 		WorldBuilding.Clear()
 		SlashCommand(`/structure load lobby:Spawn -16 4 -16`)
 		this.UpdateScore()

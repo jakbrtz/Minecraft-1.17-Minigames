@@ -1,11 +1,8 @@
-RaceOrSurvival = class extends this.Game {
+Race = class extends this.Game {
 
-	constructor(isRace, endWhenOneRemains) {
+	constructor(endWhenOneRemains) {
 		super()
-		this.IsRace = isRace
 		this.EndWhenOneRemains = endWhenOneRemains
-		this.GameMode = 'adventure'
-		this.DeathCoolDown = this.IsRace ? 0 : 10000000
 	}
 
 	AddPlayerGeneral(player) {
@@ -27,13 +24,6 @@ RaceOrSurvival = class extends this.Game {
 		return false
 	}
 
-	PlayerDiedExtension(player, killer) {
-		if (!this.IsRace && player.finishTime < 0) {
-			player.finishTime = this.elapsedGameTime
-			this.UpdateScore()
-		}
-	}
-
 	IsGameInProgress() {
 		return this.players.some(player => player.finishTime < 0)
 	}
@@ -42,11 +32,15 @@ RaceOrSurvival = class extends this.Game {
 		const lines = this.players
 			.filter(player => player.finishTime > 0)
 			.sort((a, b) => (a.finishTime - b.finishTime))
-			.map((player, i) => { return { text: player.name, value: this.IsRace ? i + 1 : this.players.length - i } })
+			.map((player, i) => this.GetScoreboardLine(player, i))
 		if (lines.length > 0) {
 			Scoreboard.Create("Results", lines, true)
 		} else {
 			Scoreboard.Destroy()
         }
+	}
+
+	GetScoreboardLine(player, index) {
+		return { text: player.name, value: index + 1 }
 	}
 }

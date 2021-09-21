@@ -1,4 +1,4 @@
-InverseTag = class extends this.ScoredGame {
+InverseTag = class extends this.Scored {
 
 	constructor() {
 		super()

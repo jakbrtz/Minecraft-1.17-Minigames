@@ -1,7 +1,7 @@
-Maze = class extends this.RaceOrSurvival {
+Maze = class extends this.Race {
 
 	constructor() {
-		super(true)
+		super()
 		this.mazeSize = [5, 2, 5]
 		this.cellSize = 5
 	}

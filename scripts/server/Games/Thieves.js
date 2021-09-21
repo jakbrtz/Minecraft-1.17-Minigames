@@ -1,10 +1,9 @@
-Thieves = class extends this.ScoredGame {
+Thieves = class extends this.Scored {
 
 	constructor() {
 		super()
 		this.DefaultGameDuration = 5 * 60 * 20
 		this.DeathCoolDown = 5 * 20
-		this.GameMode = 'adventure'
 		this.TeamsCanBeAddedAfterStart = false
 	}
 

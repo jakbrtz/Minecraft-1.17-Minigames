@@ -1,7 +1,7 @@
-BombsAway = class extends this.RaceOrSurvival {
+BombsAway = class extends this.Survival {
 
 	constructor(timeBetweenBombs) {
-		super(false)
+		super()
 		this.TimeBetweenBombs = timeBetweenBombs
 	}
 

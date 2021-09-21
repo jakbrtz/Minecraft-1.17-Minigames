@@ -1,4 +1,4 @@
-Bridges = class extends this.ScoredGame {
+Bridges = class extends this.Scored {
 
 	constructor() {
 		super()

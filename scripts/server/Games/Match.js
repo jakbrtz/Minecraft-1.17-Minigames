@@ -1,7 +1,7 @@
-Match = class extends this.RaceOrSurvival {
+Match = class extends this.Survival {
 
 	constructor() {
-		super(false, true)
+		super(true)
 
 		this.platforms = [
 			{ x: -3, z: 3, c: 4 },

@@ -1,7 +1,7 @@
-Shooters = class extends this.RaceOrSurvival {
+Shooters = class extends this.Survival {
 
 	constructor() {
-		super(false)
+		super()
 	}
 
 	BuildWorld() {

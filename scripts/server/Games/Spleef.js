@@ -1,7 +1,7 @@
-Spleef = class extends this.RaceOrSurvival {
+Spleef = class extends this.Survival {
 
 	constructor() {
-		super(false, true)
+		super(true)
 		this.GameMode = 'survival'
 	}
 

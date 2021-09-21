@@ -1,4 +1,4 @@
-Paint = class extends this.ScoredGame {
+Paint = class extends this.Scored {
 
 	constructor() {
 		super()

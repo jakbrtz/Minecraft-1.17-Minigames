@@ -1,7 +1,7 @@
-DroppingBlocks = class extends this.RaceOrSurvival {
+DroppingBlocks = class extends this.Survival {
 
 	constructor() {
-		super(false)
+		super()
 	}
 
 	BuildWorld() {

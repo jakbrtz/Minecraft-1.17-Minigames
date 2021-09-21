@@ -1,7 +1,7 @@
-Parkour = class extends this.RaceOrSurvival {
+Parkour = class extends this.Race {
 
 	constructor() {
-		super(true)
+		super()
 
 		this.checkPoints = [
 			{ x: -16, z: -16 },

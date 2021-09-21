@@ -1,7 +1,7 @@
-DoorDash = class extends this.RaceOrSurvival {
+DoorDash = class extends this.Race {
 
 	constructor() {
-		super(true)
+		super()
 
 		this.width = 6
 		this.depth = 8

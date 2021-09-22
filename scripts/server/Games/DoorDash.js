@@ -29,7 +29,7 @@ DoorDash = class extends this.Race {
 
 	RespawnExtension(player) {
 		SlashCommand(`/tp ${player.name} ${this.xStart + ((this.doors / 2 + Math.random(-1, 1)) * this.width)} 66 ${this.zStart - this.depth} facing 0 66 0`)
-		SlashCommand(`/effect ${player.name} speed 30 5 true`)
+		SlashCommand(`/effect ${player.name} speed 1000000 5 true`)
 	}
 
 	PlayerIsOutOfBounds(player) {

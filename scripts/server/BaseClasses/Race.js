@@ -7,7 +7,6 @@ Race = class extends this.Game {
 
 	AddPlayerGeneral(player) {
 		player.finishTime = -1
-		SlashCommand(`/effect ${player.name} regeneration 60 1 true`)
 	}
 
 	UpdateGameGeneral() {

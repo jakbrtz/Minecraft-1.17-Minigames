@@ -15,6 +15,7 @@ DroppingBlocks = class extends this.Survival {
 
 	RespawnExtension(player) {
 		SlashCommand(`/spreadplayers 0 0 3 6 ${player.name}`)
+		SlashCommand(`/effect ${player.name} regeneration 60 1 true`)
 	}
 
 	UpdateGameExtension() {

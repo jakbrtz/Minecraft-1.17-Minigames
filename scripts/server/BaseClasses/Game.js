@@ -117,6 +117,9 @@
         if (this.ShowPreGameTimer) {
             this.players.forEach(player => SlashCommand(`/title ${player.name} clear`))
         }
+        this.players.forEach(player => {
+            SlashCommand(`/effect ${player.name} instant_health 1 15 true`)
+        })
         this.StartGameExtension()
     }
 

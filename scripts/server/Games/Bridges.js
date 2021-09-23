@@ -6,6 +6,8 @@ Bridges = class extends this.Scored {
 		this.DeathCoolDown = 5 * 20
 		this.GameMode = 'survival'
 		this.TeamsCanBeAddedAfterStart = false
+		this.minimumNumberOfTeams = 2
+		this.maximumNumberOfTeams = 4
 	}
 
 	BuildWorld() {
@@ -69,12 +71,6 @@ Bridges = class extends this.Scored {
 		}
 		SlashCommand(`/fill 0 ${team.center.y - 3} 0 0 ${team.center.y - 10} 0 air`)
 
-	}
-
-	StartGameExtension() {
-		while (this.teams.length < 2) {
-			this.AddTeam(Teams.Random())
-		}
 	}
 
 	RespawnExtension(player) {

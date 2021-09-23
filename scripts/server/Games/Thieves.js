@@ -5,6 +5,7 @@ Thieves = class extends this.Scored {
 		this.DefaultGameDuration = 5 * 60 * 20
 		this.DeathCoolDown = 5 * 20
 		this.TeamsCanBeAddedAfterStart = false
+		this.minimumNumberOfTeams = 2
 	}
 
 	BuildWorld() {
@@ -34,13 +35,6 @@ Thieves = class extends this.Scored {
 		SlashCommand(`/structure load ${structure} ${team.center.x - 4} ${team.center.y} ${team.center.z - 4} ${Coordinates.SuggestRotation(team.center)}_degrees`)
 		SlashCommand(`/fill ${team.center.x - 4} ${team.center.y} ${team.center.z - 4} ${team.center.x + 4} ${team.center.y + 10} ${team.center.z + 4} concrete ${team.colour} replace concrete 12`)
 	}
-
-	StartGameExtension() {
-		while (this.teams.length < 2) {
-			this.AddTeam(Teams.Random())
-		}
-	}
-
 	RespawnExtension(player) {
 		SlashCommand(`/tp ${player.name} ${player.team.spawn.x} ${player.team.spawn.y} ${player.team.spawn.z} facing 0 70 0`)
 		SlashCommand(`/give ${player.name} iron_sword`)

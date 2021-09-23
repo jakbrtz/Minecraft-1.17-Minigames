@@ -6,6 +6,8 @@
         this.GameMode = 'adventure'
         this.ShowPreGameTimer = true
         this.TeamsCanBeAddedAfterStart = true
+        this.minimumNumberOfTeams = 0
+        this.maximumNumberOfTeams = 8
     }
 
     Setup() {
@@ -21,10 +23,10 @@
 
         if (this.teams.some(team => team.name === player.team.name)) {
             player.team = this.teams.find(team => team.name === player.team.name)
-        } else if (this.elapsedGameTime > 0 && !this.TeamsCanBeAddedAfterStart) {
-            player.team = Random.Arr(this.teams) // todo: pick team with least number of players
-        } else {
+        } else if ((this.elapsedGameTime < 0 || this.TeamsCanBeAddedAfterStart) && this.teams.length < this.maximumNumberOfTeams) {
             player.team = Teams.Get(player.team.name)
+        } else {
+            player.team = Random.Arr(this.teams) // todo: pick team with least number of players
         }
         this.AddTeam(player.team)
 
@@ -120,6 +122,9 @@
         this.players.forEach(player => {
             SlashCommand(`/effect ${player.name} instant_health 1 15 true`)
         })
+        while (this.teams.length < this.minimumNumberOfTeams) {
+            this.AddTeam(Teams.Random())
+        }
         this.StartGameExtension()
     }
 

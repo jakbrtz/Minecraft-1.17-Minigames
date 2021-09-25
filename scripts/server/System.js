@@ -11,6 +11,7 @@ system.initialize = function () {
 	this.listenForEvent("minecraft:entity_use_item", entity_use_item);
 	this.listenForEvent("minecraft:player_placed_block", entity_placed_block);
 	this.listenForEvent("minecraft:block_destruction_started", block_destruction_started);
+	this.listenForEvent("minecraft:player_destroyed_block", player_destroyed_block);
 	this.listenForEvent("minecraft:entity_attack", entity_attack)
 
 	const loggerData = system.createEventData("minecraft:script_logger_config");
@@ -48,6 +49,10 @@ function block_destruction_started(eventData) {
 	GameController.EntityTriedToDestroyBlock(eventData.data.player, eventData.data.block_position)
 }
 
+function player_destroyed_block(eventData) {
+	GameController.EntityDestroyedBlock(eventData.data.player, eventData.data.block_position)
+}
+
 function entity_attack(eventData) {
 	GameController.EntityAttack(eventData.data.entity, eventData.data.target)
 }
@@ -74,9 +79,12 @@ this.GetName = function (entity) {
 	return system.getComponent(entity, "minecraft:nameable").data.name
 }
 
-this.GetBlock = function (entity, position) {
-	world = system.getComponent(entity, "minecraft:tick_world");
-	return system.getBlock(world.data.ticking_area, position);
+this.GetBlockData = function (entity, position) {
+	const world = system.getComponent(entity, "minecraft:tick_world");
+	const block = system.getBlock(world.data.ticking_area, position);
+	if (block) {
+		return system.getComponent(block, "minecraft:blockstate").data
+	}
 }
 
 this.GetTags = function (entity) {

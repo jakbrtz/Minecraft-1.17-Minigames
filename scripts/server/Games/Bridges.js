@@ -4,7 +4,6 @@ Bridges = class extends this.Scored {
 		super()
 		this.DefaultGameDuration = 5 * 60 * 20
 		this.DeathCoolDown = 5 * 20
-		this.GameMode = 'survival'
 		this.TeamsCanBeAddedAfterStart = false
 		this.minimumNumberOfTeams = 2
 		this.maximumNumberOfTeams = 4
@@ -76,10 +75,10 @@ Bridges = class extends this.Scored {
 	RespawnExtension(player) {
 		SlashCommand(`/tp ${player.name} ${player.team.spawn.x} ${player.team.spawn.y} ${player.team.spawn.z} facing 0 70 0`)
 		SlashCommand(`/give ${player.name} iron_sword`)
-		SlashCommand(`/give ${player.name} iron_pickaxe`)
+		SlashCommand(`/give ${player.name} iron_pickaxe 1 0 ${AdventureTags.CanDestroy("concrete")}`)
 		SlashCommand(`/give ${player.name} bow`)
 		SlashCommand(`/give ${player.name} arrow 16`)
-		SlashCommand(`/give ${player.name} concrete 64 ${player.team.colour}`)
+		SlashCommand(`/give ${player.name} concrete 64 ${player.team.colour} ${AdventureTags.CanPlaceOn()}`)
 	}
 
 	UpdateGameExtension() {
@@ -117,9 +116,12 @@ Bridges = class extends this.Scored {
 	}
 
 	PlayerTriedToDestroyBlock(player, position) {
-		const block = GetBlock(player.entity, position)
-		if (block.__identifier !== "minecraft:concrete") {
+		const block = GetBlockData(player.entity, position)
+		player.concreteColourBeingDestroyed = Colours.NameToNumber(block.color)
+	}
 
-        }
+	PlayerDestroyedBlock(player, position) {
+		SlashCommand(`/give ${player.name} concrete 1 ${player.concreteColourBeingDestroyed} ${AdventureTags.CanPlaceOn()}`)
+		SlashCommand(`/kill @e[type=item,x=${position.x},y=${position.y},z=${position.z},rm=0,r=15]`)
 	}
 }

@@ -94,6 +94,13 @@ GameController = {
 		}
 	},
 
+	EntityDestroyedBlock: function (entity, position) {
+		const player = this.Players.get(entity.id)
+		if (player && !this.Pause) {
+			this.Game.PlayerDestroyedBlock(player, position)
+		}
+	},
+
 	EntityAttack: function (attacker, target) {
 		if (this.Game !== null && !this.Pause && this.Players.has(attacker.id) && this.Players.has(target.id)) {
 			this.Game.EntityAttack(this.Players.get(attacker.id), this.Players.get(target.id))

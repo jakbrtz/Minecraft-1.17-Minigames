@@ -228,6 +228,9 @@
     PlayerTriedToDestroyBlock(player, position) {
     }
 
+    PlayerDestroyedBlock(player, position) {
+    }
+
     EntityAttack(attacker, target) {
     }
 

@@ -1,8 +1,8 @@
 {
 	"format_version": 2,
 	"header": {
-		"description": "Behaviour pack that runs the multiplayer mini-game",
-		"name": "Server Games Kinda",
+		"description": "Behaviour pack that runs multiplayer mini-games",
+		"name": "Not Quite Server Games",
 		"uuid": "9061a0de-39a9-4135-acd7-48b7b2a2a564",
 		"version": [1, 0, 0],
 		"min_engine_version": [1, 16, 0]

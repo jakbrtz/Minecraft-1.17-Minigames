@@ -33,8 +33,9 @@
         this.AddPlayerGeneral(player)
         this.AddPlayerExtension(player)
         this.Respawn(player)
-        if (this.ShowPreGameTimer && Math.random() < 0.05) {
-            SlashCommand(`/title ${player.name} actionbar ⚠ cross-teaming is bannable or whatever`)
+        if (this.ShowPreGameTimer && Math.random() < 0.01) {
+            const name = Random.Arr(["Kobi", "Oscar"])
+            SlashCommand(`/title ${player.name} actionbar ⚠ ${name} will be banned for no reason`)
         }
         this.UpdateScore()
         this.EnableTeamsPvP(this.PvPgroupedByTeams) // todo: this needs to take the game as a parameter too

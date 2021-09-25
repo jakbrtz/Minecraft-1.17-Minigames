@@ -38,7 +38,7 @@
 		}
 		const list = this.teams.map(team => { return {
 			ref: team,
-			name: Scoreboard.NumberToColour(team.colour) + team.name,
+			name: Colours.NumberToCharacter(team.colour) + team.name,
 			score: 0
 		}})
 		this.players.forEach(player => {

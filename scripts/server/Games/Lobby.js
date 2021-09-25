@@ -12,7 +12,7 @@ Lobby = class extends this.Selection {
 				additionalCheck: (dot, player) => player.team !== dot.team,
 				onSelect: (dot, player) => {
 					player.team = dot.team
-					Chat(`${player.name} is on the ${Scoreboard.NumberToColour(player.team.colour)}${player.team.name} team`)
+					Chat(`${player.name} is on the ${Colours.NumberToCharacter(player.team.colour)}${player.team.name} team`)
 					this.UpdateScore()
 				},
 				options: [
@@ -89,7 +89,7 @@ Lobby = class extends this.Selection {
 	UpdateScore() {
 		const lines = []
 		this.players.forEach(player => {
-			lines.push(`${Scoreboard.NumberToColour(player.team.colour)}${player.name}\u00a7r`)
+			lines.push(`${Colours.NumberToCharacter(player.team.colour)}${player.name}\u00a7r`)
 		})
 		if (this.serverNumber < 16) {
 			lines.push("")

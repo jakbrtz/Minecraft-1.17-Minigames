@@ -5,6 +5,15 @@ GameController = {
 	GameDuration: 0,
 	Pause: false,
 
+	Setup: function () {
+		SlashCommand(`/gamerule doimmediaterespawn true`)
+		SlashCommand(`/gamerule dodaylightcycle false`)
+		SlashCommand(`/gamerule domobspawning false`)
+		SlashCommand(`/gamerule doweathercycle false`)
+		SlashCommand(`/time set noon`)
+		SlashCommand(`/function debugging/off`)
+	},
+
 	Update: function (allEntities) {
 
 		// update player info or add new players

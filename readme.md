@@ -18,12 +18,8 @@ Next, create a new world in Minecraft with these settings:
 
 * Add this behaviour pack
 * World type: Flat
-* Immediate respawn
 * Additional Modding Capabilities
 * Activate Cheats
-* Do Daylight Cycle: off
-* Mob spawning: off
-* Weather cycle: off
 
 ## Project Structure
 

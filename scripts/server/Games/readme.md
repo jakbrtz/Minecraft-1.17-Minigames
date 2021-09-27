@@ -248,10 +248,6 @@ What happens when the player respawns. For example in Spleef:
 
 In almost every situation this function should teleport the player to the start.
 
-### StartGameExtension()
-
-Perform special actions when the game starts. idk why this exists I should get rid of it
-
 ### UpdateGameExtension()
 
 Performs actions once per tick. 

@@ -37,10 +37,6 @@ Match = class extends this.Survival {
 		SlashCommand(`/tp ${player.name} 0 66 0`) // todo: wait for platform to respawn
 	}
 
-	StartGameExtension() {
-		this.UpdateGameExtension()
-	}
-
 	UpdateGameExtension() {
 
 		switch (this.elapsedGameTime % 100) {

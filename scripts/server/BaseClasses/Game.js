@@ -84,8 +84,6 @@
 
         if (this.elapsedGameTime < 0) {
             this.UpdateSetup()
-        } else if (this.elapsedGameTime === 0) {
-            this.StartGameBase()
         } else {
             this.UpdateGameBase()
         }
@@ -116,7 +114,7 @@
         })
     }
 
-    StartGameBase() {
+    StartGame() {
         if (this.ShowPreGameTimer) {
             this.players.forEach(player => SlashCommand(`/title ${player.name} clear`))
         }
@@ -126,14 +124,12 @@
         while (this.teams.length < this.minimumNumberOfTeams) {
             this.AddTeam(Teams.Random())
         }
-        this.StartGameExtension()
-    }
-
-    StartGameExtension() {
-
     }
 
     UpdateGameBase() {
+        if (this.elapsedGameTime === 0) {
+            this.StartGame()
+        }
         this.players.forEach(player => {
             if (this.PlayerIsOutOfBounds(player)) {
                 this.PlayerDied(player)

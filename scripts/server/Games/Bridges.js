@@ -85,7 +85,7 @@ Bridges = class extends this.Scored {
 
 		this.teams.forEach(team => {
 			this.players.forEach(player => {
-				if (player.team !== team && Coordinates.PositionsAreClose(player.position, team.goal, 2, false)) {
+				if (player.team !== team && player.deathTimer === -1 && Coordinates.PositionsAreClose(player.position, team.goal, 2, false)) {
 					if (!this.GameIsComplete) {
 						player.score++
 						this.UpdateScore()

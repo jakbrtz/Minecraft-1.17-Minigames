@@ -6,16 +6,14 @@ Selection = class extends this.Game {
 		this.ShowPreGameTimer = false
 	}
 
-	BuildWorld() {
+	SetupGeneral() {
 		this.choices = this.GetChoices()
-		this.BuildWorldWithoutOptions()
+	}
+
+	BuildWorldGeneral() {
 		this.choices.forEach(choice => {
 			choice.options.forEach(choice.construct)
 		})
-	}
-
-	BuildWorldWithoutOptions() {
-		WorldBuilding.Clear()
 	}
 
 	GetChoices() {

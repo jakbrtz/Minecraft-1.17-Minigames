@@ -121,8 +121,6 @@ For example in `Bridges` and `Thieves` a new base is constructed for each team w
 
 ### BuildWorld() ⚠
 
-*Applies to all games except for Selection Games*
-
 Place blocks to build the game. For example in Spleef:
 ```javascript
 	BuildWorld() {
@@ -132,7 +130,9 @@ Place blocks to build the game. For example in Spleef:
 ```
 This function runs before teams and players are added to the game, so only build the parts of the world that are definitely in the game.
 
-In `Bridges` and `Thieves` the layout depends on the teams, so the world is built in the `AddTeamExtension(team)` method. 
+In `Bridges` and `Thieves` the layout depends on the teams, so the world is partially built in the `AddTeamExtension(team)` method. 
+
+In Selection games the world is partially build in the `GetChoices()` method.
 
 ### EndGameExtension()
 
@@ -304,12 +304,6 @@ Has a player reached the end of the race?
 		return player.checkPoint >= 4
 	}
 ```
-
-### BuildWorldWithoutOptions() ⚠
-
-*Only applies to Selection games*
-
-Same as `BuildWorld()` but for Selection Games
 
 ### GetChoices() ⚠
 

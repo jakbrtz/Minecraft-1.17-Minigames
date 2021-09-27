@@ -5,10 +5,14 @@ BridgesBaseBuilder = class extends this.Selection {
 		this.GameMode = 'creative'
 	}
 
+	PlaceStructure(structure, position) {
+		SlashCommand(`/structure load ${structure} ${position.x - 14} 50 ${position.z - 14}`)
+    }
+
 	GetChoices() {
 		return [
 			{
-				construct: slot => SlashCommand(`/structure load ${slot.structure} ${slot.x - 14} 50 ${slot.z - 14}`),
+				construct: slot => this.PlaceStructure(slot.structure, slot),
 				radius: 14,
 				additionalCheck: (slot, player) => player.requestedBase !== slot.structure,
 				onSelect: (slot, player) => {
@@ -16,28 +20,23 @@ BridgesBaseBuilder = class extends this.Selection {
 					SlashCommand(`/tell ${player.name} you are working in ${slot.structure}`)
 				},
 				options: [
-					{ x: 32, z: 0 },
-					{ x: -32, z: 0 },
-					{ x: 0, z: 32 },
-					{ x: 0, z: -32 },
-					{ x: 32, z: 32 },
-					{ x: -32, z: -32 },
-					{ x: 32, z: -32 },
-					{ x: -32, z: 32 },
+					{ x: 32, z: 0, structure: `slot0` },
+					{ x: -32, z: 0, structure: `slot1` },
+					{ x: 0, z: 32, structure: `slot2` },
+					{ x: 0, z: -32, structure: `slot3` },
+					{ x: 32, z: 32, structure: `slot4` },
+					{ x: -32, z: -32, structure: `slot5` },
+					{ x: 32, z: -32, structure: `slot6` },
+					{ x: -32, z: 32, structure: `slot7` },
 				]
 			}
 		]
 	}
 
-	BuildWorldWithoutOptions() {
+	BuildWorld() {
 		WorldBuilding.Clear()
 		SlashCommand(`/fill -64 64 -64 63 64 63 glass`)
-		const slots = this.choices[0].options
-		for (var i = 0; i < slots.length; i++) {
-			slots[i].structure = `bridges:Basic`
-			this.choices[0].construct(slots[i])
-			slots[i].structure = `slot${i}`
-		}
+		this.choices[0].options.forEach(slot => this.PlaceStructure(`bridges:Basic`, slot))
 	}
 
 	RespawnExtension(player) {

@@ -74,7 +74,7 @@ Lobby = class extends this.Selection {
 		]
 	}
 
-	BuildWorldWithoutOptions() {
+	BuildWorld() {
 		this.serverName = Random.Arr(["NA", "NA", "EU", "EU", "OCE"])
 		this.serverNumber = Random.Int(100) + 1
 		WorldBuilding.Clear()

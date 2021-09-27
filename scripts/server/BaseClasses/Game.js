@@ -15,7 +15,21 @@
         this.players = []
         this.elapsedGameTime = -60
         this.GameIsComplete = false
+        this.SetupGeneral()
         this.BuildWorld()
+        this.BuildWorldGeneral()
+    }
+
+    SetupGeneral() {
+
+    }
+
+    BuildWorld() {
+
+    }
+
+    BuildWorldGeneral() {
+
     }
 
     AddPlayer(player) {
@@ -74,10 +88,6 @@
                 NullifyDamageFromTag(player.entity, `team-${player.team.name}`)
             })
         }
-    }
-
-    BuildWorld() {
-
     }
 
     Update() {

@@ -30,7 +30,7 @@ InverseTag = class extends this.Scored {
 		}
 	}
 
-	EntityAttack(attacker, target) {
+	PlayerAttack(attacker, target) {
 		if (target === this.HighlightedPlayer) {
 			this.SetHighlightedPlayer(attacker)
         }

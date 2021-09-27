@@ -238,7 +238,7 @@
     PlayerDestroyedBlock(player, position) {
     }
 
-    EntityAttack(attacker, target) {
+    PlayerAttack(attacker, target) {
     }
 
     IsGameInProgress() {

@@ -140,14 +140,14 @@ Performs actions when the game has ended.
 
 If this is not overriden on a scored game then a message will appear displaying the winner. 
 
-### EntityAttack(attacker, target)
+### PlayerAttack(attacker, target)
 
 Performs actions when a player attacks another player.
 
 For example in InverseTag we need to detect when a player tags another player:
 
 ```javascript
-	EntityAttack(attacker, target) {
+	PlayerAttack(attacker, target) {
 		if (target === this.HighlightedPlayer) {
 			this.SetHighlightedPlayer(attacker)
         }

@@ -101,9 +101,11 @@ GameController = {
 		}
 	},
 
-	EntityAttack: function (attacker, target) {
-		if (this.Game !== null && !this.Pause && this.Players.has(attacker.id) && this.Players.has(target.id)) {
-			this.Game.EntityAttack(this.Players.get(attacker.id), this.Players.get(target.id))
+	EntityAttack: function (attackerEntity, targetEntity) {
+		const attacker = this.Players.get(attackerEntity.id)
+		const target = this.Players.get(targetEntity.id)
+		if (this.Game !== null && !this.Pause && attacker && target) {
+			this.Game.PlayerAttack(attacker, target)
 		}
 	}
 

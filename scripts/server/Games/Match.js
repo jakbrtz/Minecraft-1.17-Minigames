@@ -1,7 +1,8 @@
 Match = class extends this.Survival {
 
 	constructor() {
-		super(true)
+		super()
+		this.EndWhenOneRemains = true
 
 		this.platforms = [
 			{ x: -3, z: 3, c: 4 },

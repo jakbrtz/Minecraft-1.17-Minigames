@@ -1,8 +1,9 @@
 Spleef = class extends this.Survival {
 
 	constructor() {
-		super(true)
+		super()
 		this.GameMode = 'survival'
+		this.EndWhenOneRemains = true
 	}
 
 	BuildWorld() {

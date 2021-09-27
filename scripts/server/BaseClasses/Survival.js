@@ -1,7 +1,7 @@
 Survival = class extends this.Race {
 
-	constructor(endWhenOneRemains) {
-		super(endWhenOneRemains)
+	constructor() {
+		super()
 		this.DeathCoolDown = 10000000
 	}
 

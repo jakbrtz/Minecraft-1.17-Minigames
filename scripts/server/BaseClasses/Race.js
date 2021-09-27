@@ -1,8 +1,8 @@
 Race = class extends this.Game {
 
-	constructor(endWhenOneRemains) {
+	constructor() {
 		super()
-		this.EndWhenOneRemains = endWhenOneRemains
+		this.EndWhenOneRemains = false
 	}
 
 	AddPlayerGeneral(player) {

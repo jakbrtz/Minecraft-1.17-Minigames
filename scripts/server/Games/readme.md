@@ -14,6 +14,7 @@ Each game must fall into one of those categories.
 The easiest examples to follow are
 
 * BombsAway.js
+* Hurdles.js
 * Parkour.js
 * QuickRespawnArena.js
 * Spleef.js

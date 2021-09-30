@@ -53,6 +53,7 @@ Lobby = class extends this.Selection {
 			{ game: new Thieves() },
 			{ structure: "match", game: new Match() },
 			{ game: new Maze() },
+			{ game: new Hurdles() },
 		]
 
 		allGames.forEach((option, i) => {

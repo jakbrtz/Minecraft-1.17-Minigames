@@ -11,6 +11,7 @@ GameController = {
 		SlashCommand(`/gamerule domobspawning false`)
 		SlashCommand(`/gamerule doweathercycle false`)
 		SlashCommand(`/time set noon`)
+		SlashCommand(`/setmaxplayers 30`)
 		SlashCommand(`/function debugging/off`)
 	},
 

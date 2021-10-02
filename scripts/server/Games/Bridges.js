@@ -21,10 +21,6 @@ Bridges = class extends this.Scored {
 			{ x: -48, y: 65, z: 0 },
 			{ x: 0, y: 65, z: 48 },
 			{ x: 0, y: 65, z: -48 },
-			{ x: 32, y: 65, z: 32 },
-			{ x: -32, y: 65, z: -32 },
-			{ x: -32, y: 65, z: 32 },
-			{ x: 32, y: 65, z: -32 },
 		]
 
 		team.center = centers[this.teams.length - 1]
@@ -34,10 +30,10 @@ Bridges = class extends this.Scored {
 			? Random.Arr(options)
 			: (team !== this.teams[0])
 				? this.teams[0].selectedBase
-				: ("bridges:" + Random.Arr(["Amethyst", "GoldBlocks", "Mud", "Temple"]))
+				: ("bridges:" + Random.Arr(["Amethyst", "GoldBlocks", "Mud", "Temple", "Monument", "Mill"]))
 
 		team.spawn = Coordinates.Offset(team.center, Coordinates.SuggestRotation(team.center), { x: 0, y: 1, z: -8 })
-		team.goal = ["bridges:Temple", "bridges:GoldBlocks", "slot2", "slot3"].includes(team.selectedBase)
+		team.goal = team.selectedBase === "bridges:GoldBlocks"
 			? team.center
 			: Coordinates.Offset(team.center, Coordinates.SuggestRotation(team.center), { x: 0, y: 1, z: 8 })
 

@@ -20,7 +20,8 @@ BridgesBaseSelection = class extends this.Selection {
 					{ x: 0, z: -32, structure: "bridges:GoldBlocks" },
 					{ x: -32, z: 0, structure: "bridges:Mud" },
 					{ x: 0, z: 32, structure: "bridges:Temple" },
-					{ x: 32, z: 32, structure: "bridges:EndIslands" },
+					{ x: 32, z: 32, structure: "bridges:Monument" },
+					{ x: -32, z: -32, structure: "bridges:Mill" },
 				]
 			}
 		]

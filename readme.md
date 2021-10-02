@@ -1,4 +1,4 @@
-# # Not Quite Server Games
+# Not Quite Server Games
 
 This is a Behaviour Pack for Minecraft Bedrock edition that runs mini-games in a multiplayer world.
 

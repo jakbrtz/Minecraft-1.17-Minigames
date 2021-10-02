@@ -59,6 +59,7 @@ Get to the end as fast as you can in:
 * Stepping stones - Not Quite 'Tip-Toe' from Fall Guys
 * Door dash - Not Quite 'Door Dash' from Fall Guys
 * Parkour - but it sucks
+* Hurdles - run to the end with speed boost and jump boost
 * Glass Maze - literally the only original idea I had
 
 

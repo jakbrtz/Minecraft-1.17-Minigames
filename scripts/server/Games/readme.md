@@ -53,11 +53,15 @@ If the maximum has been reached and a player tries to enter a new team, the play
 
 If left out then the maximum is 8.
 
-### PvPgroupedByTeams
+### PvPMode
 
 Should players in the same team be stopped from hurting each other?
 
-If left out, the answer is no (`false`).
+The options are:
+
+* `on` - players can hurt each other (default for race/survival games)
+* `teams` - players can hurt people in other teams (default for scored games)
+* `off` - players cannot hurt each other (default for selection games)
 
 ### ShowPreGameTimer
 

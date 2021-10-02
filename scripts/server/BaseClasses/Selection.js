@@ -4,6 +4,7 @@ Selection = class extends this.Game {
 		super()
 		this.choices = []
 		this.ShowPreGameTimer = false
+		this.PvPMode = `off`
 	}
 
 	SetupGeneral() {

@@ -2,7 +2,7 @@
 
     constructor() {
         this.DeathCoolDown = 0
-        this.PvPgroupedByTeams = false
+        this.PvPMode = 'on'
         this.GameMode = 'adventure'
         this.ShowPreGameTimer = true
         this.TeamsCanBeAddedAfterStart = true
@@ -52,7 +52,15 @@
             SlashCommand(`/title ${player.name} actionbar ⚠ ${name} will be banned for no reason`)
         }
         this.UpdateScore()
-        this.EnableTeamsPvP(this.PvPgroupedByTeams) // todo: this needs to take the game as a parameter too
+
+        Teams.All.forEach(team => SlashCommand(`/tag ${player.name} remove team-${team.name}`))
+        SlashCommand(`/tag ${player.name} add team-${player.team.name}`)
+        ClearNullifiedDamage(player.entity)
+        if (this.PvPMode === 'teams') {
+            NullifyDamageFromTag(player.entity, `team-${player.team.name}`)
+        } else if (this.PvPMode === 'off') {
+            NullifyDamageFromOtherPlayers(player.entity)
+        }
     }
 
     AddPlayerGeneral(player) {
@@ -75,19 +83,6 @@
 
     RemovePlayer(player) {
         this.players = this.players.filter(p => p !== player)
-    }
-
-    EnableTeamsPvP(enabled) {
-        this.players.forEach(player => {
-            SlashCommand(`/tag ${player.name} remove team-${player.team.name}`)
-        })
-        this.players.forEach(player => ClearNullifiedDamage(player.entity))
-        if (enabled) {
-            this.players.forEach(player => {
-                SlashCommand(`/tag ${player.name} add team-${player.team.name}`)
-                NullifyDamageFromTag(player.entity, `team-${player.team.name}`)
-            })
-        }
     }
 
     Update() {

@@ -96,7 +96,7 @@ this.GetTags = function (entity) {
 
 this.NullifyDamageFromTag = function (entity, tag) {
 	let damageSensorComponent = system.getComponent(entity, "minecraft:damage_sensor");
-	if (damageSensorComponent == null) { // todo: could this be undefined?
+	if (!damageSensorComponent) {
 		damageSensorComponent = system.createComponent(entity, "minecraft:damage_sensor");
 	}
 	damageSensorComponent.data.push({
@@ -105,6 +105,24 @@ this.NullifyDamageFromTag = function (entity, tag) {
 				"test": "has_tag",
 				"subject": "other",
 				"value": tag
+			}
+		},
+		"deals_damage": false
+	})
+	system.applyComponentChanges(entity, damageSensorComponent);
+}
+
+this.NullifyDamageFromOtherPlayers = function (entity) {
+	let damageSensorComponent = system.getComponent(entity, "minecraft:damage_sensor");
+	if (!damageSensorComponent) {
+		damageSensorComponent = system.createComponent(entity, "minecraft:damage_sensor");
+	}
+	damageSensorComponent.data.push({
+		"on_damage": {
+			"filters": {
+				"test": "is_family",
+				"subject": "other",
+				"value": "player"
 			}
 		},
 		"deals_damage": false

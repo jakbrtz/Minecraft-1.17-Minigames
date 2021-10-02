@@ -2,6 +2,7 @@ Parkour = class extends this.Race {
 
 	constructor() {
 		super()
+		this.PvPMode = `off`
 
 		this.checkPoints = [
 			{ x: -16, z: -16 },

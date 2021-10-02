@@ -3,6 +3,7 @@ InverseTag = class extends this.Scored {
 	constructor() {
 		super()
 		this.GroupScoreByTeam = false
+		this.PvPMode = `on`
 		this.DeathCoolDown = 2 * 20
 
 		this.HighlightedPlayer = null

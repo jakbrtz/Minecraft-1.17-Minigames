@@ -3,6 +3,7 @@ KingOfTheHill = class extends this.Scored {
 	constructor() {
 		super()
 		this.GroupScoreByTeam = false
+		this.PvPMode = `on`
 		this.DeathCoolDown = 5 * 20
 
 		this.HighlightedPlayer = null

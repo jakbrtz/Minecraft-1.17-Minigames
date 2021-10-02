@@ -4,7 +4,7 @@
 		super()
 		this.DefaultGameDuration = 60 * 20
 		this.GroupScoreByTeam = true
-		this.PvPgroupedByTeams = this.GroupScoreByTeam
+		this.PvPMode = `teams`
 	}
 
 	AddPlayerGeneral(player) {

@@ -58,11 +58,11 @@ Bridges = class extends this.Scored {
 			zlim = team.center.z + 15
 		}
 		if (Coordinates.SuggestRotation(team.center) % 180 === 0) {
-			SlashCommand(`/fill ${xlim} ${team.center.y - 3} ${zlim} ${xlim} ${team.center.y - 10} 0 concrete ${team.colour} keep`)
-			SlashCommand(`/fill ${xlim} ${team.center.y - 3} 0 0 ${team.center.y - 10} 0 concrete ${team.colour} keep`)
+			SlashCommand(`/fill ${xlim} ${team.center.y - 3} ${zlim} ${xlim} ${team.center.y - 10} 0 stained_hardened_clay ${team.colour} keep`)
+			SlashCommand(`/fill ${xlim} ${team.center.y - 3} 0 0 ${team.center.y - 10} 0 stained_hardened_clay ${team.colour} keep`)
 		} else {
-			SlashCommand(`/fill ${xlim} ${team.center.y - 3} ${zlim} 0 ${team.center.y - 10} ${zlim} concrete ${team.colour} keep`)
-			SlashCommand(`/fill 0 ${team.center.y - 3} ${zlim} 0 ${team.center.y - 10} 0 concrete ${team.colour} keep`)
+			SlashCommand(`/fill ${xlim} ${team.center.y - 3} ${zlim} 0 ${team.center.y - 10} ${zlim} stained_hardened_clay ${team.colour} keep`)
+			SlashCommand(`/fill 0 ${team.center.y - 3} ${zlim} 0 ${team.center.y - 10} 0 stained_hardened_clay ${team.colour} keep`)
 		}
 		SlashCommand(`/fill 0 ${team.center.y - 3} 0 0 ${team.center.y - 10} 0 air`)
 
@@ -71,10 +71,10 @@ Bridges = class extends this.Scored {
 	RespawnExtension(player) {
 		SlashCommand(`/tp ${player.name} ${player.team.spawn.x} ${player.team.spawn.y} ${player.team.spawn.z} facing 0 70 0`)
 		SlashCommand(`/give ${player.name} iron_sword`)
-		SlashCommand(`/give ${player.name} iron_pickaxe 1 0 ${AdventureTags.CanDestroy("concrete")}`)
+		SlashCommand(`/give ${player.name} iron_pickaxe 1 0 ${AdventureTags.CanDestroy("stained_hardened_clay")}`)
 		SlashCommand(`/give ${player.name} bow`)
 		SlashCommand(`/give ${player.name} arrow 16`)
-		SlashCommand(`/give ${player.name} concrete 64 ${player.team.colour} ${AdventureTags.CanPlaceOn()}`)
+		SlashCommand(`/give ${player.name} stained_hardened_clay 64 ${player.team.colour} ${AdventureTags.CanPlaceOn()}`)
 	}
 
 	UpdateGameExtension() {
@@ -113,11 +113,11 @@ Bridges = class extends this.Scored {
 
 	PlayerTriedToDestroyBlock(player, position) {
 		const block = GetBlockData(player.entity, position)
-		player.concreteColourBeingDestroyed = Colours.NameToNumber(block.color)
+		player.terracottaColourBeingDestroyed = Colours.NameToNumber(block.color)
 	}
 
 	PlayerDestroyedBlock(player, position) {
-		SlashCommand(`/give ${player.name} concrete 1 ${player.concreteColourBeingDestroyed} ${AdventureTags.CanPlaceOn()}`)
+		SlashCommand(`/give ${player.name} stained_hardened_clay 1 ${player.terracottaColourBeingDestroyed} ${AdventureTags.CanPlaceOn()}`)
 		SlashCommand(`/kill @e[type=item,x=${position.x},y=${position.y},z=${position.z},rm=0,r=15]`)
 	}
 }

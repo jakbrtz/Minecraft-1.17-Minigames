@@ -4,11 +4,13 @@ this.Random = {
         return arr[this.Int(arr.length)]
     },
 
-    Int: function (max) {
-        return Math.floor(Math.random() * max)
+    Int: function (a, b) {
+        return Math.floor(this.Float(a, b))
     },
 
-    Float: function (min, max) {
+    Float: function (a, b) {
+        const min = Math.min(a || 0, b || 0)
+        const max = Math.max(a || 0, b || 0)
         return Math.random() * (max - min) + min
     },
 

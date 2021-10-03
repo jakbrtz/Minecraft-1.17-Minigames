@@ -87,7 +87,7 @@ Lobby = class extends this.Selection {
 
 	BuildWorld() {
 		this.serverName = Random.Arr(["NA", "NA", "EU", "EU", "OCE"])
-		this.serverNumber = Random.Int(100) + 1
+		this.serverNumber = Random.Int(1, 100)
 		WorldBuilding.Clear()
 		SlashCommand(`/structure load lobby:Spawn -16 4 -16`)
 		this.UpdateScore()

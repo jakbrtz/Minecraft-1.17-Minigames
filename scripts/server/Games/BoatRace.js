@@ -11,8 +11,8 @@ BoatRace = class extends this.Race {
 		SlashCommand(`/structure load boatrace:boatrace -13 60 -30`)
 		for (var z = -25; z < 25; z++) {
 			for (var i = 0; i < 3; i++) {
-				var x = Random.Float(-12, 12)
-				var y = Random.Float(61, 67)
+				var x = Random.Int(-12, 12)
+				var y = Random.Int(61, 67)
 				SlashCommand(`/fill ${x} 61 ${z} ${x} ${y} ${z} packed_ice`)
 			}
 		}

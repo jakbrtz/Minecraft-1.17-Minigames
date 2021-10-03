@@ -13,6 +13,7 @@ Each game must fall into one of those categories.
 
 The easiest examples to follow are
 
+* BoatRace.js
 * BombsAway.js
 * Hurdles.js
 * Parkour.js

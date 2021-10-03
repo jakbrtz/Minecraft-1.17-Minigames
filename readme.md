@@ -61,6 +61,7 @@ Get to the end as fast as you can in:
 * Parkour - but it sucks
 * Hurdles - run to the end with speed boost and jump boost
 * Glass Maze - literally the only original idea I had
+* Boat Race - go down the river in a boat
 
 
 ## Creating new Games

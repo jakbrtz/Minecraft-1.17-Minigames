@@ -13,7 +13,7 @@ BridgesBaseSelection = class extends this.Selection {
 				additionalCheck: (base, player) => player.requestedBase !== base.structure,
 				onSelect: (base, player) => {
 					player.requestedBase = base.structure
-					Chat(`${player.name} likes ${base.structure.split(':')[1]}`)
+					SlashCommand(`tell ${player.name} You have chosen ${base.structure.substring(base.structure.lastIndexOf(':') + 1)}`)
 				},
 				options: [
 					{ x: 32, z: 0, structure: "bridges:Amethyst" },
@@ -34,6 +34,10 @@ BridgesBaseSelection = class extends this.Selection {
 
 	RespawnExtension(player) {
 		SlashCommand(`/tp ${player.name} ${Random.Float(-10, 10)} 66 ${Random.Float(-10, 10)}`)
+	}
+
+	IsGameInProgress() {
+		return false
 	}
 
 	NextGame() {

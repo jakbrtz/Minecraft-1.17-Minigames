@@ -42,13 +42,22 @@ BridgesBaseBuilder = class extends this.Selection {
 	RespawnExtension(player) {
 		SlashCommand(`/tp ${player.name} ${Random.Float(-10, 10)} 66 ${Random.Float(-10, 10)}`)
 		SlashCommand(`/give ${player.name} concrete 1 12`)
+		SlashCommand(`/give ${player.name} potato`)
 		player.requestedBase = undefined
 	}
 
-	EndGameExtension() {
-		this.choices[0].options.forEach(option => {
-			SlashCommand(`/structure save ${option.structure} ${option.x - 14} 50 ${option.z - 14} ${option.x + 14} 110 ${option.z + 14} disk`)
-		})
+	UseItemExtension(player, item) {
+		if (item === "minecraft:potato") {
+			const slot = this.choices[0].options.find(opt => opt.structure === player.requestedBase)
+			if (slot) {
+				SlashCommand(`/structure save ${slot.structure} ${slot.x - 14} 50 ${slot.z - 14} ${slot.x + 14} 110 ${slot.z + 14} disk`)
+				SlashCommand(`/tell ${player.name} ${slot.structure} has been saved`)
+			}
+		}
+	}
+
+	IsGameInProgress() {
+		return false
 	}
 
 	NextGame() {

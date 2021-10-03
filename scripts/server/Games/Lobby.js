@@ -28,7 +28,7 @@ Lobby = class extends this.Selection {
 		}
 
 		const gamePicker = {
-			construct: game => SlashCommand(`/structure load lobby:${game.structure || "default"} ${game.x - 3} 4 ${game.z - 3} ${game.angle}_degrees`),
+			construct: game => SlashCommand(`/structure load lobby:${game.structure || "default"} ${game.x - 4} 4 ${game.z - 4} ${game.angle}_degrees`),
 			radius: 3,
 			onSelect: game => GameController.ChangeGame(game.game), // todo: use the NextGame() function
 			options: []
@@ -50,11 +50,11 @@ Lobby = class extends this.Selection {
 			{ structure: "bombsaway", game: new BombsAway(10) },
 			{ structure: "parkour", game: new Parkour() },
 			{ structure: "spleef", game: new Spleef() },
-			{ game: new Thieves() },
+			{ structure: "thieves", game: new Thieves() },
 			{ structure: "match", game: new Match() },
-			{ game: new Maze() },
-			{ game: new Hurdles() },
-			{ game: new BoatRace() },
+			{ structure: "maze", game: new Maze() },
+			{ structure: "hurdles", game: new Hurdles() },
+			{ structure: "boatrace", game: new BoatRace() },
 		]
 
 		allGames.forEach((option, i) => {

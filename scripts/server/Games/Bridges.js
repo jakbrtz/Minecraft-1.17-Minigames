@@ -26,7 +26,7 @@ Bridges = class extends this.Scored {
 		team.center = centers[this.teams.length - 1]
 		const options = this.players.filter(player => player.requestedBase && player.team === team).map(player => player.requestedBase)
 
-		team.selectedBase = options.length > 0 // todo: must we write the '>0'?
+		team.selectedBase = options.length
 			? Random.Arr(options)
 			: (team !== this.teams[0])
 				? this.teams[0].selectedBase

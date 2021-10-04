@@ -1,10 +1,10 @@
 const system = server.registerSystem(0, 0)
 
 let skippedTicks = 0 // todo: something more reliable than waiting 5 seconds
+let simple_query = null
 
 system.initialize = function () {
 
-	// todo: filter only players
 	simple_query = this.registerQuery();
 
 	this.listenForEvent("minecraft:entity_death", entity_death);
@@ -24,7 +24,8 @@ system.initialize = function () {
 
 system.update = function () {
 	if (skippedTicks >= 50) {
-		GameController.Update(system.getEntitiesFromQuery(simple_query).filter(entity => entity.__identifier__ === "minecraft:player"))
+		const allPlayers = system.getEntitiesFromQuery(simple_query).filter(entity => entity.__identifier__ === "minecraft:player")
+		GameController.Update(allPlayers)
 	} else {
 		skippedTicks++
 		if (skippedTicks === 50) {

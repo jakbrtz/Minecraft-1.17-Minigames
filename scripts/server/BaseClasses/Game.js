@@ -97,7 +97,7 @@ Game = class {
 
         this.players.forEach(player => {
             if (player.needsReviving) {
-                this.AttemptRevivePlayer(player) // todo: could this go in GameController?
+                this.AttemptRevivePlayer(player)
             }
             if (player.deathTimer >= this.DeathCoolDown) {
                 this.Respawn(player)

@@ -1,4 +1,4 @@
-﻿Game = class {
+Game = class {
 
     constructor() {
         this.DeathCoolDown = 0
@@ -40,7 +40,9 @@
         } else if ((this.elapsedGameTime < 0 || this.TeamsCanBeAddedAfterStart) && this.teams.length < this.maximumNumberOfTeams) {
             player.team = Teams.Get(player.team.name)
         } else {
-            player.team = Random.Arr(this.teams) // todo: pick team with least number of players
+            const sizeOfTeam = team => this.players.filter(player => player.team === team).length
+            this.teams.sort((a, b) => sizeOfTeam(a) - sizeOfTeam(b))
+            player.team = this.teams[0]
         }
         this.AddTeam(player.team)
 

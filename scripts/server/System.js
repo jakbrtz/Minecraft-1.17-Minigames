@@ -1,6 +1,5 @@
 const system = server.registerSystem(0, 0)
 
-let skippedTicks = 0 // todo: something more reliable than waiting 5 seconds
 let simple_query = null
 
 system.initialize = function () {
@@ -23,15 +22,8 @@ system.initialize = function () {
 
 
 system.update = function () {
-	if (skippedTicks >= 50) {
-		const allPlayers = system.getEntitiesFromQuery(simple_query).filter(entity => entity.__identifier__ === "minecraft:player")
-		GameController.Update(allPlayers)
-	} else {
-		skippedTicks++
-		if (skippedTicks === 50) {
-			GameController.Setup()
-		}
-    }
+	const allPlayers = system.getEntitiesFromQuery(simple_query).filter(entity => entity.__identifier__ === "minecraft:player")
+	GameController.Update(allPlayers)
 }
 
 system.shutdown = function () {

@@ -1,6 +1,7 @@
 GameController = {
 	Game: null,
 	Players: new Map(),
+	ElapsedTime: 0,
 
 	GameDuration: 0,
 	Pause: false,
@@ -16,6 +17,15 @@ GameController = {
 	},
 
 	Update: function (allEntities) {
+
+		this.ElapsedTime++
+
+		if (this.ElapsedTime === 50) { // todo: something more reliable than waiting 2.5 seconds
+			this.Setup()
+		}
+		if (this.ElapsedTime <= 50) {
+			return
+        }
 
 		// update player info or add new players
 		allEntities.forEach(entity => {

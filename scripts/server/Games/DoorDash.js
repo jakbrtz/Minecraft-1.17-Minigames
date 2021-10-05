@@ -12,8 +12,8 @@ DoorDash = class extends this.Race {
 	BuildWorld() {
 		WorldBuilding.Clear()
 
-		this.xStart = -Math.floor(this.doors * this.width / 2)
-		this.zStart = -Math.floor(this.rows * this.depth / 2)
+		this.xStart = -this.doors * this.width / 2
+		this.zStart = -this.rows * this.depth / 2
 
 		for (var row = 0; row < this.rows; row++) {
 			const clearDoor1 = Random.Int(this.doors)

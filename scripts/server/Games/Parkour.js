@@ -61,7 +61,7 @@ Parkour = class extends this.Race {
 		this.players.forEach(player => {
 			if (player.position.y > 64 && Coordinates.PositionsAreClose(player.position, this.checkPoints[(player.checkPoint + 1) % 4], 6, true)) {
 				player.checkPoint++
-				Chat(`${player.name} has reached \u00a7bcheckpoint ${player.checkPoint}!`)
+				SlashCommand(`/say ${player.name} has reached \u00a7bcheckpoint ${player.checkPoint}!`)
             }
 		})
 

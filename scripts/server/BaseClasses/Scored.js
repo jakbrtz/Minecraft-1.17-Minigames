@@ -71,7 +71,7 @@
 			msg = bestElements.map(element => `${element.name}\u00a7r`).join(" and ") + " wins"
 		}
 		this.players.forEach(player => SlashCommand(`/title ${player.name} title ${msg}`))
-		Chat(msg)
+		SlashCommand(`/say ${msg}`)
 	}
 
 	UpdateScore() {

@@ -61,12 +61,6 @@ function entity_attack(eventData) {
 	GameController.EntityAttack(eventData.data.entity, eventData.data.target)
 }
 
-this.Chat = function (message) {
-	chatEvent = system.createEventData('minecraft:display_chat_event')
-	chatEvent.data.message = message
-	system.broadcastEvent('minecraft:display_chat_event', chatEvent)
-}
-
 this.SlashCommand = function (command) {
 	system.executeCommand(command, commandResultData => {
 		console.log(JSON.stringify(commandResultData, null, "    "))

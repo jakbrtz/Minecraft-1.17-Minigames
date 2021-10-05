@@ -12,7 +12,7 @@ Lobby = class extends this.Selection {
 			additionalCheck: (dot, player) => player.team !== dot.team,
 			onSelect: (dot, player) => {
 				player.team = dot.team
-				Chat(`${player.name} is on the ${Colours.NumberToCharacter(player.team.colour)}${player.team.name} team`)
+				SlashCommand(`/say ${player.name} is on the ${Colours.NumberToCharacter(player.team.colour)}${player.team.name} team`)
 				this.UpdateScore()
 			},
 			options: [
@@ -71,7 +71,7 @@ Lobby = class extends this.Selection {
 			additionalCheck: time => GameController.GameDuration !== time.duration,
 			onSelect: time => {
 				GameController.GameDuration = time.duration
-				Chat(`The game duration is now ${time.duration ? Scoreboard.TicksToDuration(time.duration) : "default"}`)
+				SlashCommand(`/say The game duration is now ${time.duration ? Scoreboard.TicksToDuration(time.duration) : "default"}`)
 			},
 			options: [
 				{ x: -4, z: -31, duration: 0 },

@@ -9,11 +9,6 @@ Bridges = class extends this.Scored {
 		this.maximumNumberOfTeams = 4
 	}
 
-	BuildWorld() {
-		WorldBuilding.Clear()
-		// Bases will be built as players join
-	}
-
 	AddTeamExtension(team) {
 
 		const centers = [

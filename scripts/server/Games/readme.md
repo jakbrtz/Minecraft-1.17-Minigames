@@ -64,6 +64,14 @@ The options are:
 * `teams` - players can hurt people in other teams (default for scored games)
 * `off` - players cannot hurt each other (default for selection games)
 
+### shouldClearExistingGameBeforeBuilding
+
+When building the world, do we want to start by clearing what's already there?
+
+If left out then the answer is yes (true).
+
+I can't think of a reason why this would ever be no (false).
+
 ### ShowPreGameTimer
 
 Should players see a countdown before the game starts?
@@ -130,7 +138,6 @@ For example in `Bridges` and `Thieves` a new base is constructed for each team w
 Place blocks to build the game. For example in Spleef:
 ```javascript
 	BuildWorld() {
-		WorldBuilding.Clear()
 		SlashCommand(`/fill -15 64 -15 15 64 15 snow`)
 	}
 ```

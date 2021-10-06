@@ -13,7 +13,6 @@ Parkour = class extends this.Race {
 	}
 
 	BuildWorld() {
-		WorldBuilding.Clear()
 
 		let order = []
 		for (var i = 0; i < 9; i++) {

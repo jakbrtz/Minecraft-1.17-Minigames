@@ -5,9 +5,6 @@ BoatRace = class extends this.Race {
 	}
 
 	BuildWorld() {
-
-		WorldBuilding.Clear()
-
 		SlashCommand(`/structure load boatrace:boatrace -30 60 -13`)
 		for (var x = -25; x < 25; x++) {
 			for (var i = 0; i < 3; i++) {

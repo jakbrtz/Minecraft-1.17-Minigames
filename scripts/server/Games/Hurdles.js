@@ -12,8 +12,6 @@ Hurdles = class extends this.Race {
 		this.zEnd = 32
 		this.distanceBetweenHurdles = 8
 
-		WorldBuilding.Clear()
-
 		SlashCommand(`/fill ${this.xStart} 64 ${this.zStart} ${this.xEnd} 64 ${this.zEnd} magenta_glazed_terracotta 2`)
 		for (var hurdle = this.zStart; hurdle <= this.zEnd; hurdle += this.distanceBetweenHurdles) {
 			SlashCommand(`/fill ${this.xStart} 65 ${hurdle} ${this.xEnd} 67 ${hurdle} purpur_block`)

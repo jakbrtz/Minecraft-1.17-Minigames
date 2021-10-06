@@ -10,7 +10,6 @@ DoorDash = class extends this.Race {
 	}
 
 	BuildWorld() {
-		WorldBuilding.Clear()
 
 		this.xStart = -this.doors * this.width / 2
 		this.zStart = -this.rows * this.depth / 2

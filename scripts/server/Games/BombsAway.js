@@ -6,7 +6,6 @@ BombsAway = class extends this.Survival {
 	}
 
 	BuildWorld() {
-		WorldBuilding.Clear()
 		SlashCommand(`/fill -15 64 -15 15 64 15 bedrock`)
 	}
 

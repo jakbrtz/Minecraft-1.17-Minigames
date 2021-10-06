@@ -9,7 +9,6 @@ Thieves = class extends this.Scored {
 	}
 
 	BuildWorld() {
-		WorldBuilding.Clear()
 		WorldBuilding.Circle({ x: 0, y: 64, z: 0 }, 31.5, "grass")
 		// Bases will be built as players join
 	}

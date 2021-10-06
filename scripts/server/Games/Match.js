@@ -16,7 +16,6 @@ Match = class extends this.Survival {
 	}
 
 	BuildWorld() {
-		WorldBuilding.Clear()
 		this.PutBackPlatforms()
 		this.PickNextPlatform()
 	}

@@ -5,7 +5,6 @@ Shooters = class extends this.Survival {
 	}
 
 	BuildWorld() {
-		WorldBuilding.Clear()
 
 		SlashCommand(`/structure load shooters:barracks -9 64 -16 0_degrees`)
 		SlashCommand(`/structure load shooters:barracks -9 64 14 180_degrees`)

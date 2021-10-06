@@ -7,7 +7,6 @@ Maze = class extends this.Race {
 	}
 
 	BuildWorld() {
-		WorldBuilding.Clear()
 
 		const mazeNodes = new ArrayMultiDimensional(this.mazeSize)
 

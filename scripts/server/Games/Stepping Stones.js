@@ -19,7 +19,6 @@ SteppingStones = class extends this.Race {
 	HideMaterialOnceDone(platformIsSafe) { return !platformIsSafe }
 
 	BuildWorld() {
-		WorldBuilding.Clear()
 
 		this.trackedPlatforms = new ArrayMultiDimensional([this.columns, this.rows])
 

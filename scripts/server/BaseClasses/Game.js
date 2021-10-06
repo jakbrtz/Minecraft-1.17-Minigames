@@ -8,6 +8,7 @@ Game = class {
         this.TeamsCanBeAddedAfterStart = true
         this.minimumNumberOfTeams = 0
         this.maximumNumberOfTeams = 8
+        this.shouldClearExistingGameBeforeBuilding = true
     }
 
     Setup() {
@@ -16,6 +17,9 @@ Game = class {
         this.elapsedGameTime = -60
         this.GameIsComplete = false
         this.SetupGeneral()
+        if (this.shouldClearExistingGameBeforeBuilding) {
+            WorldBuilding.Clear()
+        }
         this.BuildWorld()
         this.BuildWorldGeneral()
     }

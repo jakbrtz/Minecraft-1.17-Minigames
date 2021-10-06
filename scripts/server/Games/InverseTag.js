@@ -10,7 +10,6 @@ InverseTag = class extends this.Scored {
 	}
 
 	BuildWorld() {
-		WorldBuilding.Clear()
 		const platforms = ["arenas:nether", "arenas:oasis"]
 		SlashCommand(`/structure load ${Random.Arr(platforms)} -16 63 -16`)
 	}

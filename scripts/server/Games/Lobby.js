@@ -36,18 +36,18 @@ Lobby = class extends this.Selection {
 
 		const allGames = [
 			{ structure: "arena", game: new QuickRespawn(false) },
+			{ structure: "arenateam", game: new QuickRespawn(true) },
+			{ structure: "hill", game: new KingOfTheHill() },
+			{ structure: "bombsaway", game: new BombsAway(10) },
 			{ structure: "bridges", game: new Bridges() },
 			{ structure: "bridgeselect", game: new BridgesBaseSelection() },
 			{ structure: "bridgebuild", game: new BridgesBaseBuilder() },
 			{ structure: "droppers", game: new DroppingBlocks() },
 			{ structure: "paint", game: new Paint() },
 			{ structure: "steppingstones", game: new SteppingStones() },
-			{ structure: "arenateam", game: new QuickRespawn(true) },
 			{ structure: "doordash", game: new DoorDash() },
 			{ structure: "inversetag", game: new InverseTag() },
 			{ structure: "shooters", game: new Shooters() },
-			{ structure: "hill", game: new KingOfTheHill() },
-			{ structure: "bombsaway", game: new BombsAway(10) },
 			{ structure: "parkour", game: new Parkour() },
 			{ structure: "spleef", game: new Spleef() },
 			{ structure: "thieves", game: new Thieves() },
@@ -67,23 +67,7 @@ Lobby = class extends this.Selection {
 			gamePicker.options.push(option)
 		})
 
-		const gameTime = {
-			construct: time => SlashCommand(`/setblock ${time.x} 4 ${time.z} obsidian`),
-			additionalCheck: time => GameController.GameDuration !== time.duration,
-			onSelect: time => {
-				GameController.GameDuration = time.duration
-				SlashCommand(`/say The game duration is now ${time.duration ? Scoreboard.TicksToDuration(time.duration) : "default"}`)
-			},
-			options: [
-				{ x: -4, z: -31, duration: 0 },
-				{ x: -2, z: -31, duration: 30 * 20 },
-				{ x: 0, z: -31, duration: 60 * 20 },
-				{ x: 2, z: -31, duration: 120 * 20 },
-				{ x: 4, z: -31, duration: 300 * 20 },
-			]
-		}
-
-		return [teamSelector, gamePicker, gameTime]
+		return [teamSelector, gamePicker]
 	}
 
 	BuildWorld() {

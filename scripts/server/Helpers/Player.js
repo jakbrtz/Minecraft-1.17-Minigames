@@ -24,5 +24,6 @@ Player = class {
         SlashCommand(`/effect ${this.name} resistance ${time} 100 true`)
         SlashCommand(`/effect ${this.name} weakness ${time} 100 true`)
         SlashCommand(`/effect ${this.name} saturation ${time} 100 true`)
+        SlashCommand(`/effect ${this.name} mining_fatigue ${time} 100 true`)
     }
 }

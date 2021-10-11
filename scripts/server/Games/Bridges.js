@@ -108,7 +108,9 @@ Bridges = class extends this.Scored {
 
 	PlayerTriedToDestroyBlock(player, position) {
 		const block = GetBlockData(player.entity, position)
-		player.terracottaColourBeingDestroyed = Colours.NameToNumber(block.color)
+		if (block) {
+			player.terracottaColourBeingDestroyed = Colours.NameToNumber(block.color)
+		}
 	}
 
 	PlayerDestroyedBlock(player, position) {

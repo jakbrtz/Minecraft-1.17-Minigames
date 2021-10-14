@@ -29,11 +29,11 @@ Match = class extends this.Survival {
     }
 
 	ReplacePlatform(platform, block) {
-		SlashCommand(`/fill ${platform.x} 64 ${platform.z} ${platform.x + 3} 64 ${platform.z + 3} ${block} ${platform.c}`)
+		Command.Fill(platform.x, 64, platform.z, platform.x + 3, 64, platform.z + 3, `${block} ${platform.c}`);
     }
 
 	RespawnExtension(player) {
-		SlashCommand(`/tp ${player.name} 0 66 0`) // todo: wait for platform to respawn
+		Command.Teleport(player, 0, 66, 0); // todo: wait for platform to respawn
 	}
 
 	UpdateGameExtension() {
@@ -42,10 +42,10 @@ Match = class extends this.Survival {
 			case 0:
 				this.PutBackPlatforms()
 				this.PickNextPlatform()
-				SlashCommand(`/fill -20 66 -20  20 70 -20 concrete ${this.nextPlatform.c}`)
-				SlashCommand(`/fill -20 66 -20 -20 70  20 concrete ${this.nextPlatform.c}`)
-				SlashCommand(`/fill  20 66  20  20 70 -20 concrete ${this.nextPlatform.c}`)
-				SlashCommand(`/fill  20 66  20 -20 70  20 concrete ${this.nextPlatform.c}`)
+				Command.Fill(-20, 66, -20,  20, 70, -20, `concrete ${this.nextPlatform.c}`);
+				Command.Fill(-20, 66, -20, -20, 70,  20, `concrete ${this.nextPlatform.c}`);
+				Command.Fill( 20, 66,  20,  20, 70, -20, `concrete ${this.nextPlatform.c}`);
+				Command.Fill( 20, 66,  20, -20, 70,  20, `concrete ${this.nextPlatform.c}`);
 				break;
 			case 70:
 				this.platforms.filter(platform => platform !== this.nextPlatform).forEach(platform => {

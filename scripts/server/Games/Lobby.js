@@ -7,12 +7,12 @@ Lobby = class extends this.Selection {
 	GetChoices() {
 
 		const teamSelector = {
-			construct: dot => SlashCommand(`/fill ${dot.x - 1} 6 ${dot.z - 1} ${dot.x + 1} 6 ${dot.z + 1} concrete ${dot.team.colour}`),
+			construct: dot => Command.Fill(dot.x - 1, 6, dot.z - 1, dot.x + 1, 6, dot.z + 1, `concrete ${dot.team.colour}`),
 			radius: 2,
 			additionalCheck: (dot, player) => player.team !== dot.team,
 			onSelect: (dot, player) => {
 				player.team = dot.team
-				SlashCommand(`/say ${player.name} is on the ${Colours.NumberToCharacter(player.team.colour)}${player.team.name} team`)
+				Command.Say(`${player.name} is on the ${Colours.NumberToCharacter(player.team.colour)}${player.team.name} team`);
 				this.UpdateScore()
 			},
 			options: [
@@ -28,7 +28,7 @@ Lobby = class extends this.Selection {
 		}
 
 		const gamePicker = {
-			construct: game => SlashCommand(`/structure load lobby:${game.structure || "default"} ${game.x - 4} 4 ${game.z - 4} ${game.angle}_degrees`),
+			construct: game => Command.Structure(`lobby:${game.structure||"default"}`, game.x - 4, 4, game.z - 4, game.angle),
 			radius: 3,
 			onSelect: game => GameController.ChangeGame(game.game), // todo: use the NextGame() function
 			options: []
@@ -73,11 +73,11 @@ Lobby = class extends this.Selection {
 	BuildWorld() {
 		this.serverName = Random.Arr(["NA", "NA", "EU", "EU", "OCE"])
 		this.serverNumber = Random.Int(1, 100)
-		SlashCommand(`/structure load lobby:Spawn -16 4 -16`)
+		Command.Structure("lobby:Spawn", -16, 4, -16);
 	}
 
 	RespawnExtension(player) {
-		SlashCommand(`/tp ${player.name} ${Random.Float(-3, 3)} 7 ${Random.Float(-3, 3)}`)
+		Command.Teleport(player, Random.Float(-3, 3), 7, Random.Float(-3, 3));
 	}
 
 	UpdateScore() {

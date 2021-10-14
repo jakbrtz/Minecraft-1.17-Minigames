@@ -12,18 +12,18 @@ Hurdles = class extends this.Race {
 		this.zEnd = 32
 		this.distanceBetweenHurdles = 8
 
-		SlashCommand(`/fill ${this.xStart} 64 ${this.zStart} ${this.xEnd} 64 ${this.zEnd} magenta_glazed_terracotta 2`)
+		Command.Fill(this.xStart, 64, this.zStart, this.xEnd, 64, this.zEnd, "magenta_glazed_terracotta 2");
 		for (var hurdle = this.zStart; hurdle <= this.zEnd; hurdle += this.distanceBetweenHurdles) {
-			SlashCommand(`/fill ${this.xStart} 65 ${hurdle} ${this.xEnd} 67 ${hurdle} purpur_block`)
+			Command.Fill(this.xStart, 65, hurdle, this.xEnd, 67, hurdle, "purpur_block");
 		}
-		SlashCommand(`/fill ${this.xStart} 64 ${this.zStart - 10} ${this.xEnd} 64 ${this.zStart - 1} concrete 1`)
-		SlashCommand(`/fill ${this.xStart} 64 ${this.zEnd + 1} ${this.xEnd} 64 ${this.zEnd + 10} concrete 1`)
+		Command.Fill(this.xStart, 64, this.zStart - 10, this.xEnd, 64, this.zStart - 1, "concrete 1");
+		Command.Fill(this.xStart, 64, this.zEnd + 1, this.xEnd, 64, this.zEnd + 10, "concrete 1");
 	}
 
 	RespawnExtension(player) {
-		SlashCommand(`/tp ${player.name} ${Random.Float(this.xStart, this.xEnd)} 66 ${this.zStart - 5} facing 0 66 0`)
-		SlashCommand(`/effect ${player.name} speed 1000000 5 true`)
-		SlashCommand(`/effect ${player.name} jump_boost 1000000 5 true`)
+		Command.Teleport(player, Random.Float(this.xStart, this.xEnd), 66, this.zStart - 5, 0, 66, 0);
+		Command.Effect(player, "speed", -1, 5);
+		Command.Effect(player, "jump_boost", -1, 5);
 	}
 
 	PlayerIsOutOfBounds(player) {

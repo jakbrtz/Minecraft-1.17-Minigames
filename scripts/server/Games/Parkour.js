@@ -20,15 +20,15 @@ Parkour = class extends this.Race {
 		}
 		Random.Shuffle(order)
 
-		SlashCommand(`/fill -22 64 -22 -11 64 -11 concrete 1`)
-		SlashCommand(`/fill  21 64 -22  10 64 -11 concrete 1`)
-		SlashCommand(`/fill -22 64  21 -11 64  10 concrete 1`)
-		SlashCommand(`/fill  21 64  21  10 64  10 concrete 1`)
+		Command.Fill(-22, 64, -22, -11, 64, -11, "concrete 1");
+		Command.Fill( 21, 64, -22,  10, 64, -11, "concrete 1");
+		Command.Fill(-22, 64,  21, -11, 64,  10, "concrete 1");
+		Command.Fill( 21, 64,  21,  10, 64,  10, "concrete 1");
 
-		SlashCommand(`/structure load ${order[0]} -10 61 -21   0_degrees`)
-		SlashCommand(`/structure load ${order[1]}  11 61 -10  90_degrees`)
-		SlashCommand(`/structure load ${order[2]} -10 61  11 180_degrees`)
-		SlashCommand(`/structure load ${order[3]} -21 61 -10 270_degrees`)
+		Command.Structure(order[0], -10, 61, -21,   0);
+		Command.Structure(order[1],  11, 61, -10,  90);
+		Command.Structure(order[2], -10, 61,  11, 180);
+		Command.Structure(order[3], -21, 61, -10, 270);
 	}
 
 	AddPlayerExtension(player) {
@@ -40,7 +40,7 @@ Parkour = class extends this.Race {
 		const z = this.checkPoints[player.checkPoint % 4].z + Random.Float(-3, 3)
 		const facingX = this.checkPoints[(player.checkPoint + 1) % 4].x
 		const facingZ = this.checkPoints[(player.checkPoint + 1) % 4].z
-		SlashCommand(`/tp ${player.name} ${x} 66 ${z} facing ${facingX} 66 ${facingZ}`)
+		Command.Teleport(player, x, 66, z, facingX, 66, facingZ);
 	}
 
 	PlayerIsOutOfBounds(player) {
@@ -60,7 +60,7 @@ Parkour = class extends this.Race {
 		this.players.forEach(player => {
 			if (player.position.y > 64 && Coordinates.PositionsAreClose(player.position, this.checkPoints[(player.checkPoint + 1) % 4], 6, true)) {
 				player.checkPoint++
-				SlashCommand(`/say ${player.name} has reached \u00a7bcheckpoint ${player.checkPoint}!`)
+				Command.Say(`${player.name} has reached \u00a7bcheckpoint ${player.checkPoint}!`);
             }
 		})
 

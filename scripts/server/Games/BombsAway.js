@@ -6,11 +6,11 @@ BombsAway = class extends this.Survival {
 	}
 
 	BuildWorld() {
-		SlashCommand(`/fill -15 64 -15 15 64 15 bedrock`)
+		Command.Fill(-15, 64, -15, 15, 64, 15, "bedrock");
 	}
 
 	RespawnExtension(player) {
-		SlashCommand(`/tp ${player.name} ${Random.Float(-13, 13)} 66 ${Random.Float(-13, 13)}`)
+		Command.Teleport(player, Random.Float(-13, 13), 66, Random.Float(-13, 13));
 	}
 
 	PlayerIsOutOfBounds(player) {
@@ -19,7 +19,7 @@ BombsAway = class extends this.Survival {
 
 	UpdateGameExtension() {
 		if (this.elapsedGameTime % this.TimeBetweenBombs === 0) {
-			SlashCommand(`/summon tnt ${Random.Float(-15, 15)} 70 ${Random.Float(-15, 15)}`)
+			Command.Summon("tnt", Random.Float(-15, 15), 70, Random.Float(-15, 15));
         }
 	}
 }

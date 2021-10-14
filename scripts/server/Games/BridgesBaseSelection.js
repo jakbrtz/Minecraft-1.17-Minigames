@@ -8,12 +8,12 @@ BridgesBaseSelection = class extends this.Selection {
 	GetChoices() {
 		return [
 			{
-				construct: base => SlashCommand(`/structure load ${base.structure} ${base.x - 14} 50 ${base.z - 14} ${Coordinates.SuggestRotation(base)}_degrees`),
+				construct: base => Command.Structure(base.structure, base.x - 14, 50, base.z - 14, Coordinates.SuggestRotation(base)),
 				radius: 14,
 				additionalCheck: (base, player) => player.requestedBase !== base.structure,
 				onSelect: (base, player) => {
 					player.requestedBase = base.structure
-					SlashCommand(`tell ${player.name} You have chosen ${base.structure.substring(base.structure.lastIndexOf(':') + 1)}`)
+					Command.Tell(player, `You have chosen ${base.structure.substring(base.structure.lastIndexOf(':') + 1)}`);
 				},
 				options: [
 					{ x: 32, z: 0, structure: "bridges:Amethyst" },
@@ -28,11 +28,11 @@ BridgesBaseSelection = class extends this.Selection {
 	}
 
 	BuildWorld() {
-		SlashCommand(`/fill -64 64 -64 63 64 63 glass`)
+		Command.Fill(-64, 64, -64, 63, 64, 63, "glass");
 	}
 
 	RespawnExtension(player) {
-		SlashCommand(`/tp ${player.name} ${Random.Float(-10, 10)} 66 ${Random.Float(-10, 10)}`)
+		Command.Teleport(player, Random.Float(-10, 10), 66, Random.Float(-10, 10));
 	}
 
 	IsGameInProgress() {

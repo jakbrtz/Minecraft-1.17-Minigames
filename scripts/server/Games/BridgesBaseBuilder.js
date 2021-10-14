@@ -6,7 +6,7 @@ BridgesBaseBuilder = class extends this.Selection {
 	}
 
 	PlaceStructure(structure, position) {
-		SlashCommand(`/structure load ${structure} ${position.x - 14} 50 ${position.z - 14}`)
+		Command.Structure(structure, position.x - 14, 50, position.z - 14);
     }
 
 	GetChoices() {
@@ -17,7 +17,7 @@ BridgesBaseBuilder = class extends this.Selection {
 				additionalCheck: (slot, player) => player.requestedBase !== slot.structure,
 				onSelect: (slot, player) => {
 					player.requestedBase = slot.structure
-					SlashCommand(`/tell ${player.name} you are working in ${slot.structure}`)
+					Command.Tell(player, `You are working in ${slot.structure}`);
 				},
 				options: [
 					{ x: 32, z: 0, structure: `slot0` },
@@ -34,14 +34,14 @@ BridgesBaseBuilder = class extends this.Selection {
 	}
 
 	BuildWorld() {
-		SlashCommand(`/fill -64 64 -64 63 64 63 glass`)
+		Command.Fill(-64, 64, -64, 63, 64, 63, "glass");
 		this.choices[0].options.forEach(slot => this.PlaceStructure(`bridges:Basic`, slot))
 	}
 
 	RespawnExtension(player) {
-		SlashCommand(`/tp ${player.name} ${Random.Float(-10, 10)} 66 ${Random.Float(-10, 10)}`)
-		SlashCommand(`/give ${player.name} concrete 1 12`)
-		SlashCommand(`/give ${player.name} potato`)
+		Command.Teleport(player, Random.Float(-10, 10), 66, Random.Float(-10, 10));
+		Command.Give(player, "concrete", 1, 12);
+		Command.Give(player, "potato");
 		player.requestedBase = undefined
 	}
 
@@ -49,8 +49,8 @@ BridgesBaseBuilder = class extends this.Selection {
 		if (item === "minecraft:potato") {
 			const slot = this.choices[0].options.find(opt => opt.structure === player.requestedBase)
 			if (slot) {
-				SlashCommand(`/structure save ${slot.structure} ${slot.x - 14} 50 ${slot.z - 14} ${slot.x + 14} 110 ${slot.z + 14} disk`)
-				SlashCommand(`/tell ${player.name} ${slot.structure} has been saved`)
+				Command.StructureSave(slot.structure, slot.x - 14, 50, slot.z - 14, slot.x + 14, 110, slot.z + 14, "disk");
+				Command.Tell(player, `${slot.structure} has been saved`);
 			}
 		}
 	}

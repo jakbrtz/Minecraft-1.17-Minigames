@@ -70,8 +70,8 @@
 		} else {
 			msg = bestElements.map(element => `${element.name}\u00a7r`).join(" and ") + " wins"
 		}
-		this.players.forEach(player => SlashCommand(`/title ${player.name} title ${msg}`))
-		SlashCommand(`/say ${msg}`)
+		this.players.forEach(player => Command.Title(player, "title", msg));
+		Command.Say(msg);
 	}
 
 	UpdateScore() {

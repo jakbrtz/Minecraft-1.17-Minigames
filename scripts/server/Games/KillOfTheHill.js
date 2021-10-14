@@ -11,15 +11,15 @@ KingOfTheHill = class extends this.Scored {
 	}
 
 	BuildWorld() {
-		SlashCommand(`/fill -20 64 -20 20 64 20 grass`)
+		Command.Fill(-20, 64, -20, 20, 64, 20, "grass");
 		for (var i = 0; i < this.size; i++) {
-			SlashCommand(`/fill ${i - this.size} ${65 + i} ${i - this.size} ${this.size - i} ${65 + i} ${this.size - i} stone`)
-			SlashCommand(`/fill ${i - this.size} ${65 + i} ${i - this.size} ${this.size - i} ${65 + i} ${i - this.size} normal_stone_stairs 2`)
-			SlashCommand(`/fill ${i - this.size} ${65 + i} ${i - this.size} ${i - this.size} ${65 + i} ${this.size - i} normal_stone_stairs 0`)
-			SlashCommand(`/fill ${this.size - i} ${65 + i} ${this.size - i} ${i - this.size} ${65 + i} ${this.size - i} normal_stone_stairs 3`)
-			SlashCommand(`/fill ${this.size - i} ${65 + i} ${this.size - i} ${this.size - i} ${65 + i} ${i - this.size} normal_stone_stairs 1`)
+			Command.Fill(i - this.size, 65 + i, i - this.size, this.size - i, 65 + i, this.size - i, "stone");
+			Command.Fill(i - this.size, 65 + i, i - this.size, this.size - i, 65 + i, i - this.size, "normal_stone_stairs 2");
+			Command.Fill(i - this.size, 65 + i, i - this.size, i - this.size, 65 + i, this.size - i, "normal_stone_stairs 0");
+			Command.Fill(this.size - i, 65 + i, this.size - i, i - this.size, 65 + i, this.size - i, "normal_stone_stairs 3");
+			Command.Fill(this.size - i, 65 + i, this.size - i, this.size - i, 65 + i, i - this.size, "normal_stone_stairs 1");
 		}
-		SlashCommand(`/setblock 0 ${65 + this.size} 0 stone_slab4 2`)
+		Command.SetBlock(0, 65 + this.size, 0, "stone_slab4 2");
 	}
 
 	RespawnExtension(player) {
@@ -29,7 +29,7 @@ KingOfTheHill = class extends this.Scored {
 			x = Random.Float(-15, 15)
 			z = Random.Float(-15, 15)
 		} while (this.PositionOnHill({ x: x, z: z }))
-		SlashCommand(`/tp ${player.name} ${x} 66 ${z}`)
+		Command.Teleport(player, x, 66, z);
 	}
 
 	UpdateGameExtension() {

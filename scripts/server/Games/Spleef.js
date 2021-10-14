@@ -7,13 +7,13 @@ Spleef = class extends this.Survival {
 	}
 
 	BuildWorld() {
-		SlashCommand(`/fill -15 64 -15 15 64 15 snow`)
+		Command.Fill(-15, 64, -15, 15, 64, 15, "snow");
 	}
 
 	RespawnExtension(player) {
-		SlashCommand(`/tp ${player.name} ${Random.Float(-13, 13)} 66 ${Random.Float(-13, 13)}`)
-		SlashCommand(`/give ${player.name} diamond_shovel`)
-		SlashCommand(`/give ${player.name} snowball 8`)
+		Command.Teleport(player, Random.Float(-13, 13), 66, Random.Float(-13, 13));
+		Command.Give(player, "diamond_shovel");
+		Command.Give(player, "snowball", 8);
 	}
 
 	PlayerIsOutOfBounds(player) {

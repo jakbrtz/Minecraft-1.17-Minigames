@@ -31,12 +31,12 @@ Thieves = class extends this.Scored {
 		team.goal = { x: team.center.x, y: team.center.y + 6, z: team.center.z }
 		
 		const structure = "thieves:" + Random.Arr(["house", "pond", "monument", "rich", "treehouse"])
-		SlashCommand(`/structure load ${structure} ${team.center.x - 4} ${team.center.y} ${team.center.z - 4} ${Coordinates.SuggestRotation(team.center)}_degrees`)
-		SlashCommand(`/fill ${team.center.x - 4} ${team.center.y} ${team.center.z - 4} ${team.center.x + 4} ${team.center.y + 10} ${team.center.z + 4} concrete ${team.colour} replace concrete 12`)
+		Command.Structure(structure, team.center.x - 4, team.center.y, team.center.z - 4, Coordinates.SuggestRotation(team.center))
+		Command.Fill(team.center.x - 4, team.center.y, team.center.z - 4, team.center.x + 4, team.center.y + 10, team.center.z + 4, `concrete ${team.colour} replace concrete 12`);
 	}
 	RespawnExtension(player) {
-		SlashCommand(`/tp ${player.name} ${player.team.spawn.x} ${player.team.spawn.y} ${player.team.spawn.z} facing 0 70 0`)
-		SlashCommand(`/give ${player.name} iron_sword`)
+		Command.Teleport(player, player.team.spawn.x, player.team.spawn.y, player.team.spawn.z, 0, 70, 0);
+		Command.Give(player, "iron_sword");
 		player.carrying = false
 	}
 
@@ -50,14 +50,14 @@ Thieves = class extends this.Scored {
 							player.score++
 							// todo: remove score from opponent
 							this.UpdateScore()
-							SlashCommand(`/clear ${player.name} diamond`)
-							SlashCommand("/title " + player.name + " title You earned a point")
+							Command.Clear(player, "diamond");
+							Command.Title(player, "title", "Year earned a point");
 							player.carrying = false
 						}
 					} else {
 						if (!player.carrying) {
-							SlashCommand(`/give ${player.name} diamond`)
-							SlashCommand("/title " + player.name + " title Diamond stolen!")
+							Command.Give(player, "diamond");
+							Command.Title(player, "title", "Diamond stolen!");
 							player.carrying = true
 						}
 					}

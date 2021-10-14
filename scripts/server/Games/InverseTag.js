@@ -11,11 +11,11 @@ InverseTag = class extends this.Scored {
 
 	BuildWorld() {
 		const platforms = ["arenas:nether", "arenas:oasis"]
-		SlashCommand(`/structure load ${Random.Arr(platforms)} -16 63 -16`)
+		Command.Structure(Random.Arr(platforms), -16, 63, -16);
 	}
 
 	RespawnExtension(player) {
-		SlashCommand(`/spreadplayers 0 0 5 15 ${player.name}`)
+		Command.SpreadPlayers(0, 0, 5, 15, [player]);
 		if (this.HighlightedPlayerNeedsReplacing()) {
 			this.SetHighlightedPlayer(player)
 		}
@@ -42,9 +42,9 @@ InverseTag = class extends this.Scored {
 
 	SetHighlightedPlayer(player) {
 		if (this.HighlightedPlayer) {
-			SlashCommand(`/clear ${this.HighlightedPlayer.name}`)
+			Command.Clear(this.HighlightedPlayer);
 		}
-		SlashCommand(`/replaceitem entity ${player.name} slot.armor.chest 0 diamond_chestplate 1 0`)
+		Command.ReplaceItem(player, "slot.armor.chest", 0, "diamond_chestplate");
 		this.HighlightedPlayer = player
     }
 

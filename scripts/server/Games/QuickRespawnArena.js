@@ -8,12 +8,12 @@ QuickRespawn = class extends this.Scored {
 
 	BuildWorld() {
 		const platforms = ["arenas:nether", "arenas:oasis"]
-		SlashCommand(`/structure load ${Random.Arr(platforms)} -16 63 -16`)
+		Command.Structure(Random.Arr(platforms), -16, 63, -16);
 	}
 
 	RespawnExtension(player) {
-		SlashCommand(`/give ${player.name} diamond_sword`)
-		SlashCommand(`/spreadplayers 0 0 5 15 ${player.name}`)
+		Command.Give(player, "diamond_sword");
+		Command.SpreadPlayers(0, 0, 5, 15, [player]);
 	}
 
 	PlayerDiedExtension(player, killer) {

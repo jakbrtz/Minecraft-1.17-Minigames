@@ -7,13 +7,13 @@ GameController = {
 	Pause: false,
 
 	Setup: function () {
-		SlashCommand(`/gamerule doimmediaterespawn true`)
-		SlashCommand(`/gamerule dodaylightcycle false`)
-		SlashCommand(`/gamerule domobspawning false`)
-		SlashCommand(`/gamerule doweathercycle false`)
-		SlashCommand(`/time set noon`)
-		SlashCommand(`/setmaxplayers 30`)
-		SlashCommand(`/function debugging/off`)
+		SlashCommand(`/gamerule doimmediaterespawn true`);
+		SlashCommand(`/gamerule dodaylightcycle false`);
+		SlashCommand(`/gamerule domobspawning false`);
+		SlashCommand(`/gamerule doweathercycle false`);
+		SlashCommand(`/time set noon`);
+		SlashCommand(`/setmaxplayers 30`);
+		SlashCommand(`/function debugging/off`);
 	},
 
 	Update: function (allEntities) {
@@ -52,7 +52,7 @@ GameController = {
 			GetTags(entity).forEach(tag => {
 				if (tag.startsWith("JakesGames-")) {
 					const player = this.Players.get(entity.id)
-					SlashCommand(`/tag ${player.name} remove ${tag}`)
+					SlashCommand(`/tag ${player.name} remove ${tag}`);
 					tag = tag.substr(11)
 					if (tag === "togglePause") {
 						this.Pause = !this.Pause

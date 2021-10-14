@@ -138,7 +138,7 @@ For example in `Bridges` and `Thieves` a new base is constructed for each team w
 Place blocks to build the game. For example in Spleef:
 ```javascript
 	BuildWorld() {
-		SlashCommand(`/fill -15 64 -15 15 64 15 snow`)
+		Command.Fill(-15, 64, -15, 15, 64, 15, "snow");
 	}
 ```
 This function runs before teams and players are added to the game, so only build the parts of the world that are definitely in the game.
@@ -175,9 +175,8 @@ This is used in Bridges to give the player the block they just destroyed:
 
 ```javascript
 	PlayerDestroyedBlock(player, position) {
-		// This was set up in PlayerTriedToDestroyBlock
-		SlashCommand(`/give ${player.name} concrete 1 ${player.concreteColourBeingDestroyed} ${AdventureTags.CanPlaceOn()}`)
-		SlashCommand(`/kill @e[type=item,x=${position.x},y=${position.y},z=${position.z},rm=0,r=15]`)
+		Command.Give(player, "stained_hardened_clay", 1, `${player.terracottaColourBeingDestroyed} ${AdventureTags.CanPlaceOn()}`);
+		Command.RemoveItemEntity(position.x, position.y, position.z, 15);
 	}
 ```
 
@@ -220,9 +219,9 @@ This can be used to prevent a player from placing blocks, for example in Bridges
 ```javascript
 	PlayerPlacedBlock(player, position) {
 		this.teams.forEach(team => {
-			if (Coordinates.PositionsAreClose(position, team.goal, 1, false)) {
-				SlashCommand(`/msg ${player.name} You cannot build here`)
-				SlashCommand(`/setblock ${position.x} ${position.y} ${position.z} air`)
+			if (Coordinates.PositionsAreClose(position, team.goal, 1, false) || Coordinates.PositionsAreClose(position, team.spawn, 1, false)) {
+				Command.Tell(player, "You cannot build here");
+				Command.SetBlock(position.x, position.y, position.z, "air");
             }
 		})
 	}
@@ -253,9 +252,9 @@ What happens when the player respawns. For example in Spleef:
 
 ```javascript
 	RespawnExtension(player) {
-		SlashCommand(`/tp ${player.name} ${Random.Float(-13, 13)} 66 ${Random.Float(-13, 13)}`)
-		SlashCommand(`/give ${player.name} diamond_shovel`)
-		SlashCommand(`/give ${player.name} snowball 8`)
+		Command.Teleport(player, Random.Float(-13, 13), 66, Random.Float(-13, 13));
+		Command.Give(player, "diamond_shovel");
+		Command.Give(player, "snowball", 8);
 	}
 ```
 
@@ -272,11 +271,11 @@ For example in Bridges, we need to constantly check if a player is in an opponen
 
 		this.teams.forEach(team => {
 			this.players.forEach(player => {
-				if (player.team !== team && Coordinates.PositionsAreClose(player.position, team.goal, 2, false)) {
+				if (player.team !== team && player.deathTimer === -1 && Coordinates.PositionsAreClose(player.position, team.goal, 2, false)) {
 					if (!this.GameIsComplete) {
 						player.score++
 						this.UpdateScore()
-						SlashCommand("/title " + player.name + " title You earned a point");
+						Command.Title(player, "title", "You earned a point");
                     }
 					this.Respawn(player)
                 }
@@ -291,7 +290,7 @@ Another shorter example is BombsAway, where we summon a TNT randomly every 10 ti
 ```javascript
 	UpdateGameExtension() {
 		if (this.elapsedGameTime % 10 === 0) {
-			SlashCommand(`/summon tnt ${Random.Float(-15, 15)} 70 ${Random.Float(-15, 15)}`)
+			Command.Summon("tnt", Random.Float(-15, 15), 70, Random.Float(-15, 15));
         }
 	}
 ```

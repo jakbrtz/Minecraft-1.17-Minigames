@@ -8,13 +8,13 @@ DroppingBlocks = class extends this.Survival {
 		this.layerColours = [2, 1, 10, 4, 3]
 		this.trackedBlocks = new ArrayMultiDimensional([21, 5, 21], [-10, 0, -10])
 		for (var i = 0; i < this.layerColours.length; i++) {
-			SlashCommand(`/fill -10 ${this.LayerIndexToY(i)} -10 10 ${this.LayerIndexToY(i)} 10 concrete ${this.layerColours[i]}`)
+			Command.Fill(-10, this.LayerIndexToY(i), -10, 10, this.LayerIndexToY(i), 10, `concrete ${this.layerColours[i]}`);
 		}
 	}
 
 	RespawnExtension(player) {
-		SlashCommand(`/spreadplayers 0 0 3 6 ${player.name}`)
-		SlashCommand(`/effect ${player.name} regeneration 60 1 true`)
+		Command.SpreadPlayers(0, 0, 3, 6, [player]);
+		Command.Effect(player, "regeneration", 60);
 	}
 
 	UpdateGameExtension() {
@@ -66,7 +66,7 @@ DroppingBlocks = class extends this.Survival {
 			blocksToChange.forEach(position => {
 				if (this.trackedBlocks.IndicesInRange([position.x, this.YToLayerIndex(position.y), position.z])) {
 					if (this.trackedBlocks.Get([position.x, this.YToLayerIndex(position.y), position.z]) === undefined) {
-						SlashCommand(`/setblock ${position.x} ${position.y} ${position.z} stained_glass ${this.layerColours[this.YToLayerIndex(position.y)]}`)
+						Command.SetBlock(position.x, position.y, position.z, `stained_glass ${this.layerColours[this.YToLayerIndex(position.y)]}`);
 						this.trackedBlocks.Set([position.x, this.YToLayerIndex(position.y), position.z], { remainingTime: 20, position: position })
 					}
 				}
@@ -76,7 +76,7 @@ DroppingBlocks = class extends this.Survival {
 		this.trackedBlocks.forEach(trackedBlock => {
 			trackedBlock.remainingTime--
 			if (trackedBlock.remainingTime === 0) {
-				SlashCommand(`/setblock ${trackedBlock.position.x} ${trackedBlock.position.y} ${trackedBlock.position.z} air`)
+				Command.SetBlock(trackedBlock.position.x, trackedBlock.position.y, trackedBlock.position.z, "air");
 			}
 		})
 

@@ -55,12 +55,12 @@ Game = class {
         this.Respawn(player)
         if (this.ShowPreGameTimer && Math.random() < 0.01) {
             const name = Random.Arr(["Kobi", "Oscar"])
-            SlashCommand(`/title ${player.name} actionbar ⚠ ${name} will be banned for no reason`)
+            Command.Title(player, "actionbar", `⚠ ${name} will be banned for no reason`);
         }
         this.UpdateScore()
 
-        Teams.All.forEach(team => SlashCommand(`/tag ${player.name} remove team-${team.name}`))
-        SlashCommand(`/tag ${player.name} add team-${player.team.name}`)
+        Teams.All.forEach(team => Command.Tag(player, false, `team-${team.name}`));
+        Command.Tag(player, true, `team-${player.team.name}`);
         ClearNullifiedDamage(player.entity)
         if (this.PvPMode === 'teams') {
             NullifyDamageFromTag(player.entity, `team-${player.team.name}`)
@@ -117,7 +117,7 @@ Game = class {
     UpdateSetup() {
         this.players.forEach(player => {
             if (this.elapsedGameTime % 20 === 0 && this.ShowPreGameTimer) {
-                SlashCommand(`/title ${player.name} title ${-this.elapsedGameTime / 20}...`);
+                Command.Title(player, "title", `${-this.elapsedGameTime / 20}...`);
             }
             if (this.PlayerIsOutOfBounds(player) || this.PlayerHasLeftStartArea(player)) {
                 this.Respawn(player)
@@ -127,10 +127,10 @@ Game = class {
 
     StartGame() {
         if (this.ShowPreGameTimer) {
-            this.players.forEach(player => SlashCommand(`/title ${player.name} clear`))
+            this.players.forEach(player => Command.Title(player, "clear"));
         }
         this.players.forEach(player => {
-            SlashCommand(`/effect ${player.name} instant_health 1 15 true`)
+            Command.Effect(player, "instant_health", 1, 15);
         })
         while (this.teams.length < this.minimumNumberOfTeams) {
             this.AddTeam(Teams.Random())
@@ -174,16 +174,16 @@ Game = class {
     }
 
     Respawn(player) {
-        SlashCommand(`/clear ${player.name}`)
-        SlashCommand(`/effect ${player.name} clear`)
-        SlashCommand(`/effect ${player.name} instant_health 1 15 true`)
-        SlashCommand(`/effect ${player.name} saturation 1 15 true`)
-        SlashCommand(`/xp -2147483648L ${player.name}`)
-        SlashCommand(`/gamemode ${this.GameMode} ${player.name}`)
+        Command.Clear(player);
+        Command.EffectClear(player);
+        Command.Effect(player, "instant_health", 1, 15);
+        Command.Effect(player, "saturation", 1, 15);
+        Command.XP(-2147483648, player);
+        Command.GameMode(this.GameMode, player);
         player.deathTimer = -1
         this.RespawnExtension(player)
         if (this.GameIsComplete) {
-            SlashCommand(`/give ${player.name} potion`)
+            Command.Give(player, "potion");
         }
     }
 
@@ -202,10 +202,10 @@ Game = class {
     }
 
     AttemptRevivePlayer(player) {
-        SlashCommand(`/tag ${player.name} add JakesGames-recentlyRevived`)
+        Command.Tag(player, true, "JakesGames-recentlyRevived");
         player.AppearDead(this.DeathCoolDown / 20 + 10)
         if (this.GameIsComplete) {
-            SlashCommand(`/give ${player.name} potion`)
+            Command.Give(player, "potion");
         }
         this.AttemptRevivePlayerExtension(player)
     }
@@ -215,7 +215,7 @@ Game = class {
         if (this.DeathCoolDown === 0) {
             this.Respawn(player)
         } else {
-            SlashCommand(`/tp ${player.name} 0 80 0`)
+            Command.Teleport(player, 0, 80, 0);
         }
     }
 
@@ -257,7 +257,7 @@ Game = class {
     EndGame() {
         if (this.GameIsComplete) return
         this.GameIsComplete = true
-        this.players.forEach(player => SlashCommand(`/give ${player.name} potion`))
+        this.players.forEach(player => Command.Give(player, "potion"));
         this.EndGameExtension()
     }
 

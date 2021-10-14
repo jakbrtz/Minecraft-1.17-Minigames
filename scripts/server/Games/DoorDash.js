@@ -19,16 +19,16 @@ DoorDash = class extends this.Race {
 			const clearDoor2 = Random.Int(this.doors)
 			for (var door = 0; door < this.doors; door++) {
 				const structureName = (door === clearDoor1 || door === clearDoor2) ? "doordash:clear" : "doordash:blocked"
-				SlashCommand(`/structure load ${structureName} ${(door * this.width + this.xStart)} 64 ${row * this.depth + this.zStart}`)
+				Command.Structure(structureName, door * this.width + this.xStart, 64, row * this.depth + this.zStart);
 			}
 		}
-		SlashCommand(`/fill ${this.xStart} 64 ${this.zStart - 2 * this.depth} ${this.xStart + this.doors * this.width - 1} 64 ${this.zStart-1} concrete 1`)
-		SlashCommand(`/fill ${this.xStart} 64 ${this.rows * this.depth + this.zStart} ${this.xStart + this.doors * this.width - 1} 64 ${(this.rows + 2) * this.depth + this.zStart} concrete 1`)
+		Command.Fill(this.xStart, 64, this.zStart - 2 * this.depth, this.xStart + this.doors * this.width - 1, 64, this.zStart - 1, "concrete 1");
+		Command.Fill(this.xStart, 64, this.rows * this.depth + this.zStart, this.xStart + this.doors * this.width - 1, 64, (this.rows + 2) * this.depth + this.zStart, "concrete 1");
 	}
 
 	RespawnExtension(player) {
-		SlashCommand(`/tp ${player.name} ${this.xStart + ((this.doors / 2 + Math.random(-1, 1)) * this.width)} 66 ${this.zStart - this.depth} facing 0 66 0`)
-		SlashCommand(`/effect ${player.name} speed 1000000 5 true`)
+		Command.Teleport(player, this.xStart + ((this.doors / 2 + Math.random(-1, 1)) * this.width), 66, this.zStart - this.depth, 0, 66, 0);
+		Command.Effect(player, "speed", -1, 5);
 	}
 
 	PlayerIsOutOfBounds(player) {

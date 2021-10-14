@@ -2,7 +2,7 @@
 
 ### System.js
 
-This is the only file that uses Minecraft's API. It contains functions that the games can access (eg `SlashCommand`) but it never directly calls on the games. It only calls on GameController.
+This is the only file that uses Minecraft's API. It contains functions that is accessed by the GameController and helper functions (eg `SlashCommand`) but it should never directly communicate with games. 
 
 ### GameController.js
 

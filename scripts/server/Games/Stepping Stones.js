@@ -28,16 +28,16 @@ SteppingStones = class extends this.Race {
 		for (var row = 0; row < this.rows; row++) {
 			const z = this.zStart + row * (this.size + this.gap)
 			const y = 64 // - row
-			SlashCommand(`/fill ${this.xStart - 1} ${y-1} ${z-1} ${this.xStart + this.columns * (this.size + this.gap) - this.gap} ${y} ${z+2} ${this.GapMaterial()}`)
+			Command.Fill(this.xStart - 1, y - 1, z - 1, this.xStart + this.columns * (this.size + this.gap) - this.gap, y, z + 2, this.GapMaterial());
 			for (var column = 0; column < this.columns; column++) {
 				const x = this.xStart + column * (this.size + this.gap)
-				SlashCommand(`/fill ${x} ${y} ${z} ${x + this.size - 1} ${y} ${z + this.size - 1} ${this.UnknownMaterial(column, row)}`)
+				Command.Fill(x, y, z, x + this.size - 1, y, z + this.size - 1, this.UnknownMaterial(column, row));
 				this.trackedPlatforms.Set([column, row], { safe: false, nearbyPlayer: false, previousNearbyPlayer: false, position: { x: x, y: y, z: z } })
 			}
 		}
-		SlashCommand(`/fill ${this.xStart} 64 ${this.zStart - 10} ${this.xStart + this.columns * (this.size + this.gap) - 1 - this.gap} 64 ${this.zStart - 1} ${this.StartMaterial()}`)
+		Command.Fill(this.xStart, 64, this.zStart - 10, this.xStart + this.columns * (this.size + this.gap) - 1 - this.gap, 64, this.zStart - 1, this.StartMaterial());
 		const endHeight = 64 // - this.rows
-		SlashCommand(`/fill ${this.xStart} ${endHeight} ${this.rows * (this.size + this.gap) + this.zStart - this.gap} ${this.xStart + this.columns * (this.size + this.gap) - 1 - this.gap}  ${endHeight} ${(this.rows + 2) * (this.size + this.gap) + this.zStart} ${this.StartMaterial()}`)
+		Command.Fill(this.xStart, endHeight, this.rows * (this.size + this.gap) + this.zStart - this.gap, this.xStart + this.columns * (this.size + this.gap) - 1 - this.gap, endHeight, (this.rows + 2) * (this.size + this.gap) + this.zStart, this.StartMaterial());
 
 		let headingRight = true
 		let horizontalDistance = 0
@@ -66,7 +66,7 @@ SteppingStones = class extends this.Race {
 	}
 
 	RespawnExtension(player) {
-		SlashCommand(`/tp ${player.name} ${this.xStart + ((this.columns / 2 + Math.random(-1, 1)) * (this.size + this.gap))} 66 ${this.zStart - 5} facing 0 66 0`)
+		Command.Teleport(player, this.xStart + ((this.columns / 2 + Math.random(-1, 1)) * (this.size + this.gap)), 66, this.zStart - 5, 0, 66, 0);
 	}
 
 	UpdateGameExtension() {
@@ -88,9 +88,9 @@ SteppingStones = class extends this.Race {
 			if (trackedPlatform.previousNearbyPlayer !== trackedPlatform.nearbyPlayer) {
 				if (trackedPlatform.nearbyPlayer) {
 					const material = trackedPlatform.safe ? this.SafeMaterial(column, row) : this.DangerMaterial(column, row)
-					SlashCommand(`/fill ${trackedPlatform.position.x} ${trackedPlatform.position.y} ${trackedPlatform.position.z} ${trackedPlatform.position.x + this.size - 1} ${trackedPlatform.position.y} ${trackedPlatform.position.z + this.size - 1}  ${material}`)
+					Command.Fill(trackedPlatform.position.x, trackedPlatform.position.y, trackedPlatform.position.z, trackedPlatform.position.x + this.size - 1, trackedPlatform.position.y, trackedPlatform.position.z + this.size - 1, material);
 				} else if (this.HideMaterialOnceDone(trackedPlatform.safe)) {
-					SlashCommand(`/fill ${trackedPlatform.position.x} ${trackedPlatform.position.y} ${trackedPlatform.position.z} ${trackedPlatform.position.x + this.size - 1} ${trackedPlatform.position.y} ${trackedPlatform.position.z + this.size - 1} ${this.UnknownMaterial(column, row)}`)
+					Command.Fill(trackedPlatform.position.x, trackedPlatform.position.y, trackedPlatform.position.z, trackedPlatform.position.x + this.size - 1, trackedPlatform.position.y, trackedPlatform.position.z + this.size - 1, this.UnknownMaterial(column, row));
                 }
             }
 		})

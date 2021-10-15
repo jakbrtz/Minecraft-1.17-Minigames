@@ -10,7 +10,7 @@ Maze = class extends this.Race {
 
 		const mazeNodes = new ArrayMultiDimensional(this.mazeSize)
 
-		var current = [this.mazeSize[0] - 1, 0, this.mazeSize[2] - 1]
+		let current = [this.mazeSize[0] - 1, 0, this.mazeSize[2] - 1];
 		mazeNodes.Set(current, [])
 		const stack = [current]
 
@@ -40,9 +40,9 @@ Maze = class extends this.Race {
 			}
 		}
 
-		for (var x = 0; x <= mazeNodes.sizes[0]; x++) {
-			for (var y = 0; y <= mazeNodes.sizes[1]; y++) {
-				for (var z = 0; z <= mazeNodes.sizes[2]; z++) {
+		for (let x = 0; x <= mazeNodes.sizes[0]; x++) {
+			for (let y = 0; y <= mazeNodes.sizes[1]; y++) {
+				for (let z = 0; z <= mazeNodes.sizes[2]; z++) {
 					current = [x, y, z]
 
 					const currentInRange = mazeNodes.IndicesInRange(current)

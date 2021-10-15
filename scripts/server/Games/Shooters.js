@@ -9,12 +9,12 @@ Shooters = class extends this.Survival {
 		Command.Structure("shooters:barracks", -9, 64, -16, 0);
 		Command.Structure("shooters:barracks", -9, 64, 14, 180);
 
-		for (var i = -9; i <= 9; i += 6) {
+		for (let i = -9; i <= 9; i += 6) {
 			Command.Fill(i, 64, -9, i, 64, 9, "bone_block");
 			Command.Fill(-9, 64, i, 9, 64, i, "bone_block");
 		}
 
-		for (var i = -6; i <= 6; i += 6) {
+		for (let i = -6; i <= 6; i += 6) {
 			Command.Summon("skeleton", i, 65, 15);
 			Command.Summon("skeleton", i, 65, -15);
         }

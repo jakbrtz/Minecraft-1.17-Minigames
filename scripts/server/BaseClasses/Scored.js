@@ -60,7 +60,7 @@
 				bestElements.push(element)
             }
 		})
-		var msg
+		let msg;
 		if (bestElements.length === 0) {
 			msg = "No one won"
 		} else if (bestElements.length === 1) {

@@ -19,7 +19,7 @@ this.Random = {
     },
 
     Shuffle: function (arr) {
-        for (var i = 1; i < arr.length; i++) {
+        for (let i = 1; i < arr.length; i++) {
             const j = Random.Int(i)
             const tmp = arr[j]
             arr[j] = arr[i]

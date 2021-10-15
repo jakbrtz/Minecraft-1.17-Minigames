@@ -25,11 +25,11 @@ SteppingStones = class extends this.Race {
 		this.xStart = -Math.floor(this.columns * (this.size + this.gap) / 2)
 		this.zStart = -Math.floor(this.rows * (this.size + this.gap) / 2)
 
-		for (var row = 0; row < this.rows; row++) {
+		for (let row = 0; row < this.rows; row++) {
 			const z = this.zStart + row * (this.size + this.gap)
 			const y = 64 // - row
 			Command.Fill(this.xStart - 1, y - 1, z - 1, this.xStart + this.columns * (this.size + this.gap) - this.gap, y, z + 2, this.GapMaterial());
-			for (var column = 0; column < this.columns; column++) {
+			for (let column = 0; column < this.columns; column++) {
 				const x = this.xStart + column * (this.size + this.gap)
 				Command.Fill(x, y, z, x + this.size - 1, y, z + this.size - 1, this.UnknownMaterial(column, row));
 				this.trackedPlatforms.Set([column, row], { safe: false, nearbyPlayer: false, previousNearbyPlayer: false, position: { x: x, y: y, z: z } })
@@ -42,7 +42,7 @@ SteppingStones = class extends this.Race {
 		let headingRight = true
 		let horizontalDistance = 0
 		let x = Random.Int(this.columns)
-		for (var row = 0; row < this.rows; row++) {
+		for (let row = 0; row < this.rows; row++) {
 			this.trackedPlatforms.Get([x, row]).safe = true
 			const AllowedRight = (x < this.columns - 1) && (headingRight || horizontalDistance < 2)
 			const AllowedLeft = (x > 0) && (!headingRight || horizontalDistance < 2)

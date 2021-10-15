@@ -12,7 +12,7 @@ KingOfTheHill = class extends this.Scored {
 
 	BuildWorld() {
 		Command.Fill(-20, 64, -20, 20, 64, 20, "grass");
-		for (var i = 0; i < this.size; i++) {
+		for (let i = 0; i < this.size; i++) {
 			Command.Fill(i - this.size, 65 + i, i - this.size, this.size - i, 65 + i, this.size - i, "stone");
 			Command.Fill(i - this.size, 65 + i, i - this.size, this.size - i, 65 + i, i - this.size, "normal_stone_stairs 2");
 			Command.Fill(i - this.size, 65 + i, i - this.size, i - this.size, 65 + i, this.size - i, "normal_stone_stairs 0");
@@ -23,8 +23,8 @@ KingOfTheHill = class extends this.Scored {
 	}
 
 	RespawnExtension(player) {
-		var x
-		var z
+		let x;
+		let z;
 		do {
 			x = Random.Float(-15, 15)
 			z = Random.Float(-15, 15)

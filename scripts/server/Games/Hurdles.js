@@ -13,7 +13,7 @@ Hurdles = class extends this.Race {
 		this.distanceBetweenHurdles = 8
 
 		Command.Fill(this.xStart, 64, this.zStart, this.xEnd, 64, this.zEnd, "magenta_glazed_terracotta 2");
-		for (var hurdle = this.zStart; hurdle <= this.zEnd; hurdle += this.distanceBetweenHurdles) {
+		for (let hurdle = this.zStart; hurdle <= this.zEnd; hurdle += this.distanceBetweenHurdles) {
 			Command.Fill(this.xStart, 65, hurdle, this.xEnd, 67, hurdle, "purpur_block");
 		}
 		Command.Fill(this.xStart, 64, this.zStart - 10, this.xEnd, 64, this.zStart - 1, "concrete 1");

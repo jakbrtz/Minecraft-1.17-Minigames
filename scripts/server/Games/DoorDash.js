@@ -14,10 +14,10 @@ DoorDash = class extends this.Race {
 		this.xStart = -this.doors * this.width / 2
 		this.zStart = -this.rows * this.depth / 2
 
-		for (var row = 0; row < this.rows; row++) {
+		for (let row = 0; row < this.rows; row++) {
 			const clearDoor1 = Random.Int(this.doors)
 			const clearDoor2 = Random.Int(this.doors)
-			for (var door = 0; door < this.doors; door++) {
+			for (let door = 0; door < this.doors; door++) {
 				const structureName = (door === clearDoor1 || door === clearDoor2) ? "doordash:clear" : "doordash:blocked"
 				Command.Structure(structureName, door * this.width + this.xStart, 64, row * this.depth + this.zStart);
 			}

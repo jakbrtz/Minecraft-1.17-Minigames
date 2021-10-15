@@ -3,7 +3,7 @@ this.WorldBuilding = {
     Clear: function () {
         Command.Fill(-128, 3, -128,  -1, 3, 127, "grass");
         Command.Fill(   0, 3, -128, 127, 3, 127, "grass");
-        for (var layer = 4; layer < 128; layer++) {
+        for (let layer = 4; layer < 128; layer++) {
             Command.Fill(-128, layer, -128,  -1, layer, 127, "air");
             Command.Fill(   0, layer, -128, 127, layer, 127, "air");
         }
@@ -11,8 +11,8 @@ this.WorldBuilding = {
     },
 
     Sphere: function (center, radius, block) {
-        for (var x = 0; x <= radius; x++) {
-            for (var y = 0; y <= radius; y++) {
+        for (let x = 0; x <= radius; x++) {
+            for (let y = 0; y <= radius; y++) {
                 const z = Math.floor(Math.sqrt(radius ** 2 - x ** 2 - y ** 2))
                 if (((x + 1) ** 2 + y ** 2 + z ** 2 <= radius ** 2) ||
                     (x ** 2 + (y + 1) ** 2 + z ** 2 <= radius ** 2)) {
@@ -24,7 +24,7 @@ this.WorldBuilding = {
     },
 
     Circle: function (center, radius, block) {
-        for (var x = 0; x < radius; x++) {
+        for (let x = 0; x < radius; x++) {
             const z = Math.floor(Math.sqrt(radius ** 2 - x ** 2))
             if (((x + 1) ** 2 + z ** 2 <= radius ** 2)) {
                 continue
@@ -34,8 +34,8 @@ this.WorldBuilding = {
     },
 
     BottomSphere: function (center, radius, block) {
-        for (var x = 0; x <= radius; x++) {
-            for (var y = 0; y <= radius; y++) {
+        for (let x = 0; x <= radius; x++) {
+            for (let y = 0; y <= radius; y++) {
                 const z = Math.floor(Math.sqrt(radius ** 2 - x ** 2 - y ** 2))
                 if (((x + 1) ** 2 + y ** 2 + z ** 2 <= radius ** 2) ||
                     (x ** 2 + (y + 1) ** 2 + z ** 2 <= radius ** 2)) {

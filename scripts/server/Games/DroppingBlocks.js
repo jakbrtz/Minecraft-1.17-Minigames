@@ -7,7 +7,7 @@ DroppingBlocks = class extends this.Survival {
 	BuildWorld() {
 		this.layerColours = [2, 1, 10, 4, 3]
 		this.trackedBlocks = new ArrayMultiDimensional([21, 5, 21], [-10, 0, -10])
-		for (var i = 0; i < this.layerColours.length; i++) {
+		for (let i = 0; i < this.layerColours.length; i++) {
 			Command.Fill(-10, this.LayerIndexToY(i), -10, 10, this.LayerIndexToY(i), 10, `concrete ${this.layerColours[i]}`);
 		}
 	}

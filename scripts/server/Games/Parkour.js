@@ -15,7 +15,7 @@ Parkour = class extends this.Race {
 	BuildWorld() {
 
 		let order = []
-		for (var i = 0; i < 9; i++) {
+		for (let i = 0; i < 9; i++) {
 			order.push(`parkour:parkour${i}`)
 		}
 		Random.Shuffle(order)

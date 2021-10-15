@@ -11,7 +11,7 @@ this.Scoreboard = {
         this.Destroy()
         SlashCommand(`/scoreboard objectives add showtouser dummy "${title}"`)
         SlashCommand(`/scoreboard objectives setdisplay sidebar showtouser ${ascending ? "ascending" : "descending"}`)
-        for (var i = 0; i < 16 && i < lines.length; i++) {
+        for (let i = 0; i < 16 && i < lines.length; i++) {
             const line = lines[i]
             const colourCharacter = (i < 10) ? i : String.fromCharCode(97 + i - 10)
             SlashCommand(`/scoreboard players set "\u00a7${colourCharacter}\u00a7r ${line.text || line}  " showtouser ${line.value || 0}`)

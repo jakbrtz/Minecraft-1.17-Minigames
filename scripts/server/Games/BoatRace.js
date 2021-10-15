@@ -6,10 +6,10 @@ BoatRace = class extends this.Race {
 
 	BuildWorld() {
 		Command.Structure("boatrace:boatrace", -30, 60, -13);
-		for (var x = -25; x < 25; x++) {
-			for (var i = 0; i < 3; i++) {
-				var z = Random.Int(-12, 12)
-				var y = Random.Int(61, 67)
+		for (let x = -25; x < 25; x++) {
+			for (let i = 0; i < 3; i++) {
+				let z = Random.Int(-12, 12);
+				let y = Random.Int(61, 67);
 				Command.Fill(x, 61, z, x, y, z, "packed_ice");
 			}
 		}

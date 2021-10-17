@@ -7,13 +7,13 @@ GameController = {
 	Pause: false,
 
 	Setup: function () {
-		SlashCommand(`/gamerule doimmediaterespawn true`);
-		SlashCommand(`/gamerule dodaylightcycle false`);
-		SlashCommand(`/gamerule domobspawning false`);
-		SlashCommand(`/gamerule doweathercycle false`);
-		SlashCommand(`/time set noon`);
-		SlashCommand(`/setmaxplayers 30`);
-		SlashCommand(`/function debugging/off`);
+		System.SlashCommand(`/gamerule doimmediaterespawn true`);
+		System.SlashCommand(`/gamerule dodaylightcycle false`);
+		System.SlashCommand(`/gamerule domobspawning false`);
+		System.SlashCommand(`/gamerule doweathercycle false`);
+		System.SlashCommand(`/time set noon`);
+		System.SlashCommand(`/setmaxplayers 30`);
+		System.SlashCommand(`/function debugging/off`);
 	},
 
 	Update: function (allEntities) {
@@ -35,7 +35,7 @@ GameController = {
 				this.Players.set(entity.id, player);
 			}
 			player.entity = entity;
-			player.position = Find(entity);
+			player.position = System.Find(entity);
 		})
 
 		// delete players that have left
@@ -50,10 +50,10 @@ GameController = {
 
 		// check if any player has a tag
 		allEntities.forEach(entity => {
-			GetTags(entity).forEach(tag => {
+			System.GetTags(entity).forEach(tag => {
 				if (tag.startsWith("JakesGames-")) {
 					const player = this.Players.get(entity.id);
-					SlashCommand(`/tag ${player.name} remove ${tag}`);
+					System.SlashCommand(`/tag ${player.name} remove ${tag}`);
 					tag = tag.substr(11);
 					if (tag === "togglePause") {
 						this.Pause = !this.Pause;

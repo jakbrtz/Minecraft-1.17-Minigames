@@ -61,11 +61,11 @@ Game = class {
 
         Teams.All.forEach(team => Command.Tag(player, false, `team-${team.name}`));
         Command.Tag(player, true, `team-${player.team.name}`);
-        ClearNullifiedDamage(player.entity);
+        System.ClearNullifiedDamage(player.entity);
         if (this.PvPMode === 'teams') {
-            NullifyDamageFromTag(player.entity, `team-${player.team.name}`);
+            System.NullifyDamageFromTag(player.entity, `team-${player.team.name}`);
         } else if (this.PvPMode === 'off') {
-            NullifyDamageFromOtherPlayers(player.entity);
+            System.NullifyDamageFromOtherPlayers(player.entity);
         }
     }
 

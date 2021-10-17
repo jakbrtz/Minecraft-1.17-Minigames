@@ -7,7 +7,7 @@ this.WorldBuilding = {
             Command.Fill(-128, layer, -128,  -1, layer, 127, "air");
             Command.Fill(   0, layer, -128, 127, layer, 127, "air");
         }
-        SlashCommand(`/kill @e[type=!player]`);
+        System.SlashCommand(`/kill @e[type=!player]`);
     },
 
     Sphere: function (center, radius, block) {

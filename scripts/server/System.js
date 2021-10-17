@@ -53,70 +53,74 @@ function entity_attack(eventData) {
 	GameController.EntityAttack(eventData.data.entity, eventData.data.target);
 }
 
-this.SlashCommand = function (command) {
-	system.executeCommand(command, commandResultData => {
-		console.log(JSON.stringify(commandResultData, null, "    "));
-	});
-}
+this.System = {
 
-this.Find = function (entity) {
-	return system.getComponent(entity, "minecraft:position").data;
-}
+	SlashCommand: function (command) {
+		system.executeCommand(command, commandResultData => {
+			console.log(JSON.stringify(commandResultData, null, "    "));
+		});
+	},
 
-this.GetName = function (entity) {
-	if (entity.__type__ === "item_entity")
-		return entity.__identifier__;
-	return system.getComponent(entity, "minecraft:nameable").data.name;
-}
+	Find: function (entity) {
+		return system.getComponent(entity, "minecraft:position").data;
+	},
 
-this.GetBlockData = function (entity, position) {
-	const world = system.getComponent(entity, "minecraft:tick_world");
-	const block = system.getBlock(world.data.ticking_area, position);
-	if (block) {
-		return system.getComponent(block, "minecraft:blockstate").data;
+	GetName: function (entity) {
+		if (entity.__type__ === "item_entity")
+			return entity.__identifier__;
+		return system.getComponent(entity, "minecraft:nameable").data.name;
+	},
+
+	GetBlockData: function (entity, position) {
+		const world = system.getComponent(entity, "minecraft:tick_world");
+		const block = system.getBlock(world.data.ticking_area, position);
+		if (block) {
+			return system.getComponent(block, "minecraft:blockstate").data;
+		}
+	},
+
+	GetTags: function (entity) {
+		return system.getComponent(entity, "minecraft:tag").data;
+	},
+
+	NullifyDamageFromTag: function (entity, tag) {
+		let damageSensorComponent = system.getComponent(entity, "minecraft:damage_sensor");
+		if (!damageSensorComponent) {
+			damageSensorComponent = system.createComponent(entity, "minecraft:damage_sensor");
+		}
+		damageSensorComponent.data.push({
+			"on_damage": {
+				"filters": {
+					"test": "has_tag",
+					"subject": "other",
+					"value": tag
+				}
+			},
+			"deals_damage": false
+		});
+		system.applyComponentChanges(entity, damageSensorComponent);
+	},
+
+	NullifyDamageFromOtherPlayers: function (entity) {
+		let damageSensorComponent = system.getComponent(entity, "minecraft:damage_sensor");
+		if (!damageSensorComponent) {
+			damageSensorComponent = system.createComponent(entity, "minecraft:damage_sensor");
+		}
+		damageSensorComponent.data.push({
+			"on_damage": {
+				"filters": {
+					"test": "is_family",
+					"subject": "other",
+					"value": "player"
+				}
+			},
+			"deals_damage": false
+		});
+		system.applyComponentChanges(entity, damageSensorComponent);
+	},
+
+	ClearNullifiedDamage: function (entity) {
+		system.applyComponentChanges(entity, system.createComponent(entity, "minecraft:damage_sensor"));
 	}
-}
 
-this.GetTags = function (entity) {
-	return system.getComponent(entity, "minecraft:tag").data;
-}
-
-this.NullifyDamageFromTag = function (entity, tag) {
-	let damageSensorComponent = system.getComponent(entity, "minecraft:damage_sensor");
-	if (!damageSensorComponent) {
-		damageSensorComponent = system.createComponent(entity, "minecraft:damage_sensor");
-	}
-	damageSensorComponent.data.push({
-		"on_damage": {
-			"filters": {
-				"test": "has_tag",
-				"subject": "other",
-				"value": tag
-			}
-		},
-		"deals_damage": false
-	});
-	system.applyComponentChanges(entity, damageSensorComponent);
-}
-
-this.NullifyDamageFromOtherPlayers = function (entity) {
-	let damageSensorComponent = system.getComponent(entity, "minecraft:damage_sensor");
-	if (!damageSensorComponent) {
-		damageSensorComponent = system.createComponent(entity, "minecraft:damage_sensor");
-	}
-	damageSensorComponent.data.push({
-		"on_damage": {
-			"filters": {
-				"test": "is_family",
-				"subject": "other",
-				"value": "player"
-			}
-		},
-		"deals_damage": false
-	});
-	system.applyComponentChanges(entity, damageSensorComponent);
-}
-
-this.ClearNullifiedDamage = function (entity) {
-	system.applyComponentChanges(entity, system.createComponent(entity, "minecraft:damage_sensor"));
 }

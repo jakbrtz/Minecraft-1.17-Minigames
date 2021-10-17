@@ -235,7 +235,7 @@ This is used in Bridges to get information about the block the player is destroy
 
 ```javascript
 	PlayerTriedToDestroyBlock(player, position) {
-		const block = GetBlockData(player.entity, position);
+		const block = System.GetBlockData(player.entity, position);
 		player.concreteColourBeingDestroyed = Colours.NameToNumber(block.color);
 		// This is used in PlayerDestroyedBlock
 	}

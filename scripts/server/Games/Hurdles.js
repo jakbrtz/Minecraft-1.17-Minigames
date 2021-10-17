@@ -1,16 +1,16 @@
 Hurdles = class extends this.Race {
 
 	constructor() {
-		super()
+		super();
 	}
 
 	BuildWorld() {
 
-		this.xStart = -12
-		this.zStart = -32
-		this.xEnd = 12
-		this.zEnd = 32
-		this.distanceBetweenHurdles = 8
+		this.xStart = -12;
+		this.zStart = -32;
+		this.xEnd = 12;
+		this.zEnd = 32;
+		this.distanceBetweenHurdles = 8;
 
 		Command.Fill(this.xStart, 64, this.zStart, this.xEnd, 64, this.zEnd, "magenta_glazed_terracotta 2");
 		for (let hurdle = this.zStart; hurdle <= this.zEnd; hurdle += this.distanceBetweenHurdles) {
@@ -27,14 +27,14 @@ Hurdles = class extends this.Race {
 	}
 
 	PlayerIsOutOfBounds(player) {
-		return player.position.y < 60
+		return player.position.y < 60;
 	}
 
 	PlayerHasLeftStartArea(player) {
-		return player.position.z >= this.zStart
+		return player.position.z >= this.zStart;
 	}
 
 	PlayerIsFinished(player) {
-		return player.position.z >= this.zEnd
+		return player.position.z >= this.zEnd;
 	}
 }

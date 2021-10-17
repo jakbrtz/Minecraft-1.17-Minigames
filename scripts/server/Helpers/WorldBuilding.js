@@ -7,7 +7,7 @@ this.WorldBuilding = {
             Command.Fill(-128, layer, -128,  -1, layer, 127, "air");
             Command.Fill(   0, layer, -128, 127, layer, 127, "air");
         }
-        SlashCommand(`/kill @e[type=!player]`)
+        SlashCommand(`/kill @e[type=!player]`);
     },
 
     Sphere: function (center, radius, block) {
@@ -27,7 +27,7 @@ this.WorldBuilding = {
         for (let x = 0; x < radius; x++) {
             const z = Math.floor(Math.sqrt(radius ** 2 - x ** 2))
             if (((x + 1) ** 2 + z ** 2 <= radius ** 2)) {
-                continue
+                continue;
             }
             Command.Fill(center.x - x, center.y, center.z - z, center.x + x, center.y, center.z + z, block || "stone");
         }

@@ -1,7 +1,7 @@
 Lobby = class extends this.Selection {
 
 	constructor() {
-		super()
+		super();
 	}
 
 	GetChoices() {
@@ -25,14 +25,14 @@ Lobby = class extends this.Selection {
 				{ x: -4, z: 8, team: Teams.Get("Purple") },
 				{ x: 4, z: 8, team: Teams.Get("Yellow") },
 			]
-		}
+		};
 
 		const gamePicker = {
-			construct: game => Command.Structure(`lobby:${game.structure||"default"}`, game.x - 4, 4, game.z - 4, game.angle),
+			construct: game => Command.Structure(`lobby:${game.structure || "default"}`, game.x - 4, 4, game.z - 4, game.angle),
 			radius: 3,
 			onSelect: game => GameController.ChangeGame(game.game), // todo: use the NextGame() function
 			options: []
-		}
+		};
 
 		const allGames = [
 			{ structure: "arena", game: new QuickRespawn(false) },
@@ -55,7 +55,7 @@ Lobby = class extends this.Selection {
 			{ structure: "maze", game: new Maze() },
 			{ structure: "hurdles", game: new Hurdles() },
 			{ structure: "boatrace", game: new BoatRace() },
-		]
+		];
 
 		allGames.forEach((option, i) => {
 			const Round2dp = num => Math.round(num * 100) / 100
@@ -65,14 +65,14 @@ Lobby = class extends this.Selection {
 			option.z = Round2dp(radius * Math.cos(angle))
 			option.angle = ((Math.round(angle * 2 / Math.PI) + 4) % 4) * 90
 			gamePicker.options.push(option)
-		})
+		});
 
-		return [teamSelector, gamePicker]
+		return [teamSelector, gamePicker];
 	}
 
 	BuildWorld() {
-		this.serverName = Random.Arr(["NA", "NA", "EU", "EU", "OCE"])
-		this.serverNumber = Random.Int(1, 100)
+		this.serverName = Random.Arr(["NA", "NA", "EU", "EU", "OCE"]);
+		this.serverNumber = Random.Int(1, 100);
 		Command.Structure("lobby:Spawn", -16, 4, -16);
 	}
 
@@ -81,14 +81,14 @@ Lobby = class extends this.Selection {
 	}
 
 	UpdateScore() {
-		const lines = []
+		const lines = [];
 		this.players.forEach(player => {
-			lines.push(`${Colours.NumberToCharacter(player.team.colour)}${player.name}\u00a7r`)
+			lines.push(`${Colours.NumberToCharacter(player.team.colour)}${player.name}\u00a7r`);
 		})
 		if (this.serverNumber < 16) {
-			lines.push("")
-			lines.push(`${this.serverName} #${this.serverNumber}`)
+			lines.push("");
+			lines.push(`${this.serverName} #${this.serverNumber}`);
 		}
-		Scoreboard.Create("Teams", lines)
+		Scoreboard.Create("Teams", lines);
 	}
 }

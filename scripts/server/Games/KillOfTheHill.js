@@ -1,13 +1,13 @@
 KingOfTheHill = class extends this.Scored {
 
 	constructor() {
-		super()
-		this.GroupScoreByTeam = false
-		this.PvPMode = `on`
-		this.DeathCoolDown = 5 * 20
+		super();
+		this.GroupScoreByTeam = false;
+		this.PvPMode = `on`;
+		this.DeathCoolDown = 5 * 20;
 
-		this.HighlightedPlayer = null
-		this.size = 5
+		this.HighlightedPlayer = null;
+		this.size = 5;
 	}
 
 	BuildWorld() {
@@ -26,29 +26,29 @@ KingOfTheHill = class extends this.Scored {
 		let x;
 		let z;
 		do {
-			x = Random.Float(-15, 15)
-			z = Random.Float(-15, 15)
-		} while (this.PositionOnHill({ x: x, z: z }))
+			x = Random.Float(-15, 15);
+			z = Random.Float(-15, 15);
+		} while (this.PositionOnHill({ x: x, z: z }));
 		Command.Teleport(player, x, 66, z);
 	}
 
 	UpdateGameExtension() {
-		const previousHighlightedPlayer = this.HighlightedPlayer
-		this.HighlightedPlayer = this.players.filter(player => player.deathTimer < 0 && this.PositionOnHill(player.position)).sort((a, b) => b.position.y - a.position.y)[0] || null
+		const previousHighlightedPlayer = this.HighlightedPlayer;
+		this.HighlightedPlayer = this.players.filter(player => player.deathTimer < 0 && this.PositionOnHill(player.position)).sort((a, b) => b.position.y - a.position.y)[0] || null;
 		if (!this.GameIsComplete && this.elapsedGameTime % 20 === 0 && this.HighlightedPlayer !== null) {
-			this.HighlightedPlayer.score++
+			this.HighlightedPlayer.score++;
 		}
 		if (previousHighlightedPlayer !== this.HighlightedPlayer) {
-			this.UpdateScore()
+			this.UpdateScore();
 		}
 	}
 
 	PlayerHasLeftStartArea(player) {
-		return this.PositionOnHill(player.position)
+		return this.PositionOnHill(player.position);
 	}
 
 	PositionOnHill(position) {
-		return Coordinates.PositionsAreClose(position, { x: 0, z: 0 }, this.size + 1, true)
+		return Coordinates.PositionsAreClose(position, { x: 0, z: 0 }, this.size + 1, true);
     }
 
 	MakeListOfScores() {
@@ -56,7 +56,7 @@ KingOfTheHill = class extends this.Scored {
 			return {
 				name: (player === this.HighlightedPlayer ? '\u00a7c' : '') + player.name,
 				score: player.score
-			}
+			};
 		})
 	}
 }

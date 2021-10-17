@@ -1,8 +1,8 @@
 BridgesBaseSelection = class extends this.Selection {
 
 	constructor() {
-		super()
-		this.GameMode = 'creative'
+		super();
+		this.GameMode = 'creative';
 	}
 
 	GetChoices() {
@@ -24,7 +24,7 @@ BridgesBaseSelection = class extends this.Selection {
 					{ x: -32, z: -32, structure: "bridges:Mill" },
 				]
 			}
-		]
+		];
 	}
 
 	BuildWorld() {
@@ -36,10 +36,10 @@ BridgesBaseSelection = class extends this.Selection {
 	}
 
 	IsGameInProgress() {
-		return false
+		return false;
 	}
 
 	NextGame() {
-		return new Bridges()
+		return new Bridges();
     }
 }

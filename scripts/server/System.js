@@ -1,6 +1,6 @@
-const system = server.registerSystem(0, 0)
+const system = server.registerSystem(0, 0);
 
-let simple_query = null
+let simple_query = null;
 
 system.initialize = function () {
 
@@ -11,7 +11,7 @@ system.initialize = function () {
 	this.listenForEvent("minecraft:player_placed_block", entity_placed_block);
 	this.listenForEvent("minecraft:block_destruction_started", block_destruction_started);
 	this.listenForEvent("minecraft:player_destroyed_block", player_destroyed_block);
-	this.listenForEvent("minecraft:entity_attack", entity_attack)
+	this.listenForEvent("minecraft:entity_attack", entity_attack);
 
 	const loggerData = system.createEventData("minecraft:script_logger_config");
 	loggerData.data.log_information = true;
@@ -22,63 +22,63 @@ system.initialize = function () {
 
 
 system.update = function () {
-	const allPlayers = system.getEntitiesFromQuery(simple_query).filter(entity => entity.__identifier__ === "minecraft:player")
-	GameController.Update(allPlayers)
+	const allPlayers = system.getEntitiesFromQuery(simple_query).filter(entity => entity.__identifier__ === "minecraft:player");
+	GameController.Update(allPlayers);
 }
 
 system.shutdown = function () {
 }
 
 function entity_death(eventData) {
-	GameController.EntityDied(eventData.data.entity, eventData.data.killer)
+	GameController.EntityDied(eventData.data.entity, eventData.data.killer);
 }
 
 function entity_use_item(eventData) {
-	GameController.UseItem(eventData.data.entity, eventData.data.item_stack.item)
+	GameController.UseItem(eventData.data.entity, eventData.data.item_stack.item);
 }
 
 function entity_placed_block(eventData) {
-	GameController.EntityPlacedBlock(eventData.data.player, eventData.data.block_position)
+	GameController.EntityPlacedBlock(eventData.data.player, eventData.data.block_position);
 }
 
 function block_destruction_started(eventData) {
-	GameController.EntityTriedToDestroyBlock(eventData.data.player, eventData.data.block_position)
+	GameController.EntityTriedToDestroyBlock(eventData.data.player, eventData.data.block_position);
 }
 
 function player_destroyed_block(eventData) {
-	GameController.EntityDestroyedBlock(eventData.data.player, eventData.data.block_position)
+	GameController.EntityDestroyedBlock(eventData.data.player, eventData.data.block_position);
 }
 
 function entity_attack(eventData) {
-	GameController.EntityAttack(eventData.data.entity, eventData.data.target)
+	GameController.EntityAttack(eventData.data.entity, eventData.data.target);
 }
 
 this.SlashCommand = function (command) {
 	system.executeCommand(command, commandResultData => {
-		console.log(JSON.stringify(commandResultData, null, "    "))
+		console.log(JSON.stringify(commandResultData, null, "    "));
 	});
 }
 
 this.Find = function (entity) {
-	return system.getComponent(entity, "minecraft:position").data
+	return system.getComponent(entity, "minecraft:position").data;
 }
 
 this.GetName = function (entity) {
 	if (entity.__type__ === "item_entity")
-		return entity.__identifier__
-	return system.getComponent(entity, "minecraft:nameable").data.name
+		return entity.__identifier__;
+	return system.getComponent(entity, "minecraft:nameable").data.name;
 }
 
 this.GetBlockData = function (entity, position) {
 	const world = system.getComponent(entity, "minecraft:tick_world");
 	const block = system.getBlock(world.data.ticking_area, position);
 	if (block) {
-		return system.getComponent(block, "minecraft:blockstate").data
+		return system.getComponent(block, "minecraft:blockstate").data;
 	}
 }
 
 this.GetTags = function (entity) {
-	return system.getComponent(entity, "minecraft:tag").data
+	return system.getComponent(entity, "minecraft:tag").data;
 }
 
 this.NullifyDamageFromTag = function (entity, tag) {
@@ -95,7 +95,7 @@ this.NullifyDamageFromTag = function (entity, tag) {
 			}
 		},
 		"deals_damage": false
-	})
+	});
 	system.applyComponentChanges(entity, damageSensorComponent);
 }
 
@@ -113,7 +113,7 @@ this.NullifyDamageFromOtherPlayers = function (entity) {
 			}
 		},
 		"deals_damage": false
-	})
+	});
 	system.applyComponentChanges(entity, damageSensorComponent);
 }
 

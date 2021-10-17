@@ -1,7 +1,7 @@
 BoatRace = class extends this.Race {
 
 	constructor() {
-		super()
+		super();
 	}
 
 	BuildWorld() {
@@ -17,14 +17,14 @@ BoatRace = class extends this.Race {
 
 	RespawnExtension(player) {
 		Command.Teleport(player, -28, 66, Random.Float(-10, 10), 0, 64, 0);
-		Command.SummonRide(player, "boat")
+		Command.SummonRide(player, "boat");
 	}
 
 	PlayerHasLeftStartArea(player) {
-		return player.position.x >= -25
+		return player.position.x >= -25;
 	}
 
 	PlayerIsFinished(player) {
-		return player.position.x >= 25
+		return player.position.x >= 25;
 	}
 }

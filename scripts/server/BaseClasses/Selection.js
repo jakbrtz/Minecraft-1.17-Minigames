@@ -1,26 +1,26 @@
 Selection = class extends this.Game {
 
 	constructor() {
-		super()
-		this.choices = []
-		this.ShowPreGameTimer = false
-		this.PvPMode = `off`
+		super();
+		this.choices = [];
+		this.ShowPreGameTimer = false;
+		this.PvPMode = `off`;
 	}
 
 	SetupGeneral() {
-		this.choices = this.GetChoices()
+		this.choices = this.GetChoices();
 	}
 
 	BuildWorldGeneral() {
 		this.choices.forEach(choice => {
 			if (choice.construct) {
-				choice.options.forEach(choice.construct)
+				choice.options.forEach(choice.construct);
 			}
 		})
 	}
 
 	GetChoices() {
-		return []
+		return [];
     }
 
 	UpdateGameGeneral() {
@@ -31,7 +31,7 @@ Selection = class extends this.Game {
 						(choice.radius !== undefined
 							? Coordinates.PositionsAreClose(player.position, option, choice.radius, true)
 							: (Math.floor(player.position.x) === Math.floor(option.x) && Math.floor(player.position.z) === Math.floor(option.z)))) {
-						choice.onSelect(option, player)
+						choice.onSelect(option, player);
 					}
                 })
             })

@@ -18,13 +18,13 @@ GameController = {
 
 	Update: function (allEntities) {
 
-		this.ElapsedTime++
+		this.ElapsedTime++;
 
 		if (this.ElapsedTime === 50) { // todo: something more reliable than waiting 2.5 seconds
-			this.Setup()
+			this.Setup();
 		}
 		if (this.ElapsedTime <= 50) {
-			return
+			return;
         }
 
 		// update player info or add new players
@@ -42,9 +42,9 @@ GameController = {
 		for (let [id, player] of this.Players) {
 			if (!allEntities.some(entity => entity === player.entity)) {
 				if (this.Game) {
-					this.Game.RemovePlayer(player)
+					this.Game.RemovePlayer(player);
 				}
-				this.Players.delete(id)
+				this.Players.delete(id);
 			}
 		}
 
@@ -52,18 +52,18 @@ GameController = {
 		allEntities.forEach(entity => {
 			GetTags(entity).forEach(tag => {
 				if (tag.startsWith("JakesGames-")) {
-					const player = this.Players.get(entity.id)
+					const player = this.Players.get(entity.id);
 					SlashCommand(`/tag ${player.name} remove ${tag}`);
-					tag = tag.substr(11)
+					tag = tag.substr(11);
 					if (tag === "togglePause") {
-						this.Pause = !this.Pause
+						this.Pause = !this.Pause;
 					} else if (tag === "wantsEnd") {
-						this.Game.EndGame()
-						this.ChangeGame(this.Game.NextGame())
+						this.Game.EndGame();
+						this.ChangeGame(this.Game.NextGame());
 					} else if (tag.startsWith("duration")) {
-						this.GameDuration = tag.substr(8) * 20
+						this.GameDuration = tag.substr(8) * 20;
 					} else if (this.Game !== null && !this.Pause && player) {
-						this.Game.ReceivedTag(player, tag)
+						this.Game.ReceivedTag(player, tag);
 					}
 				}
 			})
@@ -71,25 +71,25 @@ GameController = {
 
 		if (this.Game) {
 			if (!this.Pause) {
-				this.Game.Update()
+				this.Game.Update();
             }
 		} else if (this.Players.size > 0) {
-			this.ChangeGame(new Lobby())
+			this.ChangeGame(new Lobby());
         }
 	},
 
 	ChangeGame: function (game) {
-		this.Game = game
+		this.Game = game;
 		if (this.Game !== null) {
-			this.Game.Setup()
-			this.Players.forEach(player => this.Game.AddPlayer(player))
+			this.Game.Setup();
+			this.Players.forEach(player => this.Game.AddPlayer(player));
 		}
 	},
 
 	EntityDied: function (entity, killer) {
 		if (this.Game !== null && !this.Pause) {
 			if (this.Players.has(entity.id)) {
-				this.Game.PlayerDied(this.Players.get(entity.id), killer !== undefined ? this.Players.get(killer.id) : undefined)
+				this.Game.PlayerDied(this.Players.get(entity.id), killer !== undefined ? this.Players.get(killer.id) : undefined);
 			}
 		}
 	},
@@ -98,35 +98,35 @@ GameController = {
 	UseItem: function (entity, item) {
 		if (this.Game !== null && !this.Pause) {
 			if (this.Players.has(entity.id)) {
-				this.Game.UseItem(this.Players.get(entity.id), item)
+				this.Game.UseItem(this.Players.get(entity.id), item);
 			}
         }
 	},
 
 	EntityPlacedBlock: function (entity, position) {
 		if (this.Game !== null && !this.Pause && this.Players.has(entity.id)) {
-			this.Game.PlayerPlacedBlock(this.Players.get(entity.id), position)
+			this.Game.PlayerPlacedBlock(this.Players.get(entity.id), position);
 		}
 	},
 
 	EntityTriedToDestroyBlock: function (entity, position) {
 		if (this.Game !== null && !this.Pause && this.Players.has(entity.id)) {
-			this.Game.PlayerTriedToDestroyBlock(this.Players.get(entity.id), position)
+			this.Game.PlayerTriedToDestroyBlock(this.Players.get(entity.id), position);
 		}
 	},
 
 	EntityDestroyedBlock: function (entity, position) {
-		const player = this.Players.get(entity.id)
+		const player = this.Players.get(entity.id);
 		if (player && !this.Pause) {
-			this.Game.PlayerDestroyedBlock(player, position)
+			this.Game.PlayerDestroyedBlock(player, position);
 		}
 	},
 
 	EntityAttack: function (attackerEntity, targetEntity) {
-		const attacker = this.Players.get(attackerEntity.id)
-		const target = this.Players.get(targetEntity.id)
+		const attacker = this.Players.get(attackerEntity.id);
+		const target = this.Players.get(targetEntity.id);
 		if (this.Game !== null && !this.Pause && attacker && target) {
-			this.Game.PlayerAttack(attacker, target)
+			this.Game.PlayerAttack(attacker, target);
 		}
 	}
 

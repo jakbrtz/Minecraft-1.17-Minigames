@@ -1,9 +1,9 @@
 Spleef = class extends this.Survival {
 
 	constructor() {
-		super()
-		this.GameMode = 'survival'
-		this.EndWhenOneRemains = true
+		super();
+		this.GameMode = 'survival';
+		this.EndWhenOneRemains = true;
 	}
 
 	BuildWorld() {
@@ -17,6 +17,6 @@ Spleef = class extends this.Survival {
 	}
 
 	PlayerIsOutOfBounds(player) {
-		return player.position.y < 40
+		return player.position.y < 40;
 	}
 }

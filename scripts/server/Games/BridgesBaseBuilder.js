@@ -1,8 +1,8 @@
 BridgesBaseBuilder = class extends this.Selection {
 
 	constructor() {
-		super()
-		this.GameMode = 'creative'
+		super();
+		this.GameMode = 'creative';
 	}
 
 	PlaceStructure(structure, position) {
@@ -30,24 +30,24 @@ BridgesBaseBuilder = class extends this.Selection {
 					{ x: -32, z: 32, structure: `slot7` },
 				]
 			}
-		]
+		];
 	}
 
 	BuildWorld() {
 		Command.Fill(-64, 64, -64, 63, 64, 63, "glass");
-		this.choices[0].options.forEach(slot => this.PlaceStructure(`bridges:Basic`, slot))
+		this.choices[0].options.forEach(slot => this.PlaceStructure(`bridges:Basic`, slot));
 	}
 
 	RespawnExtension(player) {
 		Command.Teleport(player, Random.Float(-10, 10), 66, Random.Float(-10, 10));
 		Command.Give(player, "concrete", 1, 12);
 		Command.Give(player, "potato");
-		player.requestedBase = undefined
+		player.requestedBase = undefined;
 	}
 
 	UseItemExtension(player, item) {
 		if (item === "minecraft:potato") {
-			const slot = this.choices[0].options.find(opt => opt.structure === player.requestedBase)
+			const slot = this.choices[0].options.find(opt => opt.structure === player.requestedBase);
 			if (slot) {
 				Command.StructureSave(slot.structure, slot.x - 14, 50, slot.z - 14, slot.x + 14, 110, slot.z + 14, "disk");
 				Command.Tell(player, `${slot.structure} has been saved`);
@@ -56,10 +56,10 @@ BridgesBaseBuilder = class extends this.Selection {
 	}
 
 	IsGameInProgress() {
-		return false
+		return false;
 	}
 
 	NextGame() {
-		return new BridgesBaseSelection()
+		return new BridgesBaseSelection();
 	}
 }

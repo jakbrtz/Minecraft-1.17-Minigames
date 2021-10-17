@@ -1,24 +1,24 @@
 DoorDash = class extends this.Race {
 
 	constructor() {
-		super()
+		super();
 
-		this.width = 6
-		this.depth = 8
-		this.rows = 8
-		this.doors = 4
+		this.width = 6;
+		this.depth = 8;
+		this.rows = 8;
+		this.doors = 4;
 	}
 
 	BuildWorld() {
 
-		this.xStart = -this.doors * this.width / 2
-		this.zStart = -this.rows * this.depth / 2
+		this.xStart = -this.doors * this.width / 2;
+		this.zStart = -this.rows * this.depth / 2;
 
 		for (let row = 0; row < this.rows; row++) {
-			const clearDoor1 = Random.Int(this.doors)
-			const clearDoor2 = Random.Int(this.doors)
+			const clearDoor1 = Random.Int(this.doors);
+			const clearDoor2 = Random.Int(this.doors);
 			for (let door = 0; door < this.doors; door++) {
-				const structureName = (door === clearDoor1 || door === clearDoor2) ? "doordash:clear" : "doordash:blocked"
+				const structureName = (door === clearDoor1 || door === clearDoor2) ? "doordash:clear" : "doordash:blocked";
 				Command.Structure(structureName, door * this.width + this.xStart, 64, row * this.depth + this.zStart);
 			}
 		}
@@ -32,14 +32,14 @@ DoorDash = class extends this.Race {
 	}
 
 	PlayerIsOutOfBounds(player) {
-		return player.position.y < 60
+		return player.position.y < 60;
 	}
 
 	PlayerHasLeftStartArea(player) {
-		return player.position.z >= this.zStart
+		return player.position.z >= this.zStart;
 	}
 
 	PlayerIsFinished(player) {
-		return player.position.z >= this.rows * this.depth + this.zStart
+		return player.position.z >= this.rows * this.depth + this.zStart;
 	}
 }

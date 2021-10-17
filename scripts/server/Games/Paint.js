@@ -1,12 +1,12 @@
 Paint = class extends this.Scored {
 
 	constructor() {
-		super()
-		this.DeathCoolDown = 5 * 20
+		super();
+		this.DeathCoolDown = 5 * 20;
 	}
 
 	BuildWorld() {
-		this.trackedBlocks = new ArrayMultiDimensional([41, 41], [-20, -20])
+		this.trackedBlocks = new ArrayMultiDimensional([41, 41], [-20, -20]);
 		Command.Fill(-20, 64, -20, 20, 64, 20, "concrete 0");
 	}
 
@@ -17,24 +17,24 @@ Paint = class extends this.Scored {
 
 	UpdateGameExtension() {
 
-		if (this.GameIsComplete) return
+		if (this.GameIsComplete) return;
 
 		this.players.filter(player => player.deathTimer === -1).forEach(player => {
 			const position = {
 				x: Math.floor(player.position.x),
 				y: Math.floor(player.position.y - 1),
 				z: Math.floor(player.position.z)
-			}
+			};
 			if (this.trackedBlocks.IndicesInRange([position.x, position.z]) && position.y === 64) {
-				const blockPlayer = this.trackedBlocks.Get([position.x, position.z])
+				const blockPlayer = this.trackedBlocks.Get([position.x, position.z]);
 				if (blockPlayer !== player) {
-					this.trackedBlocks.Set([position.x, position.z], player)
+					this.trackedBlocks.Set([position.x, position.z], player);
 					Command.SetBlock(position.x, position.y, position.z, `concrete ${player.team.colour}`);
-					player.score++
+					player.score++;
 					if (blockPlayer !== undefined) {
-						blockPlayer.score--
+						blockPlayer.score--;
 					}
-					this.UpdateScore()
+					this.UpdateScore();
 				}
 			}
 		})

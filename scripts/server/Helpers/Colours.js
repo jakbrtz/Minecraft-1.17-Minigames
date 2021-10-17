@@ -19,11 +19,11 @@ this.Colours = {
         'black'],
 
     NumberToName: function (number) {
-        return this.NameArray[number]
+        return this.NameArray[number];
     },
 
     NameToNumber: function (name) {
-        return this.NameArray.indexOf(name)
+        return this.NameArray.indexOf(name);
     },
 
     CharacterArray: [
@@ -46,10 +46,10 @@ this.Colours = {
     ],
 
     NumberToCharacter: function (number) {
-        return this.CharacterArray[number]
+        return this.CharacterArray[number];
     },
 
     CharacterToNumber: function (character) {
-        return this.CharacterArray.indexOf(character)
+        return this.CharacterArray.indexOf(character);
     }
 }

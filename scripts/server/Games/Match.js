@@ -1,8 +1,8 @@
 Match = class extends this.Survival {
 
 	constructor() {
-		super()
-		this.EndWhenOneRemains = true
+		super();
+		this.EndWhenOneRemains = true;
 
 		this.platforms = [
 			{ x: -3, z: 3, c: 4 },
@@ -12,20 +12,20 @@ Match = class extends this.Survival {
 			{ x: 3, z: -1, c: 5 },
 			{ x: -3, z: -5, c: 9 },
 			{ x: 1, z: -5, c: 11 },
-		]
+		];
 	}
 
 	BuildWorld() {
-		this.PutBackPlatforms()
-		this.PickNextPlatform()
+		this.PutBackPlatforms();
+		this.PickNextPlatform();
 	}
 
 	PutBackPlatforms() {
-		this.platforms.forEach(platform => this.ReplacePlatform(platform, "concrete"))
+		this.platforms.forEach(platform => this.ReplacePlatform(platform, "concrete"));
 	}
 
 	PickNextPlatform() {
-		this.nextPlatform = Random.Arr(this.platforms)
+		this.nextPlatform = Random.Arr(this.platforms);
     }
 
 	ReplacePlatform(platform, block) {
@@ -40,8 +40,8 @@ Match = class extends this.Survival {
 
 		switch (this.elapsedGameTime % 100) {
 			case 0:
-				this.PutBackPlatforms()
-				this.PickNextPlatform()
+				this.PutBackPlatforms();
+				this.PickNextPlatform();
 				Command.Fill(-20, 66, -20,  20, 70, -20, `concrete ${this.nextPlatform.c}`);
 				Command.Fill(-20, 66, -20, -20, 70,  20, `concrete ${this.nextPlatform.c}`);
 				Command.Fill( 20, 66,  20,  20, 70, -20, `concrete ${this.nextPlatform.c}`);
@@ -49,18 +49,18 @@ Match = class extends this.Survival {
 				break;
 			case 70:
 				this.platforms.filter(platform => platform !== this.nextPlatform).forEach(platform => {
-					this.ReplacePlatform(platform, "stained_glass")
+					this.ReplacePlatform(platform, "stained_glass");
 				})
 				break;
 			case 80:
 				this.platforms.filter(platform => platform !== this.nextPlatform).forEach(platform => {
-					this.ReplacePlatform(platform, "air")
+					this.ReplacePlatform(platform, "air");
 				})
 				break;
         }
 	}
 
 	PlayerIsOutOfBounds(player) {
-		return player.position.y < 40
+		return player.position.y < 40;
 	}
 }

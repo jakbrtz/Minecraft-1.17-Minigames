@@ -122,7 +122,7 @@ You can find an example of how they're used by looking through the other files i
 Modifies data when a player joins the game. For example in parkour:
 ```javascript
 	AddPlayerExtension(player) {
-		player.checkPoint = 0
+		player.checkPoint = 0;
 	}
 ```
 Note that things like `player.score = 0` is done in the base class, so you don't need to do that manually. 
@@ -162,7 +162,7 @@ For example in InverseTag we need to detect when a player tags another player:
 ```javascript
 	PlayerAttack(attacker, target) {
 		if (target === this.HighlightedPlayer) {
-			this.SetHighlightedPlayer(attacker)
+			this.SetHighlightedPlayer(attacker);
         }
 	}
 ```
@@ -189,8 +189,8 @@ Performs actions when a player dies. For example in QuickRespawnArena:
 ```javascript
 	PlayerDiedExtension(player, killer) {
 		if (!this.GameIsComplete && killer !== undefined) {
-			killer.score++
-			this.UpdateScore()
+			killer.score++;
+			this.UpdateScore();
 		}
 	}
 ```
@@ -207,7 +207,7 @@ Check if the player should be considered 'dead'. In most games we check if the p
 
 ```javascript
 	PlayerIsOutOfBounds(player) {
-		return player.position.y < 40
+		return player.position.y < 40;
 	}
 ```
 
@@ -235,8 +235,8 @@ This is used in Bridges to get information about the block the player is destroy
 
 ```javascript
 	PlayerTriedToDestroyBlock(player, position) {
-		const block = GetBlockData(player.entity, position)
-		player.concreteColourBeingDestroyed = Colours.NameToNumber(block.color)
+		const block = GetBlockData(player.entity, position);
+		player.concreteColourBeingDestroyed = Colours.NameToNumber(block.color);
 		// This is used in PlayerDestroyedBlock
 	}
 ```
@@ -273,11 +273,11 @@ For example in Bridges, we need to constantly check if a player is in an opponen
 			this.players.forEach(player => {
 				if (player.team !== team && player.deathTimer === -1 && Coordinates.PositionsAreClose(player.position, team.goal, 2, false)) {
 					if (!this.GameIsComplete) {
-						player.score++
-						this.UpdateScore()
+						player.score++;
+						this.UpdateScore();
 						Command.Title(player, "title", "You earned a point");
                     }
-					this.Respawn(player)
+					this.Respawn(player);
                 }
             })
 		})
@@ -313,7 +313,7 @@ Has a player reached the end of the race?
 
 ```javascript
 	PlayerIsFinished(player) {
-		return player.checkPoint >= 4
+		return player.checkPoint >= 4;
 	}
 ```
 

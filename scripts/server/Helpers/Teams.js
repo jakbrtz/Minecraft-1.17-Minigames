@@ -10,9 +10,9 @@ this.Teams = {
         { name: "Black", colour: 7 },
     ],
     Get: function (name) {
-        return this.All.find(team => team.name === name)
+        return this.All.find(team => team.name === name);
     },
     Random: function () {
-        return Random.Arr(this.All)
+        return Random.Arr(this.All);
     }
 }

@@ -1,8 +1,8 @@
 BombsAway = class extends this.Survival {
 
 	constructor(timeBetweenBombs) {
-		super()
-		this.TimeBetweenBombs = timeBetweenBombs
+		super();
+		this.TimeBetweenBombs = timeBetweenBombs;
 	}
 
 	BuildWorld() {
@@ -14,7 +14,7 @@ BombsAway = class extends this.Survival {
 	}
 
 	PlayerIsOutOfBounds(player) {
-		return player.position.y < 40
+		return player.position.y < 40;
 	}
 
 	UpdateGameExtension() {

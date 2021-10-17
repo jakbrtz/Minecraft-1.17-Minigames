@@ -1,12 +1,12 @@
 Bridges = class extends this.Scored {
 
 	constructor() {
-		super()
-		this.DefaultGameDuration = 5 * 60 * 20
-		this.DeathCoolDown = 5 * 20
-		this.TeamsCanBeAddedAfterStart = false
-		this.minimumNumberOfTeams = 2
-		this.maximumNumberOfTeams = 4
+		super();
+		this.DefaultGameDuration = 5 * 60 * 20;
+		this.DeathCoolDown = 5 * 20;
+		this.TeamsCanBeAddedAfterStart = false;
+		this.minimumNumberOfTeams = 2;
+		this.maximumNumberOfTeams = 4;
 	}
 
 	AddTeamExtension(team) {
@@ -16,21 +16,19 @@ Bridges = class extends this.Scored {
 			{ x: -48, y: 65, z: 0 },
 			{ x: 0, y: 65, z: 48 },
 			{ x: 0, y: 65, z: -48 },
-		]
+		];
 
-		team.center = centers[this.teams.length - 1]
-		const options = this.players.filter(player => player.requestedBase && player.team === team).map(player => player.requestedBase)
+		team.center = centers[this.teams.length - 1];
+		const options = this.players.filter(player => player.requestedBase && player.team === team).map(player => player.requestedBase);
 
 		team.selectedBase = options.length
 			? Random.Arr(options)
 			: (team !== this.teams[0])
 				? this.teams[0].selectedBase
-				: ("bridges:" + Random.Arr(["Amethyst", "GoldBlocks", "Mud", "Temple", "Monument", "Mill"]))
+				: ("bridges:" + Random.Arr(["Amethyst", "GoldBlocks", "Mud", "Temple", "Monument", "Mill"]));
 
-		team.spawn = Coordinates.Offset(team.center, Coordinates.SuggestRotation(team.center), { x: 0, y: 1, z: -8 })
-		team.goal = team.selectedBase === "bridges:GoldBlocks"
-			? team.center
-			: Coordinates.Offset(team.center, Coordinates.SuggestRotation(team.center), { x: 0, y: 1, z: 8 })
+		team.spawn = Coordinates.Offset(team.center, Coordinates.SuggestRotation(team.center), { x: 0, y: 1, z: -8 });
+		team.goal = Coordinates.Offset(team.center, Coordinates.SuggestRotation(team.center), { x: 0, y: 1, z: 8 });
 
 		// Place structure
 		Command.Structure(team.selectedBase, team.center.x - 14, team.center.y - 15, team.center.z - 14, Coordinates.SuggestRotation(team.center));
@@ -38,19 +36,19 @@ Bridges = class extends this.Scored {
 		Command.Fill(team.center.x - 14, team.center.y - 15, team.center.z - 14, team.center.x + 14, team.center.y + 15, team.center.z + 14, `concrete ${team.colour} replace concrete 12`);
 		Command.Fill(team.center.x - 14, team.center.y + 16, team.center.z - 14, team.center.x + 14, team.center.y + 45, team.center.z + 14, `concrete ${team.colour} replace concrete 12`);
 		// Build bridge
-		let xlim = 0
-		let zlim = 0
+		let xlim = 0;
+		let zlim = 0;
 		if (team.center.x > 15) {
-			xlim = team.center.x - 15
+			xlim = team.center.x - 15;
 		}
 		if (team.center.x < -15) {
-			xlim = team.center.x + 15
+			xlim = team.center.x + 15;
 		}
 		if (team.center.z > 15) {
-			zlim = team.center.z - 15
+			zlim = team.center.z - 15;
 		}
 		if (team.center.z < -15) {
-			zlim = team.center.z + 15
+			zlim = team.center.z + 15;
 		}
 		if (Coordinates.SuggestRotation(team.center) % 180 === 0) {
 			Command.Fill(xlim, team.center.y - 3, zlim, xlim, team.center.y - 10, 0, `stained_hardened_clay ${team.colour} keep`);
@@ -78,11 +76,11 @@ Bridges = class extends this.Scored {
 			this.players.forEach(player => {
 				if (player.team !== team && player.deathTimer === -1 && Coordinates.PositionsAreClose(player.position, team.goal, 2, false)) {
 					if (!this.GameIsComplete) {
-						player.score++
-						this.UpdateScore()
+						player.score++;
+						this.UpdateScore();
 						Command.Title(player, "title", "You earned a point");
                     }
-					this.Respawn(player)
+					this.Respawn(player);
                 }
             })
 		})
@@ -90,11 +88,11 @@ Bridges = class extends this.Scored {
 	}
 
 	PlayerHasLeftStartArea(player) {
-		return !Coordinates.PositionsAreClose(player.position, player.team.spawn, 3, false)
+		return !Coordinates.PositionsAreClose(player.position, player.team.spawn, 3, false);
 	}
 
 	PlayerIsOutOfBounds(player) {
-		return player.position.y < 30
+		return player.position.y < 30;
 	}
 
 	PlayerPlacedBlock(player, position) {
@@ -107,9 +105,9 @@ Bridges = class extends this.Scored {
 	}
 
 	PlayerTriedToDestroyBlock(player, position) {
-		const block = GetBlockData(player.entity, position)
+		const block = GetBlockData(player.entity, position);
 		if (block) {
-			player.terracottaColourBeingDestroyed = Colours.NameToNumber(block.color)
+			player.terracottaColourBeingDestroyed = Colours.NameToNumber(block.color);
 		}
 	}
 

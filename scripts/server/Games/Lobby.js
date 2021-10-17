@@ -58,11 +58,10 @@ Lobby = class extends this.Selection {
 		];
 
 		allGames.forEach((option, i) => {
-			const Round2dp = num => Math.round(num * 100) / 100
 			const radius = 40
 			const angle = 2 * Math.PI * i / allGames.length
-			option.x = Round2dp(radius * -Math.sin(angle))
-			option.z = Round2dp(radius * Math.cos(angle))
+			option.x = radius * -Math.sin(angle)
+			option.z = radius * Math.cos(angle)
 			option.angle = ((Math.round(angle * 2 / Math.PI) + 4) % 4) * 90
 			gamePicker.options.push(option)
 		});

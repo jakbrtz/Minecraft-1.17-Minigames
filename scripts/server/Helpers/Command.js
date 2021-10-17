@@ -1,22 +1,28 @@
 this.Command = {
 
     Teleport: function (player, x, y, z, facingX, facingY, facingZ) {
-        if (facingX === undefined || facingY === undefined || facingZ === undefined) {
-            System.SlashCommand(`/tp ${player.name} ${x} ${y} ${z}`);
-        } else {
-            System.SlashCommand(`/tp ${player.name} ${x} ${y} ${z} facing ${facingX} ${facingY} ${facingZ}`);
+        [x, y, z] = Command.FixCoordinates(x, y, z);
+        let commandline = `/tp ${player.name} ${x} ${y} ${z}`;
+        if (facingX !== undefined && facingY !== undefined && facingZ !== undefined) {
+            [facingX, facingY, facingZ] = Command.FixCoordinates(facingX, facingY, facingZ);
+            commandline += ` facing ${facingX} ${facingY} ${facingZ}`;
         }
+        System.SlashCommand(commandline);
     },
 
     SetBlock: function (x, y, z, block) {
+        [x, y, z] = Command.FixCoordinates(x, y, z);
         System.SlashCommand(`/setblock ${x} ${y} ${z} ${block}`);
     },
 
     Fill: function (xStart, yStart, zStart, xEnd, yEnd, zEnd, block) {
+        [xStart, yStart, zStart] = Command.FixCoordinates(xStart, yStart, zStart);
+        [xEnd, yEnd, zEnd] = Command.FixCoordinates(xEnd, yEnd, zEnd);
         System.SlashCommand(`/fill ${xStart} ${yStart} ${zStart} ${xEnd} ${yEnd} ${zEnd} ${block}`);
     },
 
     Structure: function (name, x, y, z, angle) {
+        [x, y, z] = Command.FixCoordinates(x, y, z);
         System.SlashCommand(`/structure load ${name} ${x} ${y} ${z} ${angle || 0}_degrees`);
     },
 
@@ -60,10 +66,12 @@ this.Command = {
     },
 
     SpreadPlayers: function (x, z, distanceBetweenPlayers, radius, players) {
+        [x, y, z] = Command.FixCoordinates(x, null, z);
         System.SlashCommand(`/spreadplayers ${x} ${z} ${distanceBetweenPlayers} ${radius} ${players.map(player => player.name).join(',')}`);
     },
 
     Summon: function (entityName, x, y, z) {
+        [x, y, z] = Command.FixCoordinates(x, y, z);
         System.SlashCommand(`/summon ${entityName} ${x} ${y} ${z}`);
     },
 
@@ -84,11 +92,23 @@ this.Command = {
     },
 
     RemoveItemEntity: function (x, y, z, radius) {
+        [x, y, z] = Command.FixCoordinates(x, y, z);
         System.SlashCommand(`/kill @e[type=item,x=${x},y=${y},z=${z},rm=0,r=${radius || 1}]`);
     },
 
     StructureSave: function (name, xStart, yStart, zStart, xEnd, yEnd, zEnd, mode) {
+        [xStart, yStart, zStart] = Command.FixCoordinates(xStart, yStart, zStart);
+        [xEnd, yEnd, zEnd] = Command.FixCoordinates(xEnd, yEnd, zEnd);
         System.SlashCommand(`/structure save ${name} ${xStart} ${yStart} ${zStart} ${xEnd} ${yEnd} ${zEnd} ${mode || ""}`);
+    },
+
+    FixCoordinates: function (x, y, z) {
+        const Round5dp = num => Math.round(num * 100000) / 100000;
+        return [
+            Round5dp(x || 0),
+            Round5dp(y || 0),
+            Round5dp(z || 0)
+        ];
     }
     
 }

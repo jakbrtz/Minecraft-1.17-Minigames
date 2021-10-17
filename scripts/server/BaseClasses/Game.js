@@ -203,7 +203,18 @@ Game = class {
 
     AttemptRevivePlayer(player) {
         Command.Tag(player, true, "JakesGames-recentlyRevived");
-        player.AppearDead(this.DeathCoolDown / 20 + 10);
+        const duration = this.DeathCoolDown / 20 + 10;
+        Command.Clear(player);
+        Command.Effect(player, "slow_falling", duration, 100);
+        Command.Effect(player, "night_vision", duration);
+        Command.Effect(player, "speed", duration);
+        Command.Effect(player, "fire_resistance", duration, 100);
+        Command.Effect(player, "conduit_power", duration);
+        Command.Effect(player, "invisibility", duration);
+        Command.Effect(player, "resistance", duration, 100);
+        Command.Effect(player, "weakness", duration, 100);
+        Command.Effect(player, "saturation", duration, 100);
+        Command.Effect(player, "mining_fatigue", duration, 100);
         if (this.GameIsComplete) {
             Command.Give(player, "potion");
         }

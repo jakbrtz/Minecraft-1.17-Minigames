@@ -5,25 +5,25 @@ this.Coordinates = {
             case 0:
                 return {
                     x: point.x + offset.x,
-                    y: point.y + offset.y,
+                    y: point.y + (offset.y || 0),
                     z: point.z + offset.z,
                 }
             case 90:
                 return {
                     x: point.x - offset.z,
-                    y: point.y + offset.y,
+                    y: point.y + (offset.y || 0),
                     z: point.z + offset.x,
                 }
             case 180:
                 return {
                     x: point.x - offset.x,
-                    y: point.y + offset.y,
+                    y: point.y + (offset.y || 0),
                     z: point.z - offset.z,
                 }
             case 270:
                 return {
                     x: point.x + offset.z,
-                    y: point.y + offset.y,
+                    y: point.y + (offset.y || 0),
                     z: point.z - offset.x,
                 }
         }

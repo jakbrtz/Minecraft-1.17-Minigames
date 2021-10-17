@@ -29,12 +29,13 @@ GameController = {
 
 		// update player info or add new players
 		allEntities.forEach(entity => {
-			if (this.Players.has(entity.id)) {
-				this.Players.get(entity.id).Update(entity)
-			} else {
-				const player = new Player(entity)
-				this.Players.set(entity.id, player)
+			let player = this.Players.get(entity.id);
+			if (!player) {
+				player = new Player(entity);
+				this.Players.set(entity.id, player);
 			}
+			player.entity = entity;
+			player.position = Find(entity);
 		})
 
 		// delete players that have left

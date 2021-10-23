@@ -62,7 +62,7 @@ Bridges = class extends this.Scored {
 	}
 
 	RespawnExtension(player) {
-		Command.Teleport(player, player.team.spawn.x, player.team.spawn.y, player.team.spawn.z, 0, 70, 0);
+		Command.Teleport(player, player.team.spawn.x, player.team.spawn.y, player.team.spawn.z, 0, player.team.spawn.y + 5, 0);
 		Command.Give(player, "iron_sword");
 		Command.Give(player, "iron_pickaxe", 1, `0 ${AdventureTags.CanDestroy("stained_hardened_clay")}`);
 		Command.Give(player, "bow");

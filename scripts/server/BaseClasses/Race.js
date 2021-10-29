@@ -3,17 +3,18 @@ Race = class extends this.Game {
 	constructor() {
 		super();
 		this.EndWhenOneRemains = false;
+		this.FinishedPlayers = [];
 	}
 
 	AddPlayerGeneral(player) {
-		player.finishTime = -1;
+		this.FinishedPlayers = this.FinishedPlayers.filter(p => p !== player);
 	}
 
 	UpdateGameGeneral() {
-		const remainingPlayers = this.players.filter(player => player.finishTime < 0);
+		const remainingPlayers = this.players.filter(player => !this.FinishedPlayers.includes(player));
 		remainingPlayers.forEach(player => {
 			if (this.PlayerIsFinished(player) || (this.EndWhenOneRemains && remainingPlayers.length === 1)) {
-				player.finishTime = this.elapsedGameTime;
+				this.FinishedPlayers.push(player);
 				this.UpdateScore();
 			}
 		})
@@ -24,13 +25,11 @@ Race = class extends this.Game {
 	}
 
 	IsGameInProgress() {
-		return this.players.some(player => player.finishTime < 0);
+		return this.players.some(player => !this.FinishedPlayers.includes(player));
 	}
 
 	UpdateScore() {
-		const lines = this.players
-			.filter(player => player.finishTime > 0)
-			.sort((a, b) => (a.finishTime - b.finishTime))
+		const lines = this.FinishedPlayers
 			.map((player, i) => this.GetScoreboardLine(player, i));
 		if (lines.length > 0) {
 			Scoreboard.Create("Results", lines, true);

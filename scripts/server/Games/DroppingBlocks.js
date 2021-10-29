@@ -18,7 +18,7 @@ DroppingBlocks = class extends this.Survival {
 	}
 
 	UpdateGameExtension() {
-		this.players.filter(player => player.finishTime === -1).forEach(player => {
+		this.players.filter(player => !this.FinishedPlayers.includes(player)).forEach(player => {
 			let blocksToChange = [{
 				x: Math.floor(player.position.x),
 				y: Math.floor(player.position.y - 1),

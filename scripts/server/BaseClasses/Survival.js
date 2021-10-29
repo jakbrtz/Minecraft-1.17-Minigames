@@ -6,13 +6,15 @@ Survival = class extends this.Race {
 	}
 
 	PlayerDiedExtension(player, killer) {
-		if (player.finishTime < 0) {
-			player.finishTime = this.elapsedGameTime;
+		if (!this.FinishedPlayers.includes(player)) {
+			this.FinishedPlayers.push(player);
 			this.UpdateScore();
 		}
 	}
 
 	GetScoreboardLine(player, index) {
-		return { text: player.name, value: this.players.length - index };
+		const numberOfPlayers = this.players.length +
+			this.FinishedPlayers.filter(player => !this.players.includes(player)).length;
+		return { text: player.name, value: numberOfPlayers - index };
 	}
 }

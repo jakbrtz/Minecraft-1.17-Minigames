@@ -110,8 +110,10 @@ GameController = {
 	},
 
 	EntityTriedToDestroyBlock: function (entity, position) {
-		if (this.Game !== null && !this.Pause && this.Players.has(entity.id)) {
-			this.Game.PlayerTriedToDestroyBlock(this.Players.get(entity.id), position);
+		const player = this.Players.get(entity.id);
+		if (player && this.Game !== null && !this.Pause) {
+			const GetBlockData = () => System.GetBlockData(entity, position);
+			this.Game.PlayerTriedToDestroyBlock(player, position, GetBlockData);
 		}
 	},
 

@@ -227,15 +227,17 @@ This can be used to prevent a player from placing blocks, for example in Bridges
 	}
 ```
 
-### PlayerTriedToDestroyBlock(player, position)
+### PlayerTriedToDestroyBlock(player, position, GetBlockData)
 
 Performs actions when a player starts destroying a block.
+
+GetBlockData is a method that can be used to get more information about the block that is being destroyed.
 
 This is used in Bridges to get information about the block the player is destroying:
 
 ```javascript
-	PlayerTriedToDestroyBlock(player, position) {
-		const block = System.GetBlockData(player.entity, position);
+	PlayerTriedToDestroyBlock(player, position, GetBlockData) {
+		const block = GetBlockData();
 		player.concreteColourBeingDestroyed = Colours.NameToNumber(block.color);
 		// This is used in PlayerDestroyedBlock
 	}

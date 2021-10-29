@@ -61,12 +61,7 @@ Game = class {
 
         Teams.All.forEach(team => Command.Tag(player, false, `team-${team.name}`));
         Command.Tag(player, true, `team-${player.team.name}`);
-        System.ClearNullifiedDamage(player.entity);
-        if (this.PvPMode === 'teams') {
-            System.NullifyDamageFromTag(player.entity, `team-${player.team.name}`);
-        } else if (this.PvPMode === 'off') {
-            System.NullifyDamageFromOtherPlayers(player.entity);
-        }
+        PvP.Set(this.PvPMode, player);
     }
 
     AddPlayerGeneral(player) {
@@ -244,7 +239,7 @@ Game = class {
     PlayerPlacedBlock(player, position) {
     }
 
-    PlayerTriedToDestroyBlock(player, position) {
+    PlayerTriedToDestroyBlock(player, position, GetBlockData) {
     }
 
     PlayerDestroyedBlock(player, position) {

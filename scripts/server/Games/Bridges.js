@@ -104,8 +104,8 @@ Bridges = class extends this.Scored {
 		})
 	}
 
-	PlayerTriedToDestroyBlock(player, position) {
-		const block = System.GetBlockData(player.entity, position);
+	PlayerTriedToDestroyBlock(player, position, GetBlockData) {
+		const block = GetBlockData();
 		if (block) {
 			player.terracottaColourBeingDestroyed = Colours.NameToNumber(block.color);
 		}

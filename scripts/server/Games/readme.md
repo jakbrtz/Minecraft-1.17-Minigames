@@ -329,7 +329,7 @@ At least I'm willing to admit that there isn't any documentation and I'm not pre
 
 ## Read-Only variables and functions
 
-These variables and function in the base game might come in handy.
+These variables and functions in the base game might come in handy.
 
 ### elapsedGameTime
 

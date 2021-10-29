@@ -57,7 +57,7 @@ Game = class {
             const name = Random.Arr(["Kobi", "Oscar"]);
             Command.Title(player, "actionbar", `⚠ ${name} will be banned for no reason`);
         }
-        this.UpdateScore()
+        this.UpdateScore();
 
         Teams.All.forEach(team => Command.Tag(player, false, `team-${team.name}`));
         Command.Tag(player, true, `team-${player.team.name}`);

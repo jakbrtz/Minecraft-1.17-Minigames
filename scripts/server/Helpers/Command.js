@@ -91,9 +91,14 @@ this.Command = {
         System.SlashCommand(`/ride ${player.name} summon_ride ${entityName}`);
     },
 
-    RemoveItemEntity: function (x, y, z, radius) {
+    RemoveItemEntities: function (x, y, z, radius) {
         [x, y, z] = Command.FixCoordinates(x, y, z);
         System.SlashCommand(`/kill @e[type=item,x=${x},y=${y},z=${z},rm=0,r=${radius || 1}]`);
+    },
+
+    RemoveNonPlayerEntities: function (x, y, z, dx, dy, dz) {
+        [x, y, z] = Command.FixCoordinates(x, y, z);
+        System.SlashCommand(`/kill @e[type=!player,x=${x},dx=${dx},y=${y},dy=${dy},z=${z},dz=${dz}]`);
     },
 
     StructureSave: function (name, xStart, yStart, zStart, xEnd, yEnd, zEnd, mode) {

@@ -176,7 +176,7 @@ This is used in Bridges to give the player the block they just destroyed:
 ```javascript
 	PlayerDestroyedBlock(player, position) {
 		Command.Give(player, "stained_hardened_clay", 1, `${player.terracottaColourBeingDestroyed} ${AdventureTags.CanPlaceOn()}`);
-		Command.RemoveItemEntity(position.x, position.y, position.z, 15);
+		Command.RemoveItemEntities(position.x, position.y, position.z, 15);
 	}
 ```
 

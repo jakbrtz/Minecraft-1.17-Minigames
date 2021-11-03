@@ -14,5 +14,6 @@ this.Teams = {
     },
     Random: function () {
         return Random.Arr(this.All);
+        // todo: add a parameter of existing teams
     }
 }

@@ -12,7 +12,7 @@ Lobby = class extends this.Selection {
 			additionalCheck: (dot, player) => player.team !== dot.team,
 			onSelect: (dot, player) => {
 				player.team = dot.team
-				Command.Say(`${player.name} is on the ${Colours.NumberToCharacter(player.team.colour)}${player.team.name} team`);
+				Command.Say(`${player.name} is on the ${Colours.NumberToCharacter(dot.team.colour)}${dot.team.name} team`);
 				this.UpdateScore()
 			},
 			options: [
@@ -75,6 +75,10 @@ Lobby = class extends this.Selection {
 		Command.Structure("lobby:Spawn", -16, 4, -16);
 	}
 
+	AddPlayerExtension(player) {
+		player.team = null;
+    }
+
 	RespawnExtension(player) {
 		Command.Teleport(player, Random.Float(-3, 3), 7, Random.Float(-3, 3));
 	}
@@ -82,7 +86,7 @@ Lobby = class extends this.Selection {
 	UpdateScore() {
 		const lines = [];
 		this.players.forEach(player => {
-			lines.push(`${Colours.NumberToCharacter(player.team.colour)}${player.name}\u00a7r`);
+			lines.push(`${player.team ? Colours.NumberToCharacter(player.team.colour) : ""}${player.name}\u00a7r`);
 		})
 		if (this.serverNumber < 16) {
 			lines.push("");

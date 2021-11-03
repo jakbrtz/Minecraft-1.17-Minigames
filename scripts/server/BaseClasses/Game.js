@@ -39,16 +39,20 @@ Game = class {
     AddPlayer(player) {
         this.players.push(player);
 
-        if (this.teams.some(team => team.name === player.team.name)) {
+        if (player.team !== null && this.teams.some(team => team.name === player.team.name)) {
             player.team = this.teams.find(team => team.name === player.team.name);
         } else if ((this.elapsedGameTime < 0 || this.TeamsCanBeAddedAfterStart) && this.teams.length < this.maximumNumberOfTeams) {
-            player.team = Teams.Get(player.team.name);
+            if (player.team !== null) {
+                player.team = Teams.Get(player.team.name);
+            } else {
+                player.team = Teams.Random();
+            }
         } else {
             const sizeOfTeam = team => this.players.filter(player => player.team === team).length;
             this.teams.sort((a, b) => sizeOfTeam(a) - sizeOfTeam(b));
             player.team = this.teams[0];
         }
-        this.AddTeam(player.team);
+        this.AddTeam(player.team); // todo: game parameter where player.team is not needed
 
         this.AddPlayerGeneral(player);
         this.AddPlayerExtension(player);
@@ -60,7 +64,9 @@ Game = class {
         this.UpdateScore();
 
         Teams.All.forEach(team => Command.Tag(player, false, `team-${team.name}`));
-        Command.Tag(player, true, `team-${player.team.name}`);
+        if (player.team !== null) {
+            Command.Tag(player, true, `team-${player.team.name}`);
+        }
         PvP.Set(this.PvPMode, player);
     }
 

@@ -54,15 +54,13 @@ If the maximum has been reached and a player tries to enter a new team, the play
 
 If left out then the maximum is 8.
 
-### PvPMode
+### PvPEnabled
 
-Should players in the same team be stopped from hurting each other?
+Should players be able to attack each other?
 
-The options are:
+If this is TRUE for a team games then players will not be able to hit team members
 
-* `on` - players can hurt each other (default for race/survival games)
-* `teams` - players can hurt people in other teams (default for scored games)
-* `off` - players cannot hurt each other (default for selection games)
+If left out then the default is false for selection games and true for all other games
 
 ### shouldClearExistingGameBeforeBuilding
 
@@ -77,6 +75,14 @@ I can't think of a reason why this would ever be no (false).
 Should players see a countdown before the game starts?
 
 If left out then the answer is yes (true).
+
+### TeamsAreUsedInThisGame
+
+Is this a team game?
+
+If the answer is no (false) then none of the other team-related variables do anything
+
+If left out then the answer is yes (true) for scored games and no (false) for all other games
 
 ### TeamsCanBeAddedAfterStart
 
@@ -99,16 +105,6 @@ If left out, the answer is no (false).
 What is the duration of the game in ticks? This value can be overridden 
 
 If left out, the answer is 1200 ticks (1 minute)
-
-### GroupScoreByTeam
-
-*Only applies to scored games*
-
-FALSE = each player is scored individually
-
-TRUE = each player's score is counted towards the team score
-
-The default is TRUE
 
 ## Inherited Functions that you can Override
 

@@ -3,8 +3,8 @@
 	constructor() {
 		super();
 		this.DefaultGameDuration = 60 * 20;
-		this.GroupScoreByTeam = true;
-		this.PvPMode = `teams`;
+		this.TeamsAreUsedInThisGame = true;
+		this.PvPEnabled = true;
 	}
 
 	AddPlayerGeneral(player) {
@@ -33,7 +33,7 @@
 	}
 
 	MakeListOfScores() {
-		if (!this.GroupScoreByTeam) {
+		if (!this.TeamsAreUsedInThisGame) {
 			return this.players;
 		}
 		const list = this.teams.map(team => {

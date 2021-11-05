@@ -2,7 +2,7 @@ SteppingStones = class extends this.Race {
 
 	constructor() {
 		super();
-		this.PvPMode = `off`;
+		this.PvPEnabled = false;
 
 		this.size = 3;
 		this.gap = 1;

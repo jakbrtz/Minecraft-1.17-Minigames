@@ -2,8 +2,7 @@ QuickRespawn = class extends this.Scored {
 
 	constructor(teams) {
 		super();
-		this.GroupScoreByTeam = teams;
-		this.PvPMode = teams ? `teams` : `on`;
+		this.TeamsAreUsedInThisGame = teams;
 	}
 
 	BuildWorld() {

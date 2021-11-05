@@ -2,9 +2,10 @@ Game = class {
 
     constructor() {
         this.DeathCoolDown = 0;
-        this.PvPMode = 'on';
+        this.PvPEnabled = true;
         this.GameMode = 'adventure';
         this.ShowPreGameTimer = true;
+        this.TeamsAreUsedInThisGame = false;
         this.TeamsCanBeAddedAfterStart = true;
         this.minimumNumberOfTeams = 0;
         this.maximumNumberOfTeams = 8;
@@ -12,7 +13,9 @@ Game = class {
     }
 
     Setup() {
-        this.teams = [];
+        if (this.TeamsAreUsedInThisGame) {
+            this.teams = [];
+        }
         this.players = [];
         this.elapsedGameTime = -60;
         this.GameIsComplete = false;
@@ -39,20 +42,22 @@ Game = class {
     AddPlayer(player) {
         this.players.push(player);
 
-        if (player.team !== null && this.teams.some(team => team.name === player.team.name)) {
-            player.team = this.teams.find(team => team.name === player.team.name);
-        } else if ((this.elapsedGameTime < 0 || this.TeamsCanBeAddedAfterStart) && this.teams.length < this.maximumNumberOfTeams) {
-            if (player.team !== null) {
-                player.team = Teams.Get(player.team.name);
+        if (this.TeamsAreUsedInThisGame) {
+            if (player.team !== null && this.teams.some(team => team.name === player.team.name)) {
+                player.team = this.teams.find(team => team.name === player.team.name);
+            } else if ((this.elapsedGameTime < 0 || this.TeamsCanBeAddedAfterStart) && this.teams.length < this.maximumNumberOfTeams) {
+                if (player.team !== null) {
+                    player.team = Teams.Get(player.team.name);
+                } else {
+                    player.team = Teams.Random();
+                }
             } else {
-                player.team = Teams.Random();
+                const sizeOfTeam = team => this.players.filter(player => player.team === team).length;
+                this.teams.sort((a, b) => sizeOfTeam(a) - sizeOfTeam(b));
+                player.team = this.teams[0];
             }
-        } else {
-            const sizeOfTeam = team => this.players.filter(player => player.team === team).length;
-            this.teams.sort((a, b) => sizeOfTeam(a) - sizeOfTeam(b));
-            player.team = this.teams[0];
+            this.AddTeam(player.team);
         }
-        this.AddTeam(player.team); // todo: game parameter where player.team is not needed
 
         this.AddPlayerGeneral(player);
         this.AddPlayerExtension(player);
@@ -67,7 +72,7 @@ Game = class {
         if (player.team !== null) {
             Command.Tag(player, true, `team-${player.team.name}`);
         }
-        PvP.Set(this.PvPMode, player);
+        PvP.Set(this.PvPEnabled ? this.TeamsAreUsedInThisGame ? 'teams' : 'on' : 'off', player);
     }
 
     AddPlayerGeneral(player) {
@@ -133,7 +138,7 @@ Game = class {
         this.players.forEach(player => {
             Command.Effect(player, "instant_health", 1, 15);
         })
-        while (this.teams.length < this.minimumNumberOfTeams) {
+        while (this.TeamsAreUsedInThisGame && this.teams.length < this.minimumNumberOfTeams) {
             this.AddTeam(Teams.Random());
         }
     }

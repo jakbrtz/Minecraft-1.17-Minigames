@@ -12,8 +12,7 @@ this.Teams = {
     Get: function (name) {
         return this.All.find(team => team.name === name);
     },
-    Random: function () {
-        return Random.Arr(this.All);
-        // todo: add a parameter of existing teams
+    Random: function (avoid) {
+        return Random.Arr(this.All.filter(team => !avoid.includes(team)));
     }
 }

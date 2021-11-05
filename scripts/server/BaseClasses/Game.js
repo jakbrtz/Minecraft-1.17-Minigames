@@ -49,7 +49,7 @@ Game = class {
                 if (player.team !== null) {
                     player.team = Teams.Get(player.team.name);
                 } else {
-                    player.team = Teams.Random();
+                    player.team = Teams.Random(this.teams);
                 }
             } else {
                 const sizeOfTeam = team => this.players.filter(player => player.team === team).length;
@@ -139,7 +139,7 @@ Game = class {
             Command.Effect(player, "instant_health", 1, 15);
         })
         while (this.TeamsAreUsedInThisGame && this.teams.length < this.minimumNumberOfTeams) {
-            this.AddTeam(Teams.Random());
+            this.AddTeam(Teams.Random(this.teams));
         }
     }
 

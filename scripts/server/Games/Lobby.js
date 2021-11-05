@@ -92,6 +92,6 @@ Lobby = class extends this.Selection {
 			lines.push("");
 			lines.push(`${this.serverName} #${this.serverNumber}`);
 		}
-		Scoreboard.Create("Teams", lines);
+		Scoreboard.Create("The Lobby", lines);
 	}
 }

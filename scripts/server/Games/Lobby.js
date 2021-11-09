@@ -55,6 +55,7 @@ Lobby = class extends this.Selection {
 			{ structure: "maze", game: new Maze() },
 			{ structure: "hurdles", game: new Hurdles() },
 			{ structure: "boatrace", game: new BoatRace() },
+			{ structure: "slimewall", game: new SlimeWall() },
 		];
 
 		allGames.forEach((option, i) => {

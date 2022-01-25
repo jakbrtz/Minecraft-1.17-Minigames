@@ -29,6 +29,7 @@ KingOfTheHill = class extends this.Scored {
 			z = Random.Float(-15, 15);
 		} while (this.PositionOnHill({ x: x, z: z }));
 		Command.Teleport(player, x, 66, z);
+		Command.Give(player, "netherite_sword");
 	}
 
 	UpdateGameExtension() {

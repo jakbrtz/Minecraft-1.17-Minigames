@@ -1,3 +1,8 @@
+> [!WARNING]
+> **This does not work on new versions of Minecraft**
+> 
+> The purpose of this repository is to show what could be done with the old scripting capabilities
+
 # Not Quite Server Games
 
 This is a Behaviour Pack for Minecraft Bedrock edition that runs mini-games in a multiplayer world.
@@ -29,7 +34,12 @@ Contains simple actions that can be run as commands.
 
 ### scripts
 
-This folder contains all the code that runs the games.
+This folder contains all the code that runs the games. 
+The README files in here explain the code.
+
+* [scripts/server/readme.md](scripts/server/readme.md) - further explains folder structure and mentions which files run the games
+
+* [scripts/server/Games/readme.md](scripts/server/Games/readme.md) - explains code that is used by games and how to write games
 
 ### structures
 
@@ -62,8 +72,3 @@ Get to the end as fast as you can in:
 * Hurdles - run to the end with speed boost and jump boost
 * Glass Maze - literally the only original idea I had
 * Boat Race - go down the river in a boat
-
-
-## Creating new Games
-
-Look in the scripts folder to find out more.

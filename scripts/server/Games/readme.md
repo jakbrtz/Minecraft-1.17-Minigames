@@ -159,7 +159,7 @@ For example in InverseTag we need to detect when a player tags another player:
 	PlayerAttack(attacker, target) {
 		if (target === this.HighlightedPlayer) {
 			this.SetHighlightedPlayer(attacker);
-        }
+		}
 	}
 ```
 
@@ -218,7 +218,7 @@ This can be used to prevent a player from placing blocks, for example in Bridges
 			if (Coordinates.PositionsAreClose(position, team.goal, 1, false) || Coordinates.PositionsAreClose(position, team.spawn, 1, false)) {
 				Command.Tell(player, "You cannot build here");
 				Command.SetBlock(position.x, position.y, position.z, "air");
-            }
+			}
 		})
 	}
 ```
@@ -274,10 +274,10 @@ For example in Bridges, we need to constantly check if a player is in an opponen
 						player.score++;
 						this.UpdateScore();
 						Command.Title(player, "title", "You earned a point");
-                    }
+					}
 					this.Respawn(player);
-                }
-            })
+				}
+			})
 		})
 
 	}
@@ -289,7 +289,7 @@ Another shorter example is BombsAway, where we summon a TNT randomly every 10 ti
 	UpdateGameExtension() {
 		if (this.elapsedGameTime % 10 === 0) {
 			Command.Summon("tnt", Random.Float(-15, 15), 70, Random.Float(-15, 15));
-        }
+		}
 	}
 ```
 
